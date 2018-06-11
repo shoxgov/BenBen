@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showLeftBtn="true"
+        app:titleName="交易记录" />
+
+    <TextView
+        android:id="@+id/wallet_trade_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dip"
+        android:background="@color/white"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="10dip"
+        android:text="支出：0元    收入：0元"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        app:dividerColor="@color/line_color"
+        app:dividerHeight="1dip"
+        app:itemlayout="@layout/expanadapter_wallet_trade_childitem" />
+
+</LinearLayout>

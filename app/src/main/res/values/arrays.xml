@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    　　
+    <array name="search_type_updown">
+        <item>升</item>
+        <item>降</item>
+    </array>
+    <array name="broker_myres_signuping_status">
+        <item>未入职</item>
+        <item>报名中</item>
+    </array>
+
+    <array name="enterprise_job_welfare">
+        <item>包吃</item>
+        <item>包住</item>
+        <item>加班费</item>
+        <item>保险</item>
+        <item>餐补</item>
+        <item>房补</item>
+        <item>十三薪</item>
+        <item>双休</item>
+    </array>
+    <array name="enterprise_employee_status">
+        <item>未入职</item>
+        <item>已入职</item>
+    </array>
+    <array name="enterprise_info_edit_large">
+        <item>少于50人</item>
+        <item>50-100人</item>
+        <item>150-500人</item>
+        <item>500-1000人</item>
+        <item>1000-5000人</item>
+        <item>5000-10000人</item>
+        <item>10000人以上</item>
+    </array>
+    <array name="enterprise_job_education">
+        <item>初中及以下</item>
+        <item>高中/中技/中专</item>
+        <item>大专</item>
+        <item>本科</item>
+        <item>硕士</item>
+        <item>博士</item>
+    </array>
+    <array name="enterprise_info_edit_property">
+        <item>外资(欧美)</item>
+        <item>外资(非欧美)</item>
+        <item>合资</item>
+        <item>国企</item>
+        <item>民营公司</item>
+        <item>外企代表处</item>
+        <item>政府机关</item>
+        <item>事业单位</item>
+        <item>非营利组织</item>
+        <item>上市公司</item>
+        <item>创业公司</item>
+    </array>
+    <string-array name="city">
+        <item>北京</item>
+        <item>成都</item>
+        <item>重庆</item>
+        <item>广州</item>
+        <item>杭州</item>
+        <item>南京</item>
+        <item>上海</item>
+        <item>深圳</item>
+        <item>天津</item>
+        <item>武汉</item>
+        <item>西安</item>
+    </string-array>
+
+    <string-array name="provinces">
+        <item>广东</item>
+        <item>北京</item>
+        <item>福建</item>
+        <item>浙江</item>
+        <item>山东</item>
+        <item>江苏</item>
+        <item>河南</item>
+        <item>安徽</item>
+        <item>重庆</item>
+        <item>湖北</item>
+        <item>湖南</item>
+        <item>河北</item>
+        <item>四川</item>
+        <item>天津</item>
+        <item>吉林</item>
+        <item>黑龙江</item>
+        <item>江西</item>
+        <item>辽宁</item>
+        <item>内蒙古</item>
+        <item>宁夏</item>
+        <item>青海</item>
+        <item>山西</item>
+        <item>陕西</item>
+        <item>上海</item>
+        <item>新疆</item>
+        <item>西藏</item>
+        <item>云南</item>
+        <item>甘肃</item>
+        <item>贵州</item>
+        <item>广西</item>
+        <item>海南</item>
+    </string-array>
+    <string-array name="adBlockDiv">
+        <item>div-gpt-ad-1443488528500-4</item>
+        <item>div-gpt-ad-1443727656867-1</item>
+        <item>div-gpt-ad-1443488528500-5</item>
+        <item>div-gpt-ad-1443488528500-6</item>
+        <item>div-gpt-ad-1443488528500-7</item>
+        <item>div-gpt-ad-1443727656867-0</item>
+        <item>div-gpt-ad-1443488528500-2</item>
+        <item>div-gpt-ad-1443488528500-3</item>
+        <item>div-gpt-ad-1443488528500-1</item>
+        <item>ubmcmm.baidustatic.com</item>
+        <item>cpro2.baidustatic.com</item>
+        <item>cpro.baidustatic.com</item>
+        <item>s.lianmeng.360.cn</item>
+        <item>nsclick.baidu.com</item>
+        <item>pos.baidu.com</item>
+        <item>cbjs.baidu.com</item>
+        <item>cpro.baidu.com</item>
+        <item>images.sohu.com/cs/jsfile/js/c.js</item>
+        <item>union.sogou.com/</item>
+        <item>sogou.com/</item>
+        <item>a.baidu.com</item>
+        <item>c.baidu.com</item>
+    </string-array>
+</resources>

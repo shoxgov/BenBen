@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/mainbg" />
+
+    <TextView
+        android:id="@+id/wallet_trade_parent_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:text="2018年4月"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+
+    <TextView
+        android:id="@+id/wallet_trade_parent_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:paddingBottom="10dip"
+        android:text="支出：600.0元    收入：1600.0元"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/font_normal" />
+
+</LinearLayout>

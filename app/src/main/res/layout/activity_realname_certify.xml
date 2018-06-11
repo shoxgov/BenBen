@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showLeftBtn="true"
+        app:titleName="实名认证" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/mainbg" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dip"
+                android:paddingTop="10dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:text="姓名"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_small" />
+
+                <EditText
+                    android:id="@+id/human_certify_realname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="24"
+                    android:background="@null"
+                    android:hint="请输入真实姓名"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_small" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dip"
+                android:paddingTop="10dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:text="证件号码"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_small" />
+
+                <EditText
+                    android:id="@+id/human_certify_id_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="24"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:digits="@string/editInputtype"
+                    android:hint="请输入身份证号"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_small" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/line_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="15dip"
+                android:text="请上传证件照片" />
+
+
+            <ImageView
+                android:id="@+id/human_certify_id_front"
+                android:layout_width="300dip"
+                android:layout_height="200dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/realname_certify_id_front" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:text="上传人像面照片"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_small" />
+
+            <ImageView
+                android:id="@+id/human_certify_id_back"
+                android:layout_width="300dip"
+                android:layout_height="200dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/realname_certify_id_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:text="上传国微面照片"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_small" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/human_certify_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:text="提交申核"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
+
+</LinearLayout>

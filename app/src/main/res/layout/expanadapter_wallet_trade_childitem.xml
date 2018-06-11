@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="10dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="10dip">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/wallet_trade_child_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分佣"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+
+        <TextView
+            android:id="@+id/wallet_trade_child_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:text="2018-04-22"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_normal" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/wallet_trade_child_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0¥"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_large" />
+
+</LinearLayout>

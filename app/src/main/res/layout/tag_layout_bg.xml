@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dip">
+
+    <CheckBox
+        android:id="@+id/tag_layout_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/drawable_checkbox_fangkuang_gouxuan"
+        android:button="@null"
+        android:paddingLeft="10dip"
+        android:text=""
+        android:textColor="@drawable/drawable_textcolor_check"
+        android:textSize="@dimen/font_normal" />
+
+</LinearLayout>

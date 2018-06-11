@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3b9cff</color>
+    <color name="colorPrimaryDark">#3b9cff</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="mainbg">#ececec</color>
+    <color name="grey">#888</color>
+    <color name="textred">#fd7979</color>
+    <color name="textblack">#4a4a4a</color>
+    <color name="textgrey">#666666</color>
+    <color name="textgreydim">#cccccc</color>
+    <color name="gray_dark">#9b9b9b</color>
+    <color name="gray_dim">#999999</color>
+    <color name="bluetheme">#3b9cff</color>
+    <color name="line_color">#e0e0e0</color>
+    <color name="white">#ffffff</color>
+    <color name="blue">#3b9cff</color>
+    <color name="blue_pressed">#99ccee</color>
+    <color name="transparent">#00000000</color>
+    <color name="province_line_border">#C7C7C7</color>
+</resources>

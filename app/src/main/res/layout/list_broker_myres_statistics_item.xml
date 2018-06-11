@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dip"
+    android:paddingTop="10dip">
+
+
+    <TextView
+        android:id="@+id/broker_statistics_positionname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_toLeftOf="@id/salary_history_date"
+        android:singleLine="true"
+        android:text="医疗器械销售办公室-行政主管工"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/mainbg" />
+
+    <TextView
+        android:id="@+id/broker_statistics_agreenum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:text="已输送：10人"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/font_normal" />
+</LinearLayout>

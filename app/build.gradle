@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd-HH-mm-ss", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.benben.bb"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true //函数大于65535
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
+    //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        abortOnError false
+    }
+    signingConfigs {
+        release {
+            // 下面各值的意思将在后续进行讲解
+            /*   storeFile file('D://adt-bundle-windows-x86_64-20140321/bxstore.keystore')
+               storePassword "123456"
+               keyAlias "bxstore"
+               keyPassword "123456"*/
+        }
+        debug {
+
+        }
+    }
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            versionNameSuffix "-release"
+            //true混淆;false不混淆
+            minifyEnabled false
+            // 移除无用的resource文件 true
+            shrinkResources false
+            zipAlignEnabled false
+//打开 true会报错提示这个错误。Error:A problem was found with the configuration of task ':app:packageRelease'
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明，后一个文件是自己的定义混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名配置
+            signingConfig signingConfigs.release
+            //打包输出格式
+            //文件输出名增加版本号和时间 AS2.0
+//            applicationVariants.all { variant ->
+//                variant.outputs.each { output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        def fileName
+//                        if (outputFile.name.contains("debug")) {//debug版本,使用自己的文件名,方便记忆
+//                            fileName = "$applicationId_v${defaultConfig.versionName}_${debugTime()}_code${defaultConfig.versionCode}_debug.apk"
+//                            output.outputFile = new File(outputFile.parent, fileName)//Open File后定位到这个位置,这个配置,识别不出outputFile是啥了
+//                        } else {
+//                            fileName = "$applicationId_v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${releaseTime()}_${variant.productFlavors[0].name}_release.apk"
+//                            output.outputFile = new File(outputFile.parent, fileName)
+//                        }
+//                    }
+//                }
+//            }
+            //AS3.0版本
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    if (variant.name.endsWith("debug")) {
+                        //debug包
+                        //outputFileName = "$applicationId_v${defaultConfig.versionName}_${releaseTime()}_code${defaultConfig.versionCode}_debug.apk"
+                    } else {
+                        //release包
+                        outputFileName = "ZBB_v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${releaseTime()}_release.apk"
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26+'
+    compile 'com.jakewharton:butterknife:7.0.0'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.0.0
+    compile 'com.android.support:design:26+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
+    //    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    //        compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    compile 'com.google.code.gson:gson:2.3.1'
+    //使用RecyclerView:需要添加依赖
+    compile 'com.android.support:recyclerview-v7:26+'
+    //可回收适配器
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v2.0.7'
+    implementation files('libs/AMap_Location_V3.3.0_20170118.jar')
+    //图片相册选择器
+    compile 'com.lzy.widget:imagepicker:0.6.1'
+    compile 'com.lzy.widget:ninegridview:0.2.1'
+    //添加glide,填充图片
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    implementation files('libs/core-3.1.0.jar')
+    //友盟分享
+    //    compile files('libs/umeng_social_tool.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/SocialSDK_QQ_Simplify.jar')
+    implementation files('libs/SocialSDK_Sina_Simplify.jar')
+    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
+    implementation files('libs/libammsdk.jar')
+    implementation files('libs/umeng_social_shareview.jar')
+    /////阿里百川客服IM
+    repositories {
+        maven { url 'http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/' }
+    }
+    //必选
+    compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
+    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
+    compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+    //----end 阿里百川客服IM
+}

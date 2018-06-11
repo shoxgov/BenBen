@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">职犇犇</string>
+    <string name="versionCode">1</string>
+    <string name="versionName">1.0</string>
+    <string name="title">OkHttp3使用详解</string>
+    <string name="loading">正在加载中，请稍后...</string>
+    <string name="editInputtype">1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM</string>
+
+
+    <string name="download_success">下载成功</string>
+    <string name="file_does_not_exist">文件不存在</string>
+    <string name="back_abnormal_results">数据返回异常</string>
+    <string name="back_parse_exception">数据解析异常</string>
+
+
+    <string name="homepage">首页</string>
+    <string name="enroll">招聘</string>
+    <string name="community">消息</string>
+    <string name="personal">我的</string>
+
+    <!-- 友盟分享平台名称 -->
+    <string name="umeng_socialize_text_tencent_key">腾讯微博</string>
+    <string name="umeng_socialize_text_wenxin_fav">微信收藏</string>
+    <string name="umeng_socialize_sms">短信</string>
+    <string name="umeng_socialize_sina">微博</string>
+    <string name="umeng_socialize_text_qq_key">QQ</string>
+    <string name="umeng_socialize_text_qq_zone_key">QQ空间</string>
+    <string name="umeng_socialize_text_renren_key">人人网</string>
+    <string name="umeng_socialize_text_douban_key">豆瓣</string>
+    <string name="umeng_socialize_text_weixin_key">微信</string>
+    <string name="umeng_socialize_text_weixin_circle_key">朋友圈</string>
+    <string name="umeng_socialize_text_weixin_fav_key">微信收藏</string>
+    <string name="umeng_socialize_text_add_custom_platform">请配置用户平台</string>
+    <string name="umeng_example_home_btn_plus">社交分享</string>
+    <string name="umeng_socialize_text_waitting_share">分享中&#8230;</string>
+    <string name="umeng_socialize_content_hint">说点啥&#8230;</string>
+    <string name="umeng_socialize_cancel_btn_str">取消</string>
+    <string name="umeng_socialize_send_btn_str">发送</string>
+    <string name="umeng_socialize_female">女</string>
+    <string name="umeng_socialize_male">男</string>
+</resources>

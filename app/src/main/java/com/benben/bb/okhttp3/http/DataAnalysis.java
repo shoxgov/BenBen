@@ -1,0 +1,85 @@
+package com.benben.bb.okhttp3.http;
+
+import com.benben.bb.R;
+import com.benben.bb.okhttp3.HttpJsonAdapter;
+import com.benben.bb.okhttp3.response.BaseResponse;
+import com.benben.bb.okhttp3.response.LoginResponse;
+import com.benben.bb.utils.StringUtil;
+import com.benben.bb.utils.UIUtils;
+
+
+/**
+ * @Description 数据解析
+ * @Author 一花一世界
+ */
+
+public class DataAnalysis {
+
+    public enum JSON_TYPE {
+        /**
+         * JSONObject
+         */
+        JSON_OBJECT,
+        /**
+         * JSONArray
+         */
+        JSON_ARRAY,
+        /**
+         * 不是JSON格式的字符串
+         */
+        JSON_ERROR
+    }
+
+    /**
+     * @param result 返回数据
+     * @Description 获取result数据格式
+     */
+    private static JSON_TYPE getJSONType(String result) {
+        if (StringUtil.isEmpty(result)) {
+            return JSON_TYPE.JSON_ERROR;
+        }
+
+        final char[] strChar = result.substring(0, 1).toCharArray();
+        final char firstChar = strChar[0];
+
+        if (firstChar == '{') {
+            return JSON_TYPE.JSON_OBJECT;
+        } else if (firstChar == '[') {
+            return JSON_TYPE.JSON_ARRAY;
+        } else {
+            return JSON_TYPE.JSON_ERROR;
+        }
+    }
+
+    /**
+     * @param result 请求返回字符串
+     * @Description 返回数据解析
+     */
+    public static BaseResponse getReturnData(String result, Class baseResponseClass) {
+        BaseResponse resultDesc = null;
+        if (StringUtil.isEmpty(result)) {
+            //返回数据为空
+            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results));
+            return resultDesc;
+        }
+        try {
+            System.out.println("BENBEN result=" + result);
+            resultDesc = (BaseResponse) HttpJsonAdapter.getInstance().get(result, baseResponseClass);
+        } catch (Exception e) {
+            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_parse_exception));
+        }
+        return resultDesc;
+    }
+
+    /**
+     * @param code    返回码
+     * @param message 返回数据
+     * @Description 数据重组
+     */
+    private static BaseResponse dataRestructuring(int code, String message) {
+        BaseResponse resultDesc = new BaseResponse();
+        resultDesc.setCode(code);
+        resultDesc.setMessage(message);
+        return resultDesc;
+    }
+}

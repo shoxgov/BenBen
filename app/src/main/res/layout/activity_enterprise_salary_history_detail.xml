@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showRightBtn="true"
+        app:titleName="工资核算详情" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/mainbg" />
+
+
+    <TextView
+        android:id="@+id/salary_history_detail_positionname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="行政主管"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/salary_history_detail_base"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="基本薪资：100.0/小时"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/mainbg" />
+
+    <TextView
+        android:id="@+id/salary_history_detail_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="合计：0"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/mainbg" />
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dividerColor="@color/line_color"
+        app:dividerHeight="5dip"
+        app:itemlayout="@layout/list_enterprise_salary_history" />
+
+
+</LinearLayout>

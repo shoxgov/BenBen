@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dip"
+    android:paddingTop="10dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.benben.bb.view.RoundImageView
+                android:id="@+id/home_employ_logo"
+                android:layout_width="@dimen/img_huge"
+                android:layout_height="@dimen/img_huge"
+                android:layout_marginLeft="10dip"
+                android:src="@mipmap/ic_launcher"
+                app:radius="5dip"
+                app:type="round" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/home_employ_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/home_employ_price"
+                    android:singleLine="true"
+                    android:text="JAVA工程师"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/home_employ_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="10dip"
+                    android:singleLine="true"
+                    android:text="200.0元/小时"
+                    android:textColor="@color/textred"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/home_employ_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="报名：1/5 （还剩5天）"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/font_small" />
+
+                    <com.benben.bb.view.MarqueeTextView
+                        android:id="@+id/home_employ_addr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dip"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="工作地点：湖南长沙"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/font_small" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/home_employ_broker_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/home_employ_broker_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/home_employ_broker_price"
+                        android:layout_alignRight="@+id/home_employ_broker_price"
+                        android:background="@drawable/tag_bg_topraduis"
+                        android:gravity="center"
+                        android:paddingBottom="5dip"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip"
+                        android:paddingTop="5dip"
+                        android:singleLine="true"
+                        android:text="就业顾问补贴"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_mini" />
+
+                    <TextView
+                        android:id="@+id/home_employ_broker_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/home_employ_broker_hint"
+                        android:background="@drawable/tag_bg_bottomraduis"
+                        android:gravity="center"
+                        android:minWidth="@dimen/broker_layout"
+                        android:paddingBottom="5dip"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip"
+                        android:paddingTop="5dip"
+                        android:singleLine="true"
+                        android:text="50.0元/小时"
+                        android:textColor="@color/textblack"
+                        android:textSize="@dimen/font_tiny" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_employ_welfare_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal" />
+    <!--<TextView-->
+    <!--android:id="@+id/home_employ_welfare"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dip"-->
+    <!--android:layout_marginTop="10dip"-->
+    <!--android:text="公积金｜班车接送｜节日游"-->
+    <!--android:textColor="@color/gray_dark"-->
+    <!--android:textSize="@dimen/font_small" />-->
+</LinearLayout>

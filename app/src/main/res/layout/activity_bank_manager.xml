@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleName="银行卡管理" />
+
+
+    <RelativeLayout
+        android:id="@+id/bank_manager_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="10dip">
+
+        <TextView
+            android:id="@+id/bank_manager_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xta dg "
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            android:id="@+id/bank_manager_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bank_manager_username"
+            android:layout_marginTop="10dip"
+            android:singleLine="true"
+            android:text="adsgal(sdl8945**34908590)"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            android:id="@+id/bank_manager_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:padding="3dip"
+            android:text="解绑"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_small" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/bank_manager_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dip"
+        android:drawableLeft="@mipmap/bank_add"
+        android:drawablePadding="5dip"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:text="添加银行卡"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+</LinearLayout>

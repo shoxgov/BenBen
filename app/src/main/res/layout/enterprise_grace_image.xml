@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/icon_certify_width"
+    android:layout_height="@dimen/icon_certify_height">
+
+
+    <com.benben.bb.view.RoundImageView
+        android:id="@+id/gracefull_img"
+        android:layout_width="@dimen/icon_certify_width"
+        android:layout_height="@dimen/icon_certify_height"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/gracefull_img_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="5dip"
+        android:src="@mipmap/red_clear" />
+
+</FrameLayout>

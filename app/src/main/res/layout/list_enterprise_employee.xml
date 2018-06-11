@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dip"
+    android:paddingTop="10dip">
+
+    <TextView
+        android:id="@+id/enterprise_employee_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="15dip"
+        android:singleLine="true"
+        android:text="行政主管"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/enterprise_employee_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="5dip"
+        android:singleLine="true"
+        android:text="300.0元/小时"
+        android:textColor="@color/textred"
+        android:textSize="@dimen/font_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/mainbg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="3"
+            android:text="就业顾问补帖："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/enterprise_employee_commission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="5"
+            android:text="10.0元/小时"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="3"
+            android:text="已申请："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/enterprise_employee_apply_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="5"
+            android:text="2人"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="3"
+            android:text="已同意："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/enterprise_employee_agree_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="5"
+            android:text="2人"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+
+    </LinearLayout>
+
+</LinearLayout>

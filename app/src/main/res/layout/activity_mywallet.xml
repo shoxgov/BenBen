@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightBtnText="明细"
+        app:leftBtnBackground="@mipmap/whiteback"
+        app:showRightBtn="true"
+        app:titleBackground="@color/bluetheme" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:orientation="vertical"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="账户余额 （元）"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            android:id="@+id/mywallet_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="20dip"
+            android:text="¥2333333.3"
+            android:textColor="@color/white"
+            android:textSize="40dip" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/mywallet_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/line_color"
+        android:dividerHeight="1dip"
+        android:footerDividersEnabled="true"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+
+    <Button
+        android:id="@+id/mywallet_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="15dip"
+        android:background="@drawable/drawable_buttonbg"
+        android:text="提现"
+        android:textColor="@color/white" />
+</LinearLayout>

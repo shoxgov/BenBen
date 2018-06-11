@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="10dip"
+    android:paddingTop="10dip">
+
+    <com.benben.bb.view.RoundImageView
+        android:id="@+id/broker_myteam_item_photo"
+        android:layout_width="@dimen/img_large"
+        android:layout_height="@dimen/img_large"
+        android:layout_marginLeft="10dip"
+        android:src="@mipmap/ic_launcher"
+        app:radius="5dip"
+        app:type="round" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/broker_myteam_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="5dip"
+            android:singleLine="true"
+            android:text="黄三  18887456522"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/broker_myteam_item_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="5dip"
+            android:singleLine="true"
+            android:text="资源数  40"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/broker_myteam_item_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/boarder_btn_bg_semicircle"
+        android:paddingBottom="5dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:paddingTop="5dip"
+        android:text="取消"
+        android:textColor="@color/textblack" />
+
+</LinearLayout>

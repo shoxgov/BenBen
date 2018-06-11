@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/view_broker_myteam_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="10dip"
+        android:text="您还可以设置1个就业顾问"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="5dp"
+        android:layerType="software"
+        app:dividerDrawable="@drawable/bg_dotted_line"
+        app:itemlayout="@layout/list_broker_myteam_item" />
+
+    <Button
+        android:id="@+id/view_broker_myteam_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:text="新增"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
+
+
+</LinearLayout>
