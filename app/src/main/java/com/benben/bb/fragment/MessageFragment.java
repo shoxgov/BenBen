@@ -105,8 +105,6 @@ public class MessageFragment extends BaseFragment implements Observer {
 //        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dip2px(getActivity(), 10));
 //        spanLine.setBackgroundResource(R.color.mainbg);
 //        spanLine.setLayoutParams(params);
-        mIMKit = YWAPI.getIMKitInstance(UserData.getUserData().getBenbenNum() + "", MyApplication.YW_APP_KEY);
-        ltxMsgChange();
         recyclerSwipeLayout.createAdapter(R.layout.msg_content_item);
         recyclerSwipeLayout.addHeaderView(header);
 //        recyclerSwipeLayout.addHeaderView(spanLine);
@@ -128,13 +126,14 @@ public class MessageFragment extends BaseFragment implements Observer {
         });
         recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
         recyclerSwipeLayout.setXCallBack(callBack);
+        freshUI();
     }
 
-    private void loginBaiChuang(final String openIm){
+    private void loginBaiChuang(final String openIm) {
         //开始登录
         //此对象获取到后，保存为全局对象，供APP使用  此对象跟用户相关，如果切换了用户，需要重新获取
         IYWLoginService loginService = mIMKit.getLoginService();
-        YWLoginParam loginParam = YWLoginParam.createLoginParam(UserData.getUserData().getBenbenNum()+"", MyApplication.YW_APP_COMM_PWD);
+        YWLoginParam loginParam = YWLoginParam.createLoginParam(UserData.getUserData().getBenbenNum() + "", MyApplication.YW_APP_COMM_PWD);
         loginService.login(loginParam, new IWxCallback() {
 
             @Override
@@ -191,8 +190,9 @@ public class MessageFragment extends BaseFragment implements Observer {
         public void onLoadMoreRequested() {
             if (pageNo < totalPage) {
                 pageNo++;
+            } else {
+                recyclerSwipeLayout.loadComplete();
             }
-            recyclerSwipeLayout.loadComplete();
         }
     };
 
@@ -219,5 +219,10 @@ public class MessageFragment extends BaseFragment implements Observer {
                 ltxMsgChange();
                 break;
         }
+    }
+
+    public void freshUI() {
+        mIMKit = YWAPI.getIMKitInstance(UserData.getUserData().getBenbenNum() + "", MyApplication.YW_APP_KEY);
+        ltxMsgChange();
     }
 }

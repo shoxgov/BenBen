@@ -103,8 +103,8 @@ public class MySignupActivity extends BaseActivity {
                             }
                             return;
                         }
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
-                        recyclerSwipeLayout.loadComplete();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

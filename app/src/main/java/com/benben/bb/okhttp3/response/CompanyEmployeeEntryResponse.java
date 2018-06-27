@@ -70,9 +70,18 @@ public class CompanyEmployeeEntryResponse extends BaseResponse {
     public class EmployeeEntryInfo {
         private int userId;
         private int positionUserId;
+        private int fromId;
         private String userName;
         private String trueName;
         private String avatar;
+
+        public int getFromId() {
+            return fromId;
+        }
+
+        public void setFromId(int fromId) {
+            this.fromId = fromId;
+        }
 
         public int getUserId() {
             return userId;

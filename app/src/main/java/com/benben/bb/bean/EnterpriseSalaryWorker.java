@@ -23,11 +23,20 @@ package com.benben.bb.bean;
 
 public class EnterpriseSalaryWorker {
     private int userId;
+    private int fromId;
     private float workHours;
     private float buckleMoney;
     private float rewardMoney;
     private float factMoney;
     private String buckleDetails;
+
+    public int getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(int fromId) {
+        this.fromId = fromId;
+    }
 
     public int getUserId() {
         return userId;

@@ -20,7 +20,6 @@ import com.benben.bb.view.TitleBar;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,8 +100,8 @@ public class EnterpriseSalaryActivity extends BaseActivity {
                             }
                             return;
                         }
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
-                        recyclerSwipeLayout.loadComplete();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

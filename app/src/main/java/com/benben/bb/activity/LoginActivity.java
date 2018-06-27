@@ -11,10 +11,12 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.benben.bb.MyApplication;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.bean.UserData;
@@ -122,7 +124,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_clear, R.id.login_msg_code, R.id.login_ok})
+    @OnClick({R.id.login_clear, R.id.login_msg_code, R.id.login_pwd, R.id.login_ok})
     public void onViewClicked(View view) {
         if (Utils.isFastDoubleClick()) {
             return;
@@ -170,6 +172,12 @@ public class LoginActivity extends BaseActivity {
 //                loginCode = codeEdit.getText().toString();
                 login(loginTel, loginCode);
                 break;
+            case R.id.login_pwd:
+                Intent i = new Intent();
+                i.setClass(LoginActivity.this, LoginPwdActivity.class);
+                startActivity(i);
+                finish();
+                break;
         }
     }
 
@@ -184,8 +192,11 @@ public class LoginActivity extends BaseActivity {
 //                "code":1, "message":"验证码已发送", "data":"1823"
                 try {
                     SmsCodeResponse scr = (SmsCodeResponse) resultDesc;
+                    ToastUtil.showText(scr.getMessage());
                     if (scr.getCode() == 1) {
                         loginCode = scr.getData();
+                    } else {
+                        resetAuthCodeButton();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -200,7 +211,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void login(String phone, final String loginCode) {
+    private void login(final String phone, final String loginCode) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phone);
         params.put("logCode", loginCode);
@@ -210,13 +221,17 @@ public class LoginActivity extends BaseActivity {
                 super.onSuccess(br);
                 try {
                     LoginResponse lr = (LoginResponse) br;
-                    UserData.updateAccount(lr);
-                    PreferenceUtil.commitString("LoginTel", loginTel);
-                    PreferenceUtil.commitString("LoginCode", loginCode);
-                    Intent i = new Intent();
-                    i.setClass(LoginActivity.this, MainFragmentActivity.class);
-                    startActivity(i);
-                    finish();
+                    if (lr.getCode() == 1) {
+                        UserData.updateAccount(lr);
+                        PreferenceUtil.commitString("LoginTel", phone);
+                        PreferenceUtil.commitString("passWord", lr.getData().getUser().getPassWord());
+                        Intent i = new Intent();
+                        i.setClass(LoginActivity.this, MainFragmentActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        ToastUtil.showText(lr.getMessage());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -254,5 +269,14 @@ public class LoginActivity extends BaseActivity {
     private void resetAuthCodeButton() {
         codeTv.setText("获取验证码");
         codeTv.setEnabled(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            MyApplication.finishAllActivity();
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

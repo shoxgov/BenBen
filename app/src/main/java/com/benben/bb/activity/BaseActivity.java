@@ -87,4 +87,5 @@ public class BaseActivity extends Activity {
         getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
         return typedValue.data;
     }
+
 }

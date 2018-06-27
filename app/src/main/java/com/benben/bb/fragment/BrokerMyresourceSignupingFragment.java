@@ -103,6 +103,7 @@ public class BrokerMyresourceSignupingFragment extends BaseFragment {
                             recyclerSwipeLayout.setEmpty();
                             return;
                         }
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(bpr.getData().getList());
                     }
                 } catch (Exception e) {

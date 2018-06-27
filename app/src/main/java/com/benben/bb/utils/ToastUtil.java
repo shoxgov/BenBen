@@ -83,7 +83,7 @@ public class ToastUtil {
             mTvContent.setText(info);
             mTvContent.bringToFront();
             returnValue = new Toast(context.getApplicationContext());
-            returnValue.setGravity(Gravity.BOTTOM, 0, posY);
+            returnValue.setGravity(Gravity.CENTER, 0, posY);
             returnValue.setDuration(duration);
             returnValue.setView(vContent);
         }

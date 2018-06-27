@@ -27,9 +27,8 @@ import com.benben.bb.bean.UserData;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.LoginResponse;
+import com.benben.bb.okhttp3.response.UserInfoResponse;
 import com.benben.bb.utils.LogUtil;
-import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.view.RoundImageView;
 import com.bumptech.glide.Glide;
@@ -79,34 +78,27 @@ public class MyFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new SettingAdapter(getActivity());
         settingList.setAdapter(adapter);
-        List<SettingItem> data = new ArrayList<>();
-        data.add(new SettingItem(R.mipmap.my_wallet, "钱包", ""));
-        data.add(new SettingItem(R.mipmap.my_signup, "我的报名", ""));
-        data.add(new SettingItem(R.mipmap.my_setting, "设置", ""));
-        adapter.setData(data);
         settingList.setOnItemClickListener(onItemClickListener);
+        freshUI();
     }
 
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 0:
-                    Intent wallet = new Intent();
-                    wallet.setClass(getActivity(), MyWalletActivity.class);
-                    startActivity(wallet);
-                    break;
-                case 1:
-                    Intent mysignup = new Intent();
-                    mysignup.setClass(getActivity(), MySignupActivity.class);
-                    startActivity(mysignup);
-                    break;
-                case 2:
-                    Intent setting = new Intent();
-                    setting.setClass(getActivity(), SettingActivity.class);
-                    startActivityForResult(setting, 11);
-                    break;
+            SettingItem item = adapter.getItem(position);
+            if (item.getTitle().equals("钱包")) {
+                Intent wallet = new Intent();
+                wallet.setClass(getActivity(), MyWalletActivity.class);
+                startActivity(wallet);
+            } else if (item.getTitle().equals("我的报名")) {
+                Intent mysignup = new Intent();
+                mysignup.setClass(getActivity(), MySignupActivity.class);
+                startActivity(mysignup);
+            } else if (item.getTitle().equals("设置")) {
+                Intent setting = new Intent();
+                setting.setClass(getActivity(), SettingActivity.class);
+                startActivityForResult(setting, 11);
             }
         }
     };
@@ -128,16 +120,6 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        if (!TextUtils.isEmpty(UserData.getUserData().getAvatar())) {
-            Glide.with(getActivity())
-                    .load(UserData.getUserData().getAvatar())
-                    .placeholder(R.mipmap.default_image)
-                    .error(R.mipmap.default_image)
-                    .into(personPhoto);
-        }
-        if (!TextUtils.isEmpty(UserData.getUserData().getNickName())) {
-            personTruename.setText(MyApplication.userData.getNickName());
-        }
     }
 
     @Override
@@ -169,24 +151,32 @@ public class MyFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 更新用户信息
+     */
     private void updateUserInfo() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("phone", PreferenceUtil.getString("LoginTel", ""));
-        params.put("logCode", PreferenceUtil.getString("LoginCode", ""));
-        OkHttpUtils.getAsyn(NetWorkConfig.LOGIN, params, LoginResponse.class, new HttpCallback() {
+        params.put("id", UserData.getUserData().getId() + "");//id	用户ID
+        OkHttpUtils.getAsyn(NetWorkConfig.GET_USERINFO, params, UserInfoResponse.class, new HttpCallback() {
             @Override
-            public void onSuccess(BaseResponse resultDesc) {
-                super.onSuccess(resultDesc);
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
                 try {
-                    LoginResponse lr = (LoginResponse) resultDesc;
-                    UserData.updateAccount(lr);
-                    if (!TextUtils.isEmpty(UserData.getUserData().getAvatar())) {
-                        Glide.with(getActivity())
-                                .load(UserData.getUserData().getAvatar())
-                                .into(personPhoto);
-                    }
-                    if (!TextUtils.isEmpty(UserData.getUserData().getNickName())) {
-                        personTruename.setText(MyApplication.userData.getNickName());
+                    UserInfoResponse ui = (UserInfoResponse) br;
+                    if (ui.getCode() == 1) {
+                        UserData.updateUserInfo(ui.getData().getUser());
+                        UserData.getUserData().setToken(ui.getData().getToken());
+                        if (!TextUtils.isEmpty(ui.getData().getUser().getAvatar())) {
+                            Glide.with(getActivity())
+                                    .load(ui.getData().getUser().getAvatar())
+                                    .into(personPhoto);
+                        }
+                        if (!TextUtils.isEmpty(ui.getData().getUser().getNickName())) {
+                            personTruename.setText(ui.getData().getUser().getNickName());
+                        }
+                        if (!TextUtils.isEmpty(ui.getData().getUser().getSignature())) {
+                            personSignature.setText(ui.getData().getUser().getSignature());
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -200,5 +190,28 @@ public class MyFragment extends BaseFragment {
                 ToastUtil.showText(message);
             }
         });
+    }
+
+    public void freshUI() {
+        List<SettingItem> data = new ArrayList<>();
+        data.add(new SettingItem(R.mipmap.my_wallet, "钱包", ""));
+        if (UserData.getUserData().getIsCompany() != 1) {
+            data.add(new SettingItem(R.mipmap.my_signup, "我的报名", ""));
+        }
+        data.add(new SettingItem(R.mipmap.my_setting, "设置", ""));
+        adapter.setData(data);
+        if (!TextUtils.isEmpty(UserData.getUserData().getAvatar())) {
+            Glide.with(getActivity())
+                    .load(UserData.getUserData().getAvatar())
+                    .placeholder(R.mipmap.default_image)
+                    .error(R.mipmap.default_image)
+                    .into(personPhoto);
+        }
+        if (!TextUtils.isEmpty(UserData.getUserData().getNickName())) {
+            personTruename.setText(MyApplication.userData.getNickName());
+        }
+        if (!TextUtils.isEmpty(UserData.getUserData().getSignature())) {
+            personSignature.setText(MyApplication.userData.getSignature());
+        }
     }
 }

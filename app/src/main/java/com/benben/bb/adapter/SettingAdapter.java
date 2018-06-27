@@ -35,7 +35,7 @@ public class SettingAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public SettingItem getItem(int position) {
         return data.get(position);
     }
 

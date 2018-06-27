@@ -141,6 +141,8 @@ public class PersonInfoActivity extends BaseActivity {
                 imagePicker.setMultiMode(false);   //多选
                 imagePicker.setShowCamera(true);  //显示拍照按钮
                 imagePicker.setCrop(true);       //不进行裁剪
+                imagePicker.setOutPutY(800);
+                imagePicker.setOutPutX(800);
                 imagePicker.setFocusWidth(600);
                 imagePicker.setFocusHeight(600);
                 Intent intent = new Intent(this, ImageGridActivity.class);
@@ -250,6 +252,7 @@ public class PersonInfoActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PERSON_REF_NICKNAME && resultCode == RESULT_OK) {
             nicknameTv.setText(data.getStringExtra("result"));
+            setResult(RESULT_OK);
         } else if (requestCode == PERSON_REF_SEX && resultCode == RESULT_OK) {
             sexTv.setText(data.getStringExtra("result"));
         } else if (requestCode == PERSON_REF_AGE && resultCode == RESULT_OK) {
@@ -260,6 +263,7 @@ public class PersonInfoActivity extends BaseActivity {
             nationTv.setText(data.getStringExtra("result"));
         } else if (requestCode == PERSON_REF_SIGNATURE && resultCode == RESULT_OK) {
             signatureTv.setText(data.getStringExtra("result"));
+            setResult(RESULT_OK);
         } else if (requestCode == PERSON_REF_EDU && resultCode == RESULT_OK) {
             eduTv.setText(data.getStringExtra("result"));
         } else if (requestCode == REQUEST_CODE_PHOTO && resultCode == ImagePicker.RESULT_CODE_ITEMS) {
@@ -275,9 +279,9 @@ public class PersonInfoActivity extends BaseActivity {
                         public void onSuccess(BaseResponse br) {
                             super.onSuccess(br);
                             if (br.getCode() == 1) {
-                                photoImg.setImageBitmap(ImageUtils.decodeBitmap(items.get(0).path));
                                 setResult(RESULT_OK);
                             }
+                            photoImg.setImageBitmap(ImageUtils.decodeBitmap(items.get(0).path));
                             ToastUtil.showText(br.getMessage());
                         }
 

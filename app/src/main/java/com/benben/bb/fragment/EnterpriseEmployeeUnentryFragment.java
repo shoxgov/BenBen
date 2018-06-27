@@ -104,6 +104,7 @@ public class EnterpriseEmployeeUnentryFragment extends BaseFragment {
                             return;
                         }
                         List<CompanyEmployeeEntryResponse.EmployeeEntryInfo> temp = mar.getData().getList();
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
                     }
                 } catch (Exception e) {

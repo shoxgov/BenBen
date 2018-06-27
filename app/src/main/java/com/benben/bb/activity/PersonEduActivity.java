@@ -33,7 +33,7 @@ import butterknife.OnClick;
 
 public class PersonEduActivity extends BaseActivity {
     private static final String[] HIGH_ARRAYS = new String[]{"硕士", "本科", "专科", "高中", "其它"};
-    private static final String[] STATUS_ARRAYS = new String[]{"在职", "在读", "无业", "其它"};
+    private static final String[] STATUS_ARRAYS = new String[]{"在读", "毕业"};//0是在读 1是毕业
 
     @Bind(R.id.my_person_edu_high)
     TextView highTv;
@@ -75,10 +75,18 @@ public class PersonEduActivity extends BaseActivity {
         }
         try {
             highTv.setText(UserData.getUserData().getEducation());
+            int i = 0;
+            for(String h:HIGH_ARRAYS){
+                if(h.equals(UserData.getUserData().getEducation())){
+                    high = i;
+                }
+                i++;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
+            status = UserData.getUserData().getStudyStatus();
             statusTv.setText(STATUS_ARRAYS[UserData.getUserData().getStudyStatus()]);
         } catch (Exception e) {
             e.printStackTrace();

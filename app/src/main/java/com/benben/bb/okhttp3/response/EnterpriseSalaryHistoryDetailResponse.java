@@ -134,8 +134,9 @@ public class EnterpriseSalaryHistoryDetailResponse extends BaseResponse {
     public class SalaryHistoryInfo {
         private int id;
         private int userId;
+        private int fromId;
         private int wagesListId;
-        private int workHours;
+        private float workHours;
         private float buckleMoney;
         private float rewardMoney;
         private float factMoney;
@@ -153,6 +154,14 @@ public class EnterpriseSalaryHistoryDetailResponse extends BaseResponse {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public int getFromId() {
+            return fromId;
+        }
+
+        public void setFromId(int fromId) {
+            this.fromId = fromId;
         }
 
         public float getBuckleMoney() {
@@ -195,11 +204,11 @@ public class EnterpriseSalaryHistoryDetailResponse extends BaseResponse {
             this.wagesListId = wagesListId;
         }
 
-        public int getWorkHours() {
+        public float getWorkHours() {
             return workHours;
         }
 
-        public void setWorkHours(int workHours) {
+        public void setWorkHours(float workHours) {
             this.workHours = workHours;
         }
 

@@ -96,6 +96,7 @@ public class MyWalletTradeDetailActivity extends BaseActivity {
                         recyclerSwipeLayout.setEmpty();
                         return;
                     }
+                    recyclerSwipeLayout.openLoadMore(totalPage);
                     recyclerSwipeLayout.addData(wtr.getData().getPage().getList());
                 }
             }
@@ -115,8 +116,9 @@ public class MyWalletTradeDetailActivity extends BaseActivity {
             if (pageNo < totalPage) {
                 pageNo++;
                 requestTrade();
+            } else {
+                recyclerSwipeLayout.loadComplete();
             }
-            recyclerSwipeLayout.loadComplete();
         }
     };
 

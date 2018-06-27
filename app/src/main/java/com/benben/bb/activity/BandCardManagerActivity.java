@@ -61,7 +61,11 @@ public class BandCardManagerActivity extends BaseActivity {
             bankLayout.setVisibility(View.VISIBLE);
             addTv.setText("更换银行卡");
             usernameTv.setText(UserData.getUserData().getTrueName());
-            accountTv.setText(UserData.getUserData().getBindingPaytype() + "    (" + UserData.getUserData().getBindingPayAccount().replace(UserData.getUserData().getBindingPayAccount().substring(5, 9), "****") + ")");
+            try {
+                accountTv.setText(UserData.getUserData().getBindingPaytype() + "    (" + UserData.getUserData().getBindingPayAccount().replace(UserData.getUserData().getBindingPayAccount().substring(5, 9), "****") + ")");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -76,8 +80,8 @@ public class BandCardManagerActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.bank_manager_status:
             case R.id.bank_manager_add:
-                //validateStatus  0未认证1认证中2认证失败3已通过
-                if (UserData.getUserData().getValidateStatus() == 3) {
+                //validateStatus  validateStatus 0未认证;1认证中;2认证失败;3已通过
+                if (UserData.getUserData().getValidateStatus() == 1) {
                     Intent add = new Intent();
                     add.setClass(this, BankcardAddActivity.class);
                     startActivityForResult(add, 0);

@@ -2,6 +2,8 @@ package com.benben.bb.fragment;
 
 import android.support.v4.app.Fragment;
 
+import com.benben.bb.utils.LogUtil;
+
 import java.util.HashMap;
 
 /**
@@ -17,11 +19,11 @@ public class FragmentFactory {
     private static HashMap<Integer, Fragment> mFragments = new HashMap<>();
 
     public static Fragment createFragment(int fragmentName) {
+        LogUtil.d( "FragmentFactory createFragment  fragmentName="+fragmentName);
         // 从缓存中取出
         Fragment fragment = mFragments.get(fragmentName);
         if (fragment == null) {
             switch (fragmentName) {
-
                 case F1:
                     fragment = HomeFragment.newInstance("100");
                     break;
@@ -41,11 +43,11 @@ public class FragmentFactory {
             // 把frament加入到缓存中
             mFragments.put(fragmentName,fragment);
         }
-
         return fragment;
     }
 
     public static void clear(){
+        LogUtil.d( "FragmentFactory clear");
         mFragments.clear();
     }
 }

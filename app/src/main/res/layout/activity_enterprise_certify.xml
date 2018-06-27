@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:src="@mipmap/enterprise_certify_logo" />
+                    android:src="@mipmap/home_enterprise" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -286,8 +286,9 @@
                 <com.benben.bb.view.RoundImageView
                     android:id="@+id/enterprise_certify_1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dip"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/enterprise_certify_bg"
                     app:radius="10dip"
                     app:type="round" />
@@ -299,8 +300,9 @@
                 <com.benben.bb.view.RoundImageView
                     android:id="@+id/enterprise_certify_2"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dip"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/enterprise_certify_bg"
                     app:radius="10dip"
                     app:type="round" />

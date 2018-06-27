@@ -95,6 +95,7 @@ public class EnterpriseRecruitActivity extends BaseActivity {
                             return;
                         }
                         List<CompanyRecruitResponse.RecruitInfo> temp = mar.getData().getList();
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
                     }
                 } catch (Exception e) {
@@ -133,9 +134,13 @@ public class EnterpriseRecruitActivity extends BaseActivity {
             baseViewHolder.setText(R.id.enterprise_recruit_name, ri.getPositionName());
             baseViewHolder.setText(R.id.enterprise_recruit_salary, ri.getSalary() + "元/小时");
             baseViewHolder.setText(R.id.enterprise_recruit_commission, ri.getCommision() + "元/小时");
-            baseViewHolder.setText(R.id.enterprise_recruit_num, "招聘" + ri.getEnrollNum() + "人");
-            baseViewHolder.setText(R.id.enterprise_recruit_count, ri.getHiringCount() + "元/小时");
-            baseViewHolder.setText(R.id.enterprise_recruit_date, ri.getEndTime());
+//            baseViewHolder.setText(R.id.enterprise_recruit_num, "招聘" + ri.getEnrollNum() + "人");
+            baseViewHolder.setText(R.id.enterprise_recruit_count, ri.getHiringCount() + "人");
+            if (ri.getEndTime().contains(" ")) {
+                baseViewHolder.setText(R.id.enterprise_recruit_date, ri.getEndTime().split(" ")[0]);
+            } else {
+                baseViewHolder.setText(R.id.enterprise_recruit_date, ri.getEndTime());
+            }
             SwitchButton sbBtn = baseViewHolder.getView(R.id.recruit_sb);
             switch (ri.getPositionStatus()) {
                 case 0://开放
@@ -176,7 +181,7 @@ public class EnterpriseRecruitActivity extends BaseActivity {
                     Intent intent = new Intent();
                     intent.setClass(EnterpriseRecruitActivity.this, EnterpriseAddRecruitActivity.class);
                     intent.putExtra("positionId", ri.getId());
-                    startActivity(intent);
+                    startActivityForResult(intent,11);
                 }
             });
         }

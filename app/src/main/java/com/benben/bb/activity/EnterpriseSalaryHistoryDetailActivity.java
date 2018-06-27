@@ -111,10 +111,10 @@ public class EnterpriseSalaryHistoryDetailActivity extends BaseActivity {
             baseViewHolder.setText(R.id.salary_history_detail_workhour, shi.getWorkHours() + "");
             baseViewHolder.setText(R.id.salary_history_detail_deduck, shi.getBuckleMoney() + "");
             baseViewHolder.setText(R.id.salary_history_detail_award, shi.getRewardMoney() + "");
-            if (TextUtils.isEmpty(shi.getComplain())) {
+            if (TextUtils.isEmpty(shi.getBuckleDetails())) {
                 baseViewHolder.setText(R.id.salary_history_detail_soso, "无");
             } else {
-                baseViewHolder.setText(R.id.salary_history_detail_soso, shi.getComplain());
+                baseViewHolder.setText(R.id.salary_history_detail_soso, shi.getBuckleDetails());
             }
         }
     };
@@ -142,7 +142,10 @@ public class EnterpriseSalaryHistoryDetailActivity extends BaseActivity {
                         recyclerSwipeLayout.setEmpty();
                         return;
                     }
+                    recyclerSwipeLayout.openLoadMore(totalPage);
                     recyclerSwipeLayout.addData(er.getData().getList());
+                } else {
+                    ToastUtil.showText(er.getMessage());
                 }
             }
 

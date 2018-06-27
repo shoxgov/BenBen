@@ -73,7 +73,9 @@ public class MyWalletActivity extends BaseActivity {
         } else {
             data.add(new SettingItem(R.mipmap.wallet_realname, "实名认证", ""));
         }
-        data.add(new SettingItem(R.mipmap.wallet_salary_sheet, "工资条", ""));
+        if (UserData.getUserData().getIsCompany() != 1) {
+            data.add(new SettingItem(R.mipmap.wallet_salary_sheet, "工资条", ""));
+        }
         adapter.setData(data);
         list.setOnItemClickListener(onItemClickListener);
     }
@@ -84,6 +86,10 @@ public class MyWalletActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0:
+                    if (UserData.getUserData().getValidateStatus() != 1) {
+                        ToastUtil.showText("请先实名认证");
+                        return;
+                    }
                     Intent bank = new Intent();
                     bank.setClass(MyWalletActivity.this, BandCardManagerActivity.class);
                     startActivity(bank);

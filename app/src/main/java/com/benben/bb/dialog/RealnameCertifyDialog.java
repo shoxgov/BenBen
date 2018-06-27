@@ -23,7 +23,7 @@ public class RealnameCertifyDialog extends Dialog implements OnClickListener {
 
 
     public RealnameCertifyDialog(Context context, String info, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.info = info;
         this.dialogcallback = dialogcallback;
     }

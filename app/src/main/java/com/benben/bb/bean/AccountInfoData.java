@@ -1,9 +1,5 @@
 package com.benben.bb.bean;
 
-import android.text.TextUtils;
-
-import com.benben.bb.NetWorkConfig;
-
 import java.io.Serializable;
 
 /**
@@ -53,6 +49,7 @@ public class AccountInfoData implements Serializable {
     private String token;
     private String userName;
     private String benbenNum;
+    private String passWord;
     private String nickName;
     private String avatar;
     private String region;
@@ -120,6 +117,13 @@ public class AccountInfoData implements Serializable {
         this.benbenNum = benbenNum;
     }
 
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
 
     public int getIsAgent() {
         return isAgent;

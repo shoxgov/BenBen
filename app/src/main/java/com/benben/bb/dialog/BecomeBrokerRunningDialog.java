@@ -23,12 +23,12 @@ public class BecomeBrokerRunningDialog extends Dialog implements OnClickListener
 
 
     public BecomeBrokerRunningDialog(Context context, String titleInfo, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.titleInfo = titleInfo;
         this.dialogcallback = dialogcallback;
     }
     public BecomeBrokerRunningDialog(Context context, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.dialogcallback = dialogcallback;
     }
 

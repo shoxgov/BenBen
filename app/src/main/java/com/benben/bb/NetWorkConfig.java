@@ -50,9 +50,17 @@ public class NetWorkConfig {
      */
     public static final String REGISTER = HTTP + "/user/account/register";
     /**
+     获取用户信息
+     */
+    public static final String GET_USERINFO = HTTP + "/api/user/getUserInfo";
+    /**
      * 获取首页Banner
      */
     public static final String HOME_BANNER = HTTP + "/api/index/getAdTop";
+    /**
+     * 首页推荐
+     * */
+    public static final String INDEX_HOME_ADV = HTTP + "/api/index/advPositionList";
     /**
      * 查询或搜索职位列表
      */

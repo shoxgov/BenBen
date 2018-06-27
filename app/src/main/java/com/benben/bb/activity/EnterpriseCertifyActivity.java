@@ -228,7 +228,7 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                     return;
                 }
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("categoryName", categoryNameTv.getTag().toString());
+                params.put("categoriesId", categoryNameTv.getTag().toString());
                 params.put("companyName", name);
                 params.put("companyAddr", addr);
                 List<File> files = new ArrayList<>();
@@ -245,7 +245,7 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                     public void onSuccess(BaseResponse baseResponse) {
                         super.onSuccess(baseResponse);
                         if (baseResponse.getCode() == 1) {
-                            ToastUtil.showText(baseResponse.getMessage());
+                            ToastUtil.showText("申请成功");
                             setResult(RESULT_OK);
                             finish();
                         } else {

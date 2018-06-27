@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.benben.bb.utils.LogUtil;
+
 import butterknife.ButterKnife;
 /**
  * Created by wangshengyin on 2018-05-03.
@@ -18,6 +20,7 @@ public abstract  class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtil.d("BaseFragment onCreateView");
         View view = inflater.inflate(provieResourceID(), container, false);
         ButterKnife.bind(this, view);
         init();

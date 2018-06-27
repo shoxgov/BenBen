@@ -29,7 +29,7 @@ import com.benben.bb.bean.UserData;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.LoginResponse;
+import com.benben.bb.okhttp3.response.UserInfoResponse;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -168,6 +168,10 @@ public class Utils {
         return getMd5(String.valueOf(random.nextInt(10000)).getBytes());
     }
 
+    public static String getMd5(String s) {
+        return getMd5(s.getBytes());
+    }
+
     public static String getMd5(byte[] buffer) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -269,9 +273,13 @@ public class Utils {
     }
 
     public static void closeInputMethod(Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 //        imm.hideSoftInputFromWindow(EditText.getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
     }
 
 
@@ -364,17 +372,20 @@ public class Utils {
         }
     }
 
-    public static void updateUserInfo() {
+    /**
+     * 更新用户信息
+     */
+    public static void updateUserInfomation() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("phone", PreferenceUtil.getString("LoginTel", ""));
-        params.put("logCode", PreferenceUtil.getString("LoginCode", ""));
-        OkHttpUtils.getAsyn(NetWorkConfig.LOGIN, params, LoginResponse.class, new HttpCallback() {
+        params.put("id", UserData.getUserData().getId() + "");//id	用户ID
+        OkHttpUtils.getAsyn(NetWorkConfig.GET_USERINFO, params, UserInfoResponse.class, new HttpCallback() {
             @Override
             public void onSuccess(BaseResponse br) {
                 super.onSuccess(br);
                 try {
-                    LoginResponse lr = (LoginResponse) br;
-                    UserData.updateAccount(lr);
+                    UserInfoResponse ui = (UserInfoResponse) br;
+                    UserData.updateUserInfo(ui.getData().getUser());
+                    UserData.getUserData().setToken(ui.getData().getToken());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -384,6 +395,7 @@ public class Utils {
             @Override
             public void onFailure(int code, String message) {
                 super.onFailure(code, message);
+                ToastUtil.showText(message);
             }
         });
     }

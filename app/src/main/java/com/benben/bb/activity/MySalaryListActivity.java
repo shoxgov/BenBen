@@ -37,7 +37,7 @@ import butterknife.OnClick;
 
 public class MySalaryListActivity extends BaseActivity {
 
-    private static final String[] DATE_ARRAYS = new String[]{"2018", "2017"};
+    private static final String[] DATE_ARRAYS = new String[]{"2019", "2018", "2017"};
     @Bind(R.id.recyclerRefreshLayout)
     RecyclerViewSwipeLayout recyclerSwipeLayout;
     @Bind(R.id.salary_history_date)
@@ -49,6 +49,8 @@ public class MySalaryListActivity extends BaseActivity {
     private int pageNo = 1;
     private int totalPage = -1;
     private int pageSize = 10;
+
+    private String oldDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +75,12 @@ public class MySalaryListActivity extends BaseActivity {
         recyclerSwipeLayout.createAdapter(R.layout.list_salary_item);
         recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
         recyclerSwipeLayout.setXCallBack(callBack);
-        salaryDate.setText(DATE_ARRAYS[0]);
+        salaryDate.setText(DATE_ARRAYS[1]);
         requestHistory(salaryDate.getText().toString());
     }
 
     private void requestHistory(String date) {
+        oldDate = date;
         Map<String, String> params = new HashMap<String, String>();
         params.put("pageNum", pageNo + "");
         params.put("pageSize", pageSize + "");
@@ -98,8 +101,8 @@ public class MySalaryListActivity extends BaseActivity {
                             }
                             return;
                         }
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
-                        recyclerSwipeLayout.loadComplete();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -142,11 +145,30 @@ public class MySalaryListActivity extends BaseActivity {
                     Intent detail = new Intent();
                     detail.setClass(MySalaryListActivity.this, MySalaryListDetailActivity.class);
                     detail.putExtra("id", si.getId());
-                    startActivity(detail);
+                    detail.putExtra("salary", si.getSalary());
+                    detail.putExtra("factMoney", si.getFactMoney());
+                    detail.putExtra("workHours", si.getWorkHours());
+                    detail.putExtra("buckleMoney", si.getBuckleMoney());
+                    detail.putExtra("rewardMoney", si.getRewardMoney());
+                    detail.putExtra("buckleDetails", si.getBuckleDetails());
+                    detail.putExtra("wagesTitle", si.getWagesTitle());
+                    detail.putExtra("complain", si.getComplain());
+                    startActivityForResult(detail, 12);
                 }
             });
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 12 && resultCode == RESULT_OK) {
+            pageNo = 1;
+            totalPage = -1;
+            recyclerSwipeLayout.setNewData(new ArrayList<MySalaryHistoryResponse.SalaryInfo>());
+            requestHistory(oldDate);
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -161,7 +183,7 @@ public class MySalaryListActivity extends BaseActivity {
             public void OkDown(Object score) {
                 int position = (int) score;
                 String temp = salaryDate.getText().toString();
-                if(temp.equals(DATE_ARRAYS[position])){
+                if (temp.equals(DATE_ARRAYS[position])) {
                     return;
                 }
                 salaryDate.setText(DATE_ARRAYS[position]);

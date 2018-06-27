@@ -95,6 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="更换"
+            android:visibility="invisible"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/font_small" />
 
@@ -120,7 +121,7 @@
             android:id="@+id/broker_truename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="张三"
+            android:text=""
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_small" />
 
@@ -133,7 +134,7 @@
             android:id="@+id/broker_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="430********025466431"
+            android:text=""
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_small" />
 

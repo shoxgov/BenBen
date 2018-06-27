@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.benben.bb.MyApplication;
 import com.benben.bb.okhttp3.response.LoginResponse;
+import com.benben.bb.okhttp3.response.UserInfomation;
 
 /**
  * Created by wangshengyin on 2017-03-15.
@@ -20,6 +21,9 @@ public class UserData {
     }
 
     public static AccountInfoData getUserData() {
+        if (MyApplication.userData == null) {
+            return new AccountInfoData();
+        }
         return MyApplication.userData;
     }
 
@@ -28,77 +32,84 @@ public class UserData {
         if (lr == null) {
             return;
         }
-        AccountInfoData userInfoData = new AccountInfoData();
         if (!TextUtils.isEmpty(lr.getData().getToken())) {
-            userInfoData.setToken(lr.getData().getToken());
+            getUserData().setToken(lr.getData().getToken());
         }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getAvatar())) {
-            userInfoData.setAvatar(lr.getData().getUser().getAvatar());
-        }
-        if (lr.getData().getUser().getId() > 0) {
-            userInfoData.setId(lr.getData().getUser().getId());
-        }
-        userInfoData.setStudyStatus(lr.getData().getUser().getStudyStatus());
-        userInfoData.setSex(lr.getData().getUser().getSex());
-        userInfoData.setBalance(lr.getData().getUser().getBalance());
-        userInfoData.setIsAgent(lr.getData().getUser().getIsAgent());
-        userInfoData.setIsCompany(lr.getData().getUser().getIsCompany());
-        userInfoData.setValidateStatus(lr.getData().getUser().getValidateStatus());
-        userInfoData.setWalletStatus(lr.getData().getUser().getWalletStatus());
-        if (!TextUtils.isEmpty(lr.getData().getUser().getBenbenNum())) {
-            userInfoData.setBenbenNum(lr.getData().getUser().getBenbenNum());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getSignature())) {
-            userInfoData.setSignature(lr.getData().getUser().getSignature());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getNation())) {
-            userInfoData.setNation(lr.getData().getUser().getNation());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getMajor())) {
-            userInfoData.setMajor(lr.getData().getUser().getMajor());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getEducation())) {
-            userInfoData.setEducation(lr.getData().getUser().getEducation());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getAge())) {
-            userInfoData.setAge(lr.getData().getUser().getAge());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getRegion())) {
-            userInfoData.setRegion(lr.getData().getUser().getRegion());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getUserName())) {
-            userInfoData.setUserName(lr.getData().getUser().getUserName());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getNickName())) {
-            userInfoData.setNickName(lr.getData().getUser().getNickName());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getTrueName())) {
-            userInfoData.setTrueName(lr.getData().getUser().getTrueName());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getFinishSchool())) {
-            userInfoData.setFinishSchool(lr.getData().getUser().getFinishSchool());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getIdcardZheng())) {
-            userInfoData.setIdcardZheng(lr.getData().getUser().getIdcardZheng());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getIdcardFan())) {
-            userInfoData.setIdcardFan(lr.getData().getUser().getIdcardFan());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getIdentityCard())) {
-            userInfoData.setIdentityCard(lr.getData().getUser().getIdentityCard());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getBindingPaytype())) {
-            userInfoData.setBindingPaytype(lr.getData().getUser().getBindingPaytype());
-        }
-        if (!TextUtils.isEmpty(lr.getData().getUser().getBindingPayAccount())) {
-            userInfoData.setBindingPayAccount(lr.getData().getUser().getBindingPayAccount());
-        }
+        updateUserInfo(lr.getData().getUser());
         ///////////////////////////////////
         //save to local
         //////////////////////////////////
-        MyApplication.userData = userInfoData;
+
     }
 
-//    public static void restoreUserInfo() {
-//    }
+    public static void updateUserInfo(UserInfomation ui) {
+        if (ui == null) {
+            return;
+        }
+        if (!TextUtils.isEmpty(ui.getAvatar())) {
+            getUserData().setAvatar(ui.getAvatar());
+        }
+        if (ui.getId() > 0) {
+            getUserData().setId(ui.getId());
+        }
+        getUserData().setStudyStatus(ui.getStudyStatus());
+        getUserData().setSex(ui.getSex());
+        getUserData().setBalance(ui.getBalance());
+        getUserData().setIsAgent(ui.getIsAgent());
+        getUserData().setIsCompany(ui.getIsCompany());
+        getUserData().setValidateStatus(ui.getValidateStatus());
+        getUserData().setWalletStatus(ui.getWalletStatus());
+        if (!TextUtils.isEmpty(ui.getPassWord())) {
+            getUserData().setPassWord(ui.getPassWord());
+        }
+        if (!TextUtils.isEmpty(ui.getBenbenNum())) {
+            getUserData().setBenbenNum(ui.getBenbenNum());
+        }
+        if (!TextUtils.isEmpty(ui.getSignature())) {
+            getUserData().setSignature(ui.getSignature());
+        }
+        if (!TextUtils.isEmpty(ui.getNation())) {
+            getUserData().setNation(ui.getNation());
+        }
+        if (!TextUtils.isEmpty(ui.getMajor())) {
+            getUserData().setMajor(ui.getMajor());
+        }
+        if (!TextUtils.isEmpty(ui.getEducation())) {
+            getUserData().setEducation(ui.getEducation());
+        }
+        if (!TextUtils.isEmpty(ui.getAge())) {
+            getUserData().setAge(ui.getAge());
+        }
+        if (!TextUtils.isEmpty(ui.getRegion())) {
+            getUserData().setRegion(ui.getRegion());
+        }
+        if (!TextUtils.isEmpty(ui.getUserName())) {
+            getUserData().setUserName(ui.getUserName());
+        }
+        if (!TextUtils.isEmpty(ui.getNickName())) {
+            getUserData().setNickName(ui.getNickName());
+        }
+        if (!TextUtils.isEmpty(ui.getTrueName())) {
+            getUserData().setTrueName(ui.getTrueName());
+        }
+        if (!TextUtils.isEmpty(ui.getFinishSchool())) {
+            getUserData().setFinishSchool(ui.getFinishSchool());
+        }
+        if (!TextUtils.isEmpty(ui.getIdcardZheng())) {
+            getUserData().setIdcardZheng(ui.getIdcardZheng());
+        }
+        if (!TextUtils.isEmpty(ui.getIdcardFan())) {
+            getUserData().setIdcardFan(ui.getIdcardFan());
+        }
+        if (!TextUtils.isEmpty(ui.getIdentityCard())) {
+            getUserData().setIdentityCard(ui.getIdentityCard());
+        }
+        if (!TextUtils.isEmpty(ui.getBindingPaytype())) {
+            getUserData().setBindingPaytype(ui.getBindingPaytype());
+        }
+        if (!TextUtils.isEmpty(ui.getBindingPayAccount())) {
+            getUserData().setBindingPayAccount(ui.getBindingPayAccount());
+        }
+    }
+
 }

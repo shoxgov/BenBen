@@ -9,12 +9,12 @@
 
     <com.benben.bb.view.TitleBar
         android:layout_width="match_parent"
-        app:titleTextColor="@color/white"
         android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dip" />
+        android:layout_height="1dip"
+        android:background="@color/mainbg" />
 
     <ProgressBar
         android:id="@+id/progressBar1"

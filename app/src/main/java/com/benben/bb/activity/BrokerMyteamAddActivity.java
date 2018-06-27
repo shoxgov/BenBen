@@ -128,9 +128,13 @@ public class BrokerMyteamAddActivity extends BaseActivity {
         if (Utils.isFastDoubleClick()) {
             return;
         }
+        List<AddAgentListResponse.AgentInfo> tempData = adapter.getData();
+        if(tempData == null){
+            ToastUtil.showText("当前无可添加人员");
+            return;
+        }
         String userIds = "";
         String selectedTag = adapter.getSelectedTag();
-        List<AddAgentListResponse.AgentInfo> tempData = adapter.getData();
         int count = 0;
         for (AddAgentListResponse.AgentInfo epi : tempData) {
             if (selectedTag.contains("#" + epi.getUserId() + "@")) {

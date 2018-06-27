@@ -2,8 +2,8 @@
 <resources>
     　　
     <array name="search_type_updown">
-        <item>升</item>
-        <item>降</item>
+        <item>工资升序</item>
+        <item>工资降序</item>
     </array>
     <array name="broker_myres_signuping_status">
         <item>未入职</item>

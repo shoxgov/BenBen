@@ -75,6 +75,34 @@
         android:layout_marginTop="1dip"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:padding="10dip">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="户主"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <EditText
+            android:id="@+id/bank_add_account_truename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:enabled="false"
+            android:text=""
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dip"
+        android:background="@color/white"
+        android:orientation="horizontal"
         android:padding="10dip"
         android:visibility="gone">
 

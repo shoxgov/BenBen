@@ -20,6 +20,7 @@ import com.benben.bb.utils.GlideImageLoader;
 import com.benben.bb.utils.ImageUtils;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.ToastUtil;
+import com.benben.bb.utils.Utils;
 import com.benben.bb.view.TitleBar;
 import com.bumptech.glide.Glide;
 import com.lzy.imagepicker.ImagePicker;
@@ -233,7 +234,9 @@ public class RealNameCertifyActivity extends BaseActivity {
                     public void onSuccess(BaseResponse baseResponse) {
                         super.onSuccess(baseResponse);
                         if (baseResponse.getCode() == 1) {
-                            ToastUtil.showText(baseResponse.getMessage());
+                            ToastUtil.showText("申请成功");
+                            Utils.updateUserInfomation();
+//                            UserData.getUserData().setValidateStatus(3);//validateStatus 0未认证1已通过2认证失败3认证中
                             setResult(RESULT_OK);
                             finish();
                         } else {

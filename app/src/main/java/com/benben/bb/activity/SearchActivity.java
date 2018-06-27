@@ -21,6 +21,7 @@ import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.SearchResultResponse;
 import com.benben.bb.utils.DateUtils;
 import com.benben.bb.utils.ToastUtil;
+import com.benben.bb.utils.Utils;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
 import com.benben.bb.view.SpinerPopWindow;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -127,6 +128,7 @@ public class SearchActivity extends BaseActivity {
                         recyclerSwipeLayout.setEmpty();
                         return;
                     }
+                    recyclerSwipeLayout.openLoadMore(totalPage);
                     recyclerSwipeLayout.addData(srr.getData().getList());
                 }
             }
@@ -157,8 +159,9 @@ public class SearchActivity extends BaseActivity {
             if (pageNo < totalPage) {
                 pageNo++;
                 requestSearchKey(oldKey, oldUpdown);
+            } else {
+                recyclerSwipeLayout.loadComplete();
             }
-            recyclerSwipeLayout.loadComplete();
         }
     };
 
@@ -168,17 +171,19 @@ public class SearchActivity extends BaseActivity {
         public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
             final SearchResultResponse.RecruitInfo ri = (SearchResultResponse.RecruitInfo) itemModel;
             baseViewHolder.setText(R.id.employ_job_name, ri.getPositionName());
-            baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
             baseViewHolder.setText(R.id.employ_job_welfare, ri.getWelfare().replace(",", "|"));
             baseViewHolder.setText(R.id.employ_job_count, Html.fromHtml("报名：<font color=#FD7979>" + ri.getEnrollNum() + "/" + ri.getHiringCount() + "</font>(还剩<font color=#FD7979>" + DateUtils.dateDiffToday(ri.getEndTime()) + "</font>天)"));
             baseViewHolder.setText(R.id.employ_job_addr, "工作地点：" + ri.getRegion());
-            int isAgent = UserData.getUserData().getIsAgent();
-            if (isAgent > 0 && isAgent < 88) {
+            if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
                 baseViewHolder.setVisible(R.id.employ_job_broker_layout, true);
-                baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
                 baseViewHolder.setText(R.id.employ_job_broker_price, ri.getCommision() + "元/小时");
-            } else {
+                baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
+            } else if (UserData.getUserData().getIsCompany() > 0 && UserData.getUserData().getIsCompany() < 88) {
                 baseViewHolder.setVisible(R.id.employ_job_broker_layout, false);
+                baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
+            } else {//普通用户
+                baseViewHolder.setVisible(R.id.employ_job_broker_layout, false);
+                baseViewHolder.setText(R.id.employ_job_price, ri.getFocusSalary() + "元/月");
             }
             baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -193,13 +198,13 @@ public class SearchActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.search_ok, R.id.search_bar_updown})
+    @OnClick({R.id.search_ok, R.id.search_bar_updown, R.id.search_bar_qzone, R.id.search_bar_category})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.search_ok:
                 String temp = keyEdit.getText().toString();
                 if (TextUtils.isEmpty(temp)) {
-                    ToastUtil.showText("请输入关键词");
+                    ToastUtil.showText("请输入职位");
                     return;
                 }
                 if (temp.equals(oldKey)) {
@@ -211,12 +216,19 @@ public class SearchActivity extends BaseActivity {
                 totalPage = -1;
                 recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
                 requestSearchKey(temp, 0);
+                Utils.closeInputMethod(this);
                 break;
 
             case R.id.search_bar_updown:
                 mSpinerPopWindow.setWidth(updownSp.getWidth());
                 mSpinerPopWindow.showAsDropDown(updownSp);
 //                setTextImage(R.drawable.icon_up);
+                break;
+            case R.id.search_bar_qzone:
+                ToastUtil.showText("暂不支持地区选择");
+                break;
+            case R.id.search_bar_category:
+                ToastUtil.showText("暂不支持行业分类");
                 break;
         }
     }

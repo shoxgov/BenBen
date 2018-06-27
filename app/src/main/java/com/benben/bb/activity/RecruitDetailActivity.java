@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
@@ -26,6 +27,7 @@ import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.CompanyRecruitResponse;
 import com.benben.bb.share.AndroidShare;
+import com.benben.bb.share.Defaultcontent;
 import com.benben.bb.share.ShareStyle;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.ToastUtil;
@@ -48,6 +50,8 @@ import butterknife.OnClick;
 public class RecruitDetailActivity extends BaseActivity {
     @Bind(R.id.webview)
     WebView webView;
+    @Bind(R.id.recruit_detail_agentsignup)
+    TextView agentSignup;
 
     private String url;
     /**
@@ -61,7 +65,6 @@ public class RecruitDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit_detail);
         ButterKnife.bind(this);
-        init();
         //H5 职位详情   http://ip或域名/show?id=职位ID
         positionId = getIntent().getIntExtra("positionId", 0);
         positionName = getIntent().getStringExtra("positionName");
@@ -81,6 +84,9 @@ public class RecruitDetailActivity extends BaseActivity {
         LogUtil.d("WebActivity url= " + url);
         initWebview();
         init();
+        if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
+            agentSignup.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -187,7 +193,7 @@ public class RecruitDetailActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.recruit_detail_signup, R.id.recruit_detail_share})
+    @OnClick({R.id.recruit_detail_signup, R.id.recruit_detail_share, R.id.recruit_detail_agentsignup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.recruit_detail_signup:
@@ -195,63 +201,74 @@ public class RecruitDetailActivity extends BaseActivity {
                     ToastUtil.showText("未实名认证用户不能报名");
                     return;
                 }
-                int agent = UserData.getUserData().getIsAgent();
-                if (agent > 0 && agent < 88) {//是就业顾问
-                    Intent intent = new Intent();
-                    intent.setClass(RecruitDetailActivity.this, BrokerSignupActivity.class);
-                    intent.putExtra("positionId", positionId);
-                    intent.putExtra("positionName", positionName);
-                    startActivity(intent);
-                } else {//非就业顾问
-                    SignupDialog signupDialog = new SignupDialog(this, new DialogCallBack() {
-                        @Override
-                        public void OkDown(Object score) {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("positionId", positionId + "");//职位ID
-                            params.put("positionName", positionName);//职位
-                            params.put("code", "2");//1经纪人报名2自主报名
-                            params.put("userIds", UserData.getUserData().getId() + "");//用户ID逗号分隔
-                            OkHttpUtils.getAsyn(NetWorkConfig.USER_SIGNUP_EVENT, params, BaseResponse.class, new HttpCallback() {
-                                @Override
-                                public void onSuccess(BaseResponse br) {
-                                    super.onSuccess(br);
-                                    try {
-                                        if (br.getCode() == 1) {
-                                            SignupSuccessDialog signupSucDialog = new SignupSuccessDialog(RecruitDetailActivity.this, new DialogCallBack() {
-                                                @Override
-                                                public void OkDown(Object score) {
-
-                                                }
-
-                                                @Override
-                                                public void CancleDown() {
-
-                                                }
-                                            });
-                                            signupSucDialog.show();
-                                        } else {
-                                            ToastUtil.showText(br.getMessage());
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(int code, String message) {
-                                    super.onFailure(code, message);
-                                    ToastUtil.showText(message);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void CancleDown() {
-
-                        }
-                    });
-                    signupDialog.show();
+                if (UserData.getUserData().getIsCompany() == 1) {
+                    ToastUtil.showText("企业用户不能报名");
+                    return;
                 }
+                SignupDialog signupDialog = new SignupDialog(this, new DialogCallBack() {
+                    @Override
+                    public void OkDown(Object score) {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("positionId", positionId + "");//职位ID
+                        params.put("positionName", positionName);//职位
+                        params.put("code", "2");//1经纪人报名2自主报名
+                        params.put("userIds", UserData.getUserData().getId() + "");//用户ID逗号分隔
+                        OkHttpUtils.getAsyn(NetWorkConfig.USER_SIGNUP_EVENT, params, BaseResponse.class, new HttpCallback() {
+                            @Override
+                            public void onSuccess(BaseResponse br) {
+                                super.onSuccess(br);
+                                try {
+                                    if (br.getCode() == 1) {
+                                        SignupSuccessDialog signupSucDialog = new SignupSuccessDialog(RecruitDetailActivity.this, new DialogCallBack() {
+                                            @Override
+                                            public void OkDown(Object score) {
+
+                                            }
+
+                                            @Override
+                                            public void CancleDown() {
+
+                                            }
+                                        });
+                                        signupSucDialog.show();
+                                    } else {
+                                        ToastUtil.showText(br.getMessage());
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int code, String message) {
+                                super.onFailure(code, message);
+                                ToastUtil.showText(message);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void CancleDown() {
+
+                    }
+                });
+                signupDialog.show();
+                break;
+
+            case R.id.recruit_detail_agentsignup:
+                if (UserData.getUserData().getValidateStatus() != 1) {//validateStatus 0未认证1已通过2认证失败3认证中
+                    ToastUtil.showText("未实名认证用户不能报名");
+                    return;
+                }
+                if (UserData.getUserData().getIsCompany() == 1) {
+                    ToastUtil.showText("企业用户不能报名");
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.setClass(RecruitDetailActivity.this, BrokerSignupActivity.class);
+                intent.putExtra("positionId", positionId);
+                intent.putExtra("positionName", positionName);
+                startActivity(intent);
                 break;
             case R.id.recruit_detail_share:
                 Intent share = new Intent();
@@ -259,8 +276,8 @@ public class RecruitDetailActivity extends BaseActivity {
                 share.putExtra("text", "犇犇分享！");
                 share.putExtra("type", ShareStyle.ShareType.WEB.ordinal());
                 share.putExtra("url", url);
-                share.putExtra("title", "犇犇智慧教育平台");
-                share.putExtra("description", "求职者，就业指导，劳务人力资源公司以及用工企业四方共享资源，共享信息，共享服务的移动互联网平台");
+                share.putExtra("title", "一款好工作会赚钱的APP-职犇犇");
+                share.putExtra("description", Defaultcontent.description);
                 startActivity(share);
                 break;
         }

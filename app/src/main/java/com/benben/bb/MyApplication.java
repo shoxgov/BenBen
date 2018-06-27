@@ -104,7 +104,7 @@ public class MyApplication extends Application {
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
         //各个平台的配置，建议放在全局Application或者程序入口
-        PlatformConfig.setWeixin("wx6ab0128193e89c8e", "a3a2dfd2c643125f2c10565c34fd3d8d");//微信后台注册签名：cf571acd59eb69c09ce7dd690e3d7ca5
+        PlatformConfig.setWeixin("wx6ab0128193e89c8e", "558efcac898b14264f0bf7abf635f1de");//微信后台注册签名：
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("1541150674", "3c48508f14a4f92f84c667538ffc9384", "http://sns.whalecloud.com/sina2/callback");
 //        Config.REDIRECT_URL="http://sns.whalecloud.com/sina2/callback";

@@ -187,7 +187,7 @@ public class BrokerSignupActivity extends BaseActivity {
                         SignupSuccessDialog signupSucDialog = new SignupSuccessDialog(BrokerSignupActivity.this, new DialogCallBack() {
                             @Override
                             public void OkDown(Object score) {
-
+                                finish();
                             }
 
                             @Override

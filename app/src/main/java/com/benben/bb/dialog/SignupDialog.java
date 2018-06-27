@@ -20,7 +20,7 @@ public class SignupDialog extends Dialog implements OnClickListener {
 
 
     public SignupDialog(Context context, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.dialogcallback = dialogcallback;
     }
 

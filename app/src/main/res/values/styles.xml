@@ -6,8 +6,23 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/Animation_Activity_RightInRightOut</item>
     </style>
+    <!-- 用于普通的Activity -->
+    <style name="Animation_Activity_RightInRightOut" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/rightin</item>
+        <item name="android:activityCloseEnterAnimation">@anim/leftin</item>
 
+        <item name="android:activityOpenExitAnimation">@anim/leftout</item>
+        <item name="android:activityCloseExitAnimation">@anim/rightout</item>
+    </style>
+    <!-- 另一种实现方法，只不过这个指定activity相关的window的animation（上面是Activity的animation） -->
+    <style name="Animation_Activity_RightInRightOut1" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/rightin</item>
+        <item name="android:windowExitAnimation">@anim/rightout</item>
+        <item name="android:windowHideAnimation">@anim/leftout</item>
+        <item name="android:windowShowAnimation">@anim/leftin</item>
+    </style>
     <!-- 自定义loading动画 -->
     <style name="custom_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

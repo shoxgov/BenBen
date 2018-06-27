@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dip"
                 android:background="@null"
-                android:hint="输入搜索关键字"
+                android:hint="输入搜索职位"
                 android:singleLine="true"
                 android:textColor="#8c8d91" />
 
@@ -72,13 +72,14 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/search_bar_qzone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dip"
                 android:drawableRight="@mipmap/down_arrow"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="地区"
+                android:text="全国"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_normal" />
         </LinearLayout>
@@ -90,6 +91,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/search_bar_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dip"

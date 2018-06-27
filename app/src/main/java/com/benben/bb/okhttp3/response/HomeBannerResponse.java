@@ -22,10 +22,11 @@ public class HomeBannerResponse extends BaseResponse {
         this.data = data;
     }
 
-    public class BannerInfo{
+    public class BannerInfo {
         private String href;
         private String pic;
         private String title;
+        private String positionName;
 
         public String getHref() {
             return href;
@@ -49,6 +50,14 @@ public class HomeBannerResponse extends BaseResponse {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getPositionName() {
+            return positionName;
+        }
+
+        public void setPositionName(String positionName) {
+            this.positionName = positionName;
         }
     }
 

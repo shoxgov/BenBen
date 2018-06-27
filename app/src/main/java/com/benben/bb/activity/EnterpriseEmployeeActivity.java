@@ -99,6 +99,7 @@ public class EnterpriseEmployeeActivity extends BaseActivity {
                             return;
                         }
                         List<CompanyEmployeeResponse.EmployeeInfo> temp = mar.getData().getList();
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
                     }
                 } catch (Exception e) {

@@ -12,6 +12,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -135,6 +136,14 @@ public class WebActivity extends BaseActivity {
                 Toast.makeText(WebActivity.this, "网页加载出错!", Toast.LENGTH_LONG).show();
                 DialogUtil.hideDialogLoading();
                 super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                //拦截垃圾电信运营商的广告方法  关键代码
+                if (!url.contains("zhibenben")) {
+                    return new WebResourceResponse(null, null, null);
+                }
+                return super.shouldInterceptRequest(view, url);
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {

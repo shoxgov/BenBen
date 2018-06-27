@@ -113,7 +113,7 @@ public class MySalaryHistoryResponse extends BaseResponse {
 
     public class SalaryInfo {
         private int id;
-        private int workHours;
+        private float workHours;
         private float buckleMoney;
         private float rewardMoney;
         private float factMoney;
@@ -135,11 +135,11 @@ public class MySalaryHistoryResponse extends BaseResponse {
             this.id = id;
         }
 
-        public int getWorkHours() {
+        public float getWorkHours() {
             return workHours;
         }
 
-        public void setWorkHours(int workHours) {
+        public void setWorkHours(float workHours) {
             this.workHours = workHours;
         }
 
@@ -238,6 +238,7 @@ public class MySalaryHistoryResponse extends BaseResponse {
         public void setWagesTitle(String wagesTitle) {
             this.wagesTitle = wagesTitle;
         }
+
     }
 
 }

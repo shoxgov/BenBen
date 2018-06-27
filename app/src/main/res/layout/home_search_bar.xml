@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dip"
-            android:text="搜索 学校、培训机构"
+            android:text="搜索职位"
             android:textColor="#8c8d91" />
 
     </LinearLayout>

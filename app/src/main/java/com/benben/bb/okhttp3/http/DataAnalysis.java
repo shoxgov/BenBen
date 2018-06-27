@@ -52,21 +52,29 @@ public class DataAnalysis {
     }
 
     /**
-     * @param result 请求返回字符串
+     * @param result 请求返回字符串 result={"code":1,"message":"工资核算详情List","data":null}
      * @Description 返回数据解析
      */
     public static BaseResponse getReturnData(String result, Class baseResponseClass) {
         BaseResponse resultDesc = null;
-        if (StringUtil.isEmpty(result)) {
-            //返回数据为空
-            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results));
-            return resultDesc;
-        }
+        System.out.println("BENBEN result=" + result);
         try {
-            System.out.println("BENBEN result=" + result);
+            if (StringUtil.isEmpty(result)) {
+                //返回数据为空
+//                resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results));
+                String error = "{\"code\":-1,\"message\":\"数据返回为空\"}";
+                resultDesc = (BaseResponse) HttpJsonAdapter.getInstance().get(error, baseResponseClass);
+                return resultDesc;
+            }
             resultDesc = (BaseResponse) HttpJsonAdapter.getInstance().get(result, baseResponseClass);
         } catch (Exception e) {
-            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_parse_exception));
+            e.printStackTrace();
+            String error = "{\"code\":-1,\"message\":\"数据解析异常\"}";
+            try {
+                resultDesc = (BaseResponse) HttpJsonAdapter.getInstance().get(error, baseResponseClass);
+            } catch (Exception e2) {
+                resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_parse_exception));
+            }
         }
         return resultDesc;
     }

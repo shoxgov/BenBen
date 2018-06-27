@@ -185,18 +185,22 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
                     if (categoryList != null && !categoryList.isEmpty()) {
                         category = findCategoryName(cir.getData().getCategoriesId());
                     }
-                    infoHint.setText(cir.getData().getCompanyAddr() + "    " + category);
+                    infoHint.setText(cir.getData().getCompanyAddr() + " | " + category);
                     String cpSize = "";
                     if (scaleList != null && !scaleList.isEmpty()) {
-                        cpSize = scaleList.get(cir.getData().getCompanySize()).getName();
+                        selectScale = scaleList.get(cir.getData().getCompanySize() - 1);
+                        cpSize = selectScale.getName();
                     }
                     infoSize.setText(cpSize);
                     String cpNature = "";
                     if (natureList != null && !natureList.isEmpty()) {
-                        cpNature = natureList.get(cir.getData().getCompanyNature()).getName();
+                        selectNature = natureList.get(cir.getData().getCompanyNature() - 1);
+                        cpNature = selectNature.getName();
                     }
                     infoNature.setText(cpNature);
-                    infoIntroduction.setText(cir.getData().getIntroduction() + "");
+                    if (!TextUtils.isEmpty(cir.getData().getIntroduction())) {
+                        infoIntroduction.setText(cir.getData().getIntroduction() + "");
+                    }
                 }
             }
 
@@ -333,7 +337,7 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
                 params.put("companyNature", selectNature.getId() + "");
                 params.put("companySize", selectScale.getId() + "");
                 params.put("introduction", tempIntr);
-                params.put("id", companyId+"");
+                params.put("id", companyId + "");
                 String filekey = "file";
                 List<File> files = new ArrayList<>();
                 if (pics != null && !pics.isEmpty()) {

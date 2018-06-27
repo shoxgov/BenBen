@@ -2,7 +2,9 @@ package com.benben.bb.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,6 +128,39 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
         if (positionId > 0) {
             requestRecruitDetail();
         }
+        salaryhourEdit.addTextChangedListener(new MyTextWatcher());
+        daysEdit.addTextChangedListener(new MyTextWatcher());
+        hoursEdit.addTextChangedListener(new MyTextWatcher());
+    }
+
+    class MyTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                float pp = Float.parseFloat(s.toString());
+                if (pp <= 0) {
+                    return;
+                }
+                float salary = Float.parseFloat(salaryhourEdit.getText().toString());
+                float day = Float.parseFloat(daysEdit.getText().toString());
+                float hour = Float.parseFloat(hoursEdit.getText().toString());
+                totalsalaryEdit.setText(salary * day * hour + "");
+            } catch (Exception e) {
+                e.printStackTrace();
+                totalsalaryEdit.setText("0");
+            }
+        }
     }
 
     private void requestRecruitDetail() {
@@ -141,15 +176,19 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
                         positionNameEdit.setText(crdr.getData().getPositionName());
                         peopleNumEdit.setText(crdr.getData().getHiringCount() + "");
                         addrTv.setText(crdr.getData().getRegion());
-                        endtimeEdit.setText(crdr.getData().getEndTime());
+                        if (crdr.getData().getEndTime().contains(" ")) {
+                            endtimeEdit.setText(crdr.getData().getEndTime().split(" ")[0]);
+                        } else {
+                            endtimeEdit.setText(crdr.getData().getEndTime());
+                        }
                         salaryhourEdit.setText(crdr.getData().getSalary() + "");
                         workhourEdit.setText(crdr.getData().getDayworkHour() + "");
                         commissionhourEdit.setText(crdr.getData().getCommision() + "");
                         remarksEdit.setText(crdr.getData().getSupplement());
                         inteviewEdit.setText(crdr.getData().getJobDemand());
                         totalsalaryEdit.setText(crdr.getData().getFocusSalary());
-                        daysEdit.setText(crdr.getData().getMonthworkDay()+"");
-                        hoursEdit.setText(crdr.getData().getDayworkHour()+"");
+                        daysEdit.setText(crdr.getData().getMonthworkDay() + "");
+                        hoursEdit.setText(crdr.getData().getDayworkHour() + "");
                         String houseImg = crdr.getData().getHouseImg();
                         if (TextUtils.isEmpty(houseImg)) {
                             return;
@@ -275,8 +314,7 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
                 String remark = remarksEdit.getText().toString();
                 String interview = inteviewEdit.getText().toString();
                 if (TextUtils.isEmpty(pName) || TextUtils.isEmpty(pNum) || TextUtils.isEmpty(addr) || TextUtils.isEmpty(endTime) || TextUtils.isEmpty(salary) ||
-                        TextUtils.isEmpty(workH) || TextUtils.isEmpty(commission) || TextUtils.isEmpty(total) || TextUtils.isEmpty(monthDay) || TextUtils.isEmpty(dayHour) ||
-                        TextUtils.isEmpty(remark) || TextUtils.isEmpty(interview)) {
+                        TextUtils.isEmpty(workH) || TextUtils.isEmpty(commission) || TextUtils.isEmpty(total) || TextUtils.isEmpty(monthDay) || TextUtils.isEmpty(dayHour)) {
                     ToastUtil.showText("请完善信息");
                     return;
                 }
@@ -293,16 +331,17 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
                     files = null;
                     filekey = "";
                 }
+                StringBuffer welfare = new StringBuffer("");
                 if (tagSelect.isEmpty()) {
-                    ToastUtil.showText("请选择福利");
-                    return;
-                }
-                StringBuffer welfare = new StringBuffer();
-                for (String s : tagSelect) {
-                    if (TextUtils.isEmpty(welfare)) {
-                        welfare.append(s);
-                    } else {
-                        welfare.append(",").append(s);
+//                    ToastUtil.showText("请选择福利");
+//                    return;
+                } else {
+                    for (String s : tagSelect) {
+                        if (TextUtils.isEmpty(welfare)) {
+                            welfare.append(s);
+                        } else {
+                            welfare.append(",").append(s);
+                        }
                     }
                 }
                 Map<String, String> params = new HashMap<String, String>();
@@ -310,7 +349,7 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
                     params.put("id", positionId + "");
                 }
                 params.put("positionName", pName);
-                params.put("enrollNum", pNum);
+                params.put("hiringCount", pNum);
                 params.put("region", addr);
                 params.put("welfare", welfare.toString());
                 params.put("endTime", endTime);
@@ -324,10 +363,10 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
                 params.put("jobDemand", interview);
                 OkHttpUtils.postAsynFiles(NetWorkConfig.COMPANY_RECRUIT_ADD, filekey, files, params, BaseResponse.class, new HttpCallback() {
                     @Override
-                    public void onSuccess(BaseResponse baseResponse) {
-                        super.onSuccess(baseResponse);
-                        ToastUtil.showText(baseResponse.getMessage());
-                        if (baseResponse.getCode() == 1) {
+                    public void onSuccess(BaseResponse br) {
+                        super.onSuccess(br);
+                        ToastUtil.showText(br.getMessage());
+                        if (br.getCode() == 1) {
                             setResult(RESULT_OK);
                             finish();
                         }

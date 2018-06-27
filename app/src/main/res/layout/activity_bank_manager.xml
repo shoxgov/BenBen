@@ -26,7 +26,7 @@
             android:id="@+id/bank_manager_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xta dg "
+            android:text=""
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_normal" />
 
@@ -37,7 +37,7 @@
             android:layout_below="@id/bank_manager_username"
             android:layout_marginTop="10dip"
             android:singleLine="true"
-            android:text="adsgal(sdl8945**34908590)"
+            android:text=""
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_normal" />
 
@@ -49,6 +49,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
             android:padding="3dip"
+            android:visibility="gone"
             android:text="解绑"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/font_small" />

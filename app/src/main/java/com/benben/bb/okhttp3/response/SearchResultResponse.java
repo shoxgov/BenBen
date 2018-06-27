@@ -133,6 +133,7 @@ public class SearchResultResponse extends BaseResponse {
         private int id;
         private float commision;
         private float salary;
+        private float focusSalary;
         private int hiringCount;
         private int enrollNum;
         private String positionName;
@@ -163,6 +164,14 @@ public class SearchResultResponse extends BaseResponse {
 
         public void setSalary(float salary) {
             this.salary = salary;
+        }
+
+        public float getFocusSalary() {
+            return focusSalary;
+        }
+
+        public void setFocusSalary(float focusSalary) {
+            this.focusSalary = focusSalary;
         }
 
         public int getHiringCount() {

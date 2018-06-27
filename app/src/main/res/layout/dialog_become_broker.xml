@@ -5,24 +5,47 @@
     android:background="@drawable/bg_white_radius_coner"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="15dip">
+    android:paddingBottom="15dip"
+    android:paddingTop="10dip">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:src="@mipmap/dialog_become_broker_bgicon" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:src="@mipmap/dialog_become_broker_bgicon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="认证成为就业顾问"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_large"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/showInfo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:gravity="center"
-        android:text="是否认证为就业顾问?"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="15dip"
+        android:gravity="left"
+        android:lineSpacingMultiplier="1.2"
+        android:text="1.免费认证
+通过【我的】-【二维码】-【分享】-成功邀请10位好友加入职犇犇
+2.收费认证
+缴纳认证费 200.00"
         android:textColor="@color/textblack"
-        android:textSize="@dimen/font_large"
-        android:textStyle="bold" />
+        android:textSize="@dimen/font_large" />
 
     <Button
         android:id="@+id/okBtn"
@@ -36,7 +59,7 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:singleLine="true"
-        android:text="确定"
+        android:text="提交申核"
         android:textColor="@color/white"
         android:textSize="@dimen/font_normal" />
 

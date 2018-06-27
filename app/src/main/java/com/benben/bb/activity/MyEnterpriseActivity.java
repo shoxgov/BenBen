@@ -127,7 +127,7 @@ public class MyEnterpriseActivity extends BaseActivity {
                     if (categoryList != null && !categoryList.isEmpty()) {
                         category = findCategoryName(cir.getData().getCategoriesId());
                     }
-                    categoryTv.setText(cir.getData().getCompanyAddr() + "    " + category);
+                    categoryTv.setText(cir.getData().getCompanyAddr() + " | " + category);
                 }
             }
 

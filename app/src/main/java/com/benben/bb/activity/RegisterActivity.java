@@ -2,6 +2,7 @@ package com.benben.bb.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -19,9 +20,11 @@ import android.widget.TextView;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
+import com.benben.bb.bean.UserData;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
+import com.benben.bb.okhttp3.response.LoginResponse;
 import com.benben.bb.okhttp3.response.SmsCodeResponse;
 import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.ToastUtil;
@@ -46,6 +49,8 @@ public class RegisterActivity extends BaseActivity {
     EditText telEdit;
     @Bind(R.id.register_msg_code_edit)
     EditText codeEdit;
+    @Bind(R.id.register_pwd)
+    EditText pwdEdit;
     @Bind(R.id.register_msg_code)
     TextView codeTv;
     @Bind(R.id.register_hint)
@@ -54,6 +59,8 @@ public class RegisterActivity extends BaseActivity {
     EditText inviteCodeEdit;
     @Bind(R.id.register_agreement_cb)
     CheckBox agreementCb;
+    @Bind(R.id.register_agreement_txt)
+    TextView agreementTxt;
     /**
      * 计数器
      */
@@ -78,6 +85,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void init() {
         hintTv.setText(Html.fromHtml("已有账户，<font color=#3b9cff>立即登录</font>"));
+        agreementTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         SpannableString spanableInfo = new SpannableString("已有账户，立即登录");
         spanableInfo.setSpan(new Clickable(clickListener), 5, 9, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         hintTv.setText(spanableInfo);
@@ -127,12 +135,19 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.register_clear, R.id.register_msg_code, R.id.register_ok})
+    @OnClick({R.id.register_clear, R.id.register_msg_code, R.id.register_ok, R.id.register_agreement_txt})
     public void onViewClicked(View view) {
         if (Utils.isFastDoubleClick()) {
             return;
         }
         switch (view.getId()) {
+            case R.id.register_agreement_txt:
+                Intent detail = new Intent();
+                detail.setClass(RegisterActivity.this, WebActivity.class);
+                detail.putExtra("url", NetWorkConfig.HTTP + "/agreement");
+                detail.putExtra("title", "注册协议");
+                startActivity(detail);
+                break;
             case R.id.register_clear:
                 telEdit.setText("");
                 break;
@@ -142,6 +157,7 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtil.showText("请输入手机号");
                     return;
                 }
+
                 if (!Utils.isMobliePhone(temp)) {
                     ToastUtil.showText("请输入合法的手机号");
                     return;
@@ -154,6 +170,15 @@ public class RegisterActivity extends BaseActivity {
                 codeTv.setEnabled(false);
                 break;
             case R.id.register_ok:
+                String pwd = pwdEdit.getText().toString();
+                if (TextUtils.isEmpty(pwd)) {
+                    ToastUtil.showText("请输入密码");
+                    return;
+                }
+                if (pwd.length() < 6 || pwd.length() > 20) {
+                    ToastUtil.showText("请输入长度6-20位密码");
+                    return;
+                }
                 if (TextUtils.isEmpty(telEdit.getText().toString())) {
                     ToastUtil.showText("请输入手机号");
                     return;
@@ -174,7 +199,7 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtil.showText("请同意用户协议");
                     return;
                 }
-                register(registerTel, registerCode, inviteCodeEdit.getText().toString());
+                register(registerTel, registerCode, Utils.getMd5(pwd), inviteCodeEdit.getText().toString());
                 break;
         }
     }
@@ -214,9 +239,12 @@ public class RegisterActivity extends BaseActivity {
                 super.onSuccess(br);
 //                "code":1, "message":"验证码已发送", "data":"1823"
                 SmsCodeResponse scr = (SmsCodeResponse) br;
+                ToastUtil.showText(scr.getMessage());
                 if (scr.getCode() == 1) {
                     registerTel = phone;
                     registerCode = scr.getData();
+                } else {
+                    resetAuthCodeButton();
                 }
             }
 
@@ -228,25 +256,59 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
-    private void register(String phone, final String loginCode, final String inviteCode) {
+    private void register(final String phone, final String loginCode, final String pwd, final String inviteCode) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phone);
         if (!TextUtils.isEmpty(inviteCode)) {
             params.put("userCode", inviteCode);//邀请码
         }
         params.put("regCode", loginCode);
+        params.put("passWord", pwd);
         PreferenceUtil.init(this);
         OkHttpUtils.getAsyn(NetWorkConfig.REGISTER, params, new HttpCallback() {
             @Override
-            public void onSuccess(BaseResponse resultDesc) {
-                super.onSuccess(resultDesc);
-                PreferenceUtil.commitString("LoginTel", registerTel);
-                PreferenceUtil.commitString("LoginCode", registerCode);
-                ToastUtil.showText("注册成功");
-                Intent i = new Intent();
-                i.setClass(RegisterActivity.this, LoginActivity.class);
-                startActivity(i);
-                finish();
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
+                if (br.getCode() == 1) {
+                    PreferenceUtil.commitString("LoginTel", phone);
+                    PreferenceUtil.commitString("passWord", pwd);
+                    ToastUtil.showText("注册成功");
+                    login(phone, pwd);
+                } else {
+                    ToastUtil.showText(br.getMessage());
+                }
+            }
+        });
+    }
+
+    private void login(final String phone, final String pwd) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("phone", phone);
+        params.put("passWord", pwd);
+        OkHttpUtils.getAsyn(NetWorkConfig.LOGIN, params, LoginResponse.class, new HttpCallback() {
+            @Override
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
+                try {
+                    LoginResponse lr = (LoginResponse) br;
+                    if (lr.getCode() == 1) {
+                        UserData.updateAccount(lr);
+                        Intent i = new Intent();
+                        i.setClass(RegisterActivity.this, MainFragmentActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        ToastUtil.showText(lr.getMessage());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
+                ToastUtil.showText(message);
             }
         });
     }

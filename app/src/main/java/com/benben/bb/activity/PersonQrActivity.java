@@ -12,6 +12,7 @@ import com.benben.bb.R;
 import com.benben.bb.bean.UserData;
 import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.share.AndroidShare;
+import com.benben.bb.share.Defaultcontent;
 import com.benben.bb.share.ShareStyle;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.TitleBar;
@@ -51,8 +52,8 @@ public class PersonQrActivity extends BaseActivity {
                 share.putExtra("text", "犇犇分享！");
                 share.putExtra("type", ShareStyle.ShareType.WEB.ordinal());
                 share.putExtra("url", shareUrl);
-                share.putExtra("title", "犇犇智慧教育平台");
-                share.putExtra("description", "求职者，就业指导，劳务人力资源公司以及用工企业四方共享资源，共享信息，共享服务的移动互联网平台");
+                share.putExtra("title", "一款好工作会赚钱的APP-职犇犇");
+                share.putExtra("description", Defaultcontent.description);
                 startActivity(share);
             }
 

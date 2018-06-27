@@ -101,6 +101,7 @@ public class BrokerBusinessStatisticsActivity extends BaseActivity {
                             recyclerSwipeLayout.setEmpty();
                             return;
                         }
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(bpr.getData().getList());
                     }
                 } catch (Exception e) {

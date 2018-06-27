@@ -14,24 +14,22 @@ import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.bean.UserData;
+import com.benben.bb.dialog.WarnDialog;
+import com.benben.bb.imp.DialogCallBack;
 import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.LoginResponse;
 import com.benben.bb.okhttp3.response.MyAgentsResponse;
-import com.benben.bb.utils.PreferenceUtil;
+import com.benben.bb.okhttp3.response.UserInfoResponse;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
-import com.benben.bb.view.RotateTransformation;
 import com.benben.bb.view.TitleBar;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,6 +123,7 @@ public class BrokerMyteamActivity extends BaseActivity implements View.OnClickLi
                         }
                         initStatus(false);
                         List<MyAgentsResponse.AgentInfo> temp = mar.getData().getList();
+                        recyclerSwipeLayout.openLoadMore(totalPage);
                         recyclerSwipeLayout.addData(temp);
                     }
                 } catch (Exception e) {
@@ -170,28 +169,38 @@ public class BrokerMyteamActivity extends BaseActivity implements View.OnClickLi
             cancelBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("userId", ai.getUserId() + "");
-                    OkHttpUtils.getAsyn(NetWorkConfig.BROKER_DEL_AGENTS, params, BaseResponse.class, new HttpCallback() {
+                    WarnDialog warnDialog = new WarnDialog(BrokerMyteamActivity.this, "确定删除该就业顾问？", new DialogCallBack() {
                         @Override
-                        public void onSuccess(BaseResponse br) {
-                            super.onSuccess(br);
-                            ToastUtil.showText(br.getMessage());
-                            if (br.getCode() == 1) {
-                                pageNo = 1;
-                                totalPage = -1;
-                                recyclerSwipeLayout.setNewData(new ArrayList<MyAgentsResponse.AgentInfo>());
-                                requestTeams();
-                            }
+                        public void OkDown(Object obj) {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("userId", ai.getUserId() + "");
+                            OkHttpUtils.getAsyn(NetWorkConfig.BROKER_DEL_AGENTS, params, BaseResponse.class, new HttpCallback() {
+                                @Override
+                                public void onSuccess(BaseResponse br) {
+                                    super.onSuccess(br);
+                                    ToastUtil.showText(br.getMessage());
+                                    if (br.getCode() == 1) {
+                                        pageNo = 1;
+                                        totalPage = -1;
+                                        recyclerSwipeLayout.setNewData(new ArrayList<MyAgentsResponse.AgentInfo>());
+                                        requestTeams();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int code, String message) {
+                                    super.onFailure(code, message);
+                                    ToastUtil.showText(message);
+                                }
+                            });
                         }
 
                         @Override
-                        public void onFailure(int code, String message) {
-                            super.onFailure(code, message);
-                            ToastUtil.showText(message);
+                        public void CancleDown() {
+
                         }
                     });
-
+                    warnDialog.show();
                 }
             });
         }
@@ -232,15 +241,15 @@ public class BrokerMyteamActivity extends BaseActivity implements View.OnClickLi
 
     private void updateUserInfo() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("phone", PreferenceUtil.getString("LoginTel", ""));
-        params.put("logCode", PreferenceUtil.getString("LoginCode", ""));
-        OkHttpUtils.getAsyn(NetWorkConfig.LOGIN, params, LoginResponse.class, new HttpCallback() {
+        params.put("id", UserData.getUserData().getId() + "");//id	用户ID
+        OkHttpUtils.getAsyn(NetWorkConfig.GET_USERINFO, params, UserInfoResponse.class, new HttpCallback() {
             @Override
-            public void onSuccess(BaseResponse resultDesc) {
-                super.onSuccess(resultDesc);
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
                 try {
-                    LoginResponse lr = (LoginResponse) resultDesc;
-                    UserData.updateAccount(lr);
+                    UserInfoResponse ui = (UserInfoResponse) br;
+                    UserData.updateUserInfo(ui.getData().getUser());
+                    UserData.getUserData().setToken(ui.getData().getToken());
                     requestTeams();
                 } catch (Exception e) {
                     e.printStackTrace();

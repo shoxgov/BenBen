@@ -115,8 +115,6 @@
                     android:id="@+id/my_person_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="5dip"
-                    android:drawableRight="@mipmap/person_benbenid"
                     android:gravity="right|center_vertical"
                     android:text=""
                     android:textColor="@color/textblack"

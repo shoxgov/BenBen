@@ -8,22 +8,30 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.benben.bb.MyApplication;
+import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.bean.UserData;
-import com.benben.bb.dialog.WarnDialog;
+import com.benben.bb.dialog.RealnameCertifyDialog;
 import com.benben.bb.fragment.EmployFragment;
 import com.benben.bb.fragment.FragmentFactory;
 import com.benben.bb.fragment.HomeFragment;
 import com.benben.bb.fragment.MessageFragment;
 import com.benben.bb.fragment.MyFragment;
 import com.benben.bb.imp.DialogCallBack;
+import com.benben.bb.okhttp3.http.HttpCallback;
+import com.benben.bb.okhttp3.http.OkHttpUtils;
+import com.benben.bb.okhttp3.response.BaseResponse;
+import com.benben.bb.okhttp3.response.LoginResponse;
 import com.benben.bb.service.MQService;
 import com.benben.bb.utils.LogUtil;
+import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,24 +61,57 @@ public class MainFragmentActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        LogUtil.d("MainFragmentActivity onCreate");
         setContentView(R.layout.activity_main);
+        PreferenceUtil.init(this);
         ButterKnife.bind(this);
         Utils.verifyStoragePermissions(this);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         MyApplication.screenWidthPixels = dm.widthPixels;
         MyApplication.screenHeightPixels = dm.heightPixels;
+
+        MyApplication app = (MyApplication) getApplication();
+        app.initLocation();
+        app.startBD();
+        judeFirst();
+        mFragmentManager = getSupportFragmentManager();
+        if (savedInstanceState == null) {
+            homeFragment = FragmentFactory.createFragment(FragmentFactory.F1);
+            selectFragment(homeFragment);
+            LogUtil.d("MainFragmentActivity savedInstanceState is  null");
+            startServer();
+        } else {
+            position = savedInstanceState.getInt("position");
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("phone", PreferenceUtil.getString("LoginTel", ""));
+            params.put("passWord", PreferenceUtil.getString("passWord", ""));
+            OkHttpUtils.getAsyn(NetWorkConfig.LOGIN, params, LoginResponse.class, new HttpCallback() {
+                @Override
+                public void onSuccess(BaseResponse br) {
+                    super.onSuccess(br);
+                    LoginResponse lr = (LoginResponse) br;
+                    if (lr.getCode() == 1) {
+                        UserData.updateAccount(lr);
+                    }
+                    preventOverlap();
+                }
+
+                @Override
+                public void onFailure(int code, String message) {
+                    super.onFailure(code, message);
+                    preventOverlap();
+                }
+            });
+        }
+    }
+
+    private void startServer() {
         Intent server = new Intent(getBaseContext(), MQService.class);
         server.putExtra("command", MQService.START_YUNIM);
         server.putExtra("openIm", UserData.getUserData().getBenbenNum());
 //        bindService(server,conn);
         startService(server);
-        mFragmentManager = getSupportFragmentManager();
-        preventOverlap(savedInstanceState);
-        MyApplication app = (MyApplication) getApplication();
-        app.initLocation();
-        app.startBD();
     }
 
     @Override
@@ -78,93 +119,124 @@ public class MainFragmentActivity extends BaseFragmentActivity {
         super.onDestroy();
     }
 
+    private void judeFirst() {
+        PreferenceUtil.init(this);
+        boolean isFirst = PreferenceUtil.getBoolean("IsFirst", true);
+        if (!isFirst) {
+            return;
+        }
+        if (UserData.getUserData().getValidateStatus() == 0) {//validateStatus 0未认证1已通过2认证失败3认证中
+            PreferenceUtil.commitBoolean("IsFirst", false);
+            RealnameCertifyDialog realnameCertifyDialog = new RealnameCertifyDialog(this, "前去完成实名认证", new DialogCallBack() {
+                @Override
+                public void OkDown(Object obj) {
+                    Intent realname = new Intent();
+                    realname.setClass(MainFragmentActivity.this, RealNameCertifyActivity.class);
+                    realname.putExtra("status", "0");
+                    startActivity(realname);
+                }
+
+                @Override
+                public void CancleDown() {
+
+                }
+            });
+            realnameCertifyDialog.show();
+        }
+    }
+
     /**
      * 防止Fragment重叠的问题，切换横竖屏或者内存不够，重走了Activity的生命周期
      * 第一次要createFragment
      * 重启以后，要通过tag来找到对应的Fragment
-     *
+     * <p>
      * 重启的标准是savedInstanceState是否为null
      * 因为重启之前savedInstanceState=null
      * 重启之后savedInstanceState！=null
-     *
-     * @param savedInstanceState
      */
-    private void preventOverlap(Bundle savedInstanceState) {
+    private void preventOverlap() {
 //        如果savedInstanceState为空，证明没有发生重走Activity的生命周期的情况，这时候要创建createFragment
-        if (savedInstanceState == null) {
-            homeFragment = FragmentFactory.createFragment(FragmentFactory.F1);
-            selectFragment(homeFragment);
-            LogUtil.d("MainFragmentActivity savedInstanceState is  null");
-        } else {
-            LogUtil.d("MainFragmentActivity savedInstanceState is not null");
+        LogUtil.d("MainFragmentActivity savedInstanceState is not null");
 //            使用mFragmentManager通过Tag来取得，只要他add过，就给他添加了Tag
 //            否则直接重写创建一个Fragment的话,会导致重叠
-            homeFragment = mFragmentManager.findFragmentByTag(HomeFragment.class.getName());
-            employFragment = mFragmentManager.findFragmentByTag(EmployFragment.class.getName());
-            msgFragment = mFragmentManager.findFragmentByTag(MessageFragment.class.getName());
-            myFragment = mFragmentManager.findFragmentByTag(MyFragment.class.getName());
+        homeFragment = mFragmentManager.findFragmentByTag(HomeFragment.class.getName());
+        employFragment = mFragmentManager.findFragmentByTag(EmployFragment.class.getName());
+        msgFragment = mFragmentManager.findFragmentByTag(MessageFragment.class.getName());
+        myFragment = mFragmentManager.findFragmentByTag(MyFragment.class.getName());
 //=======================以下代码，不要系统也会自动识别，上次死亡位置，但是除了死亡位置，savedInstanceState还可以传递其他数据============
 //            获得上次死亡重启的位置
-            position = savedInstanceState.getInt("position");
-            LogUtil.d(position+"=======");
-            switch (position) {
-                case 1:
-                    tvBottomNav1.performClick();
+        LogUtil.d(position + "=======");
+        switch (position) {
+            case 1:
+                tvBottomNav1.performClick();
 //                    selectFragment(homeFragment);
-                    break;
-                case 2:
-                    tvBottomNav2.performClick();
+                break;
+            case 2:
+                tvBottomNav2.performClick();
 //                    selectFragment(employFragment);
-                    break;
-                case 3:
-                    tvBottomNav3.performClick();
+                break;
+            case 3:
+                tvBottomNav3.performClick();
 //                    selectFragment(msgFragment);
-                    break;
-                case 4:
-                    tvBottomNav4.performClick();
+                break;
+            case 4:
+                tvBottomNav4.performClick();
 //                    selectFragment(myFragment);
-                    break;
-            }
-//===================以上代码需要配合onSaveInstanceState（）方法里面记录数据================
+                break;
         }
+        if (homeFragment != null) {
+            ((HomeFragment) homeFragment).freshUI();
+        }
+        if (employFragment != null) {
+            ((EmployFragment) employFragment).freshUI();
+        }
+        if (msgFragment != null) {
+            ((MessageFragment) msgFragment).freshUI();
+        }
+        if (myFragment != null) {
+            ((MyFragment) myFragment).freshUI();
+        }
+        startServer();
+//===================以上代码需要配合onSaveInstanceState（）方法里面记录数据================
     }
 
     @OnClick({R.id.rb_home, R.id.rb_employ, R.id.rb_msg, R.id.rb_my})
     public void onViewClicked(View view) {
+        LogUtil.d("onViewClicked");
         switch (view.getId()) {
             case R.id.rb_home:
                 if (homeFragment == null) {
                     homeFragment = FragmentFactory.createFragment(FragmentFactory.F1);
                 }
                 selectFragment(homeFragment);
-                position=1;
+                position = 1;
                 break;
             case R.id.rb_employ:
                 if (employFragment == null) {
                     employFragment = FragmentFactory.createFragment(FragmentFactory.F2);
                 }
                 selectFragment(employFragment);
-                position=2;
+                position = 2;
                 break;
             case R.id.rb_msg:
                 if (msgFragment == null) {
                     msgFragment = FragmentFactory.createFragment(FragmentFactory.F3);
                 }
                 selectFragment(msgFragment);
-                position=3;
+                position = 3;
                 break;
             case R.id.rb_my:
                 if (myFragment == null) {
                     myFragment = FragmentFactory.createFragment(FragmentFactory.F4);
                 }
                 selectFragment(myFragment);
-                position=4;
+                position = 4;
                 break;
         }
     }
 
-    public void changeFragment(int page){
-        switch (page){
+    public void changeFragment(int page) {
+        switch (page) {
             case 0:
                 tvBottomNav1.performClick();
                 break;
@@ -182,6 +254,7 @@ public class MainFragmentActivity extends BaseFragmentActivity {
 
     /**
      * 选择显示某一个Fragment
+     *
      * @param fragment
      */
     private void selectFragment(Fragment fragment) {
@@ -214,10 +287,11 @@ public class MainFragmentActivity extends BaseFragmentActivity {
     }
 
     //记录Fragment的位置
-    private int position ;
+    private int position;
 
     /**
      * 这个方法会在activity重启前调用，用来保存一些数据
+     *
      * @param outState
      */
     @Override
@@ -232,24 +306,24 @@ public class MainFragmentActivity extends BaseFragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            WarnDialog warnDialog = new WarnDialog(MainFragmentActivity.this, "确定退出应用？", new DialogCallBack() {
-                @Override
-                public void OkDown(Object obj) {
-                    MyApplication.finishAllActivity();
-                    finish();
-                    try {
+//            WarnDialog warnDialog = new WarnDialog(MainFragmentActivity.this, "确定退出应用？", new DialogCallBack() {
+//                @Override
+//                public void OkDown(Object obj) {
+            MyApplication.finishAllActivity();
+            finish();
+//                    try {
 //                        int id = android.os.Process.myPid();
 //                        android.os.Process.killProcess(id);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void CancleDown() {
-                }
-            });
-            warnDialog.show();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void CancleDown() {
+//                }
+//            });
+//            warnDialog.show();
         }
         return super.onKeyDown(keyCode, event);
     }

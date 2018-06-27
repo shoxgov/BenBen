@@ -125,13 +125,16 @@ public class OkHttpUtils {
      * @param callback 请求回调
      * @Description GET请求
      */
-    public static void getSync(String url, Map<String, String> params, HttpCallback callback) {
+    public static void getSync(String url, Map<String, String> params, Class baseResponseClass, HttpCallback callback) {
         if (params != null && !params.isEmpty()) {
+            if (!TextUtils.isEmpty(UserData.getUserData().getToken())) {
+                params.put("token", UserData.getUserData().getToken());
+            }
             url = OkHttpRequest.appendGetParams(url, params);
         }
         LogUtil.d("getSync url=" + url);
         Request request = OkHttpRequest.builderRequest(HttpMethodType.GET, url, null, null);
-        OkHttpRequest.doExecute(request, callback);
+        OkHttpRequest.doExecute(request, baseResponseClass, callback);
     }
 
     /**

@@ -23,11 +23,11 @@ public class BecomeBrokerDialog extends Dialog implements OnClickListener {
 
 
     public BecomeBrokerDialog(Context context, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.dialogcallback = dialogcallback;
     }
     public BecomeBrokerDialog(Context context, String info, DialogCallBack dialogcallback) {
-        super(context, R.style.CustomDialog_discovery);
+        this(context, R.style.CustomDialog_discovery);
         this.dialogcallback = dialogcallback;
         this.info = info;
     }

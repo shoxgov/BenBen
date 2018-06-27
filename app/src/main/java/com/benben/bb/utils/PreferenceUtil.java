@@ -15,7 +15,8 @@ public class PreferenceUtil {
     
     public static void init(Context context){
     	if (null == mSharedPreferences) {
-    		mSharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context) ;
+    		mSharedPreferences = context.getApplicationContext().getSharedPreferences("ZhiBenBen",Context.MODE_MULTI_PROCESS);
+//    		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ;
     	}
     }
     

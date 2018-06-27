@@ -36,9 +36,76 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dip"
-                android:text="输入搜索关键字"
+                android:text="输入搜索职位"
                 android:textColor="#8c8d91" />
 
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dip">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/home_employ_qzone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dip"
+                android:drawableRight="@mipmap/down_arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="全国"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/home_employ_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dip"
+                android:drawableRight="@mipmap/down_arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="行业选择"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/home_employ_updown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dip"
+                android:drawableRight="@mipmap/down_arrow"
+                android:gravity="center"
+                android:minEms="4"
+                android:singleLine="true"
+                android:text="工资升降"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
         </LinearLayout>
     </LinearLayout>
 

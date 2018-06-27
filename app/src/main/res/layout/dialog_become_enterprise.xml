@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_coner"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="15dip">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:src="@mipmap/dialog_become_enterprise_bgicon" />
+
+    <TextView
+        android:id="@+id/showInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:gravity="center"
+        android:text="是否认证为就业顾问?"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_large"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/okBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/buttonbg_normal"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
+
+    <Button
+        android:id="@+id/seeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/whitebg_corner"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:text="再考虑一下"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/font_normal"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

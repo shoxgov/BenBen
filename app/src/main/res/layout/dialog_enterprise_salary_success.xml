@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_coner"
+    android:orientation="vertical"
+    android:paddingBottom="10dip"
+    android:paddingTop="20dip">
+
+    <TextView
+        android:id="@+id/dialog_enterprise_salary_success_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@color/white"
+        android:text="已为您生成了工时统计表"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_normal" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@color/white"
+        android:text="如果您需要代发工资请汇款至"
+        android:textColor="@color/gray_dim"
+        android:textSize="@dimen/font_normal" />
+
+    <TextView
+        android:id="@+id/dialog_enterprise_salary_success_bank"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@color/white"
+        android:text="长沙银行        6669 1187 2310 2222 89"
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_large" />
+
+
+    <Button
+        android:id="@+id/okBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/buttonbg_normal"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
+
+</LinearLayout>
