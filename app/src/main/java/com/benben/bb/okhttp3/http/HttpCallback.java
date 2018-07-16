@@ -10,10 +10,10 @@ import com.benben.bb.okhttp3.response.BaseResponse;
 public class HttpCallback {
 
     /**
-     * @param baseResponse 返回数据
+     * @param br 返回数据
      * @Description 请求成功时回调
      */
-    public void onSuccess(BaseResponse baseResponse) {
+    public void onSuccess(BaseResponse br) {
     }
 
     /**

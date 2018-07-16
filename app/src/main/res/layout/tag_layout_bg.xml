@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="10dip">
+    android:orientation="horizontal">
 
-    <CheckBox
+    <TextView
         android:id="@+id/tag_layout_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dip"
-        android:background="@drawable/drawable_checkbox_fangkuang_gouxuan"
-        android:button="@null"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/boarder_btn_bg_semicircle"
+        android:text="sgdg"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
         android:paddingLeft="10dip"
-        android:text=""
-        android:textColor="@drawable/drawable_textcolor_check"
+        android:paddingRight="10dip"
+        android:textColor="@color/textblack"
         android:textSize="@dimen/font_normal" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/tag_layout_clear"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="10dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:paddingTop="5dip"
+        android:src="@mipmap/tag_clear" />
+
+</FrameLayout>

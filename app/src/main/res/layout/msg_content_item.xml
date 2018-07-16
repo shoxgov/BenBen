@@ -9,6 +9,7 @@
     android:paddingTop="10dip">
 
     <com.benben.bb.view.RoundImageView
+        android:id="@+id/msg_logo"
         android:layout_width="@dimen/img_large"
         android:layout_height="@dimen/img_large"
         android:layout_marginLeft="10dip"

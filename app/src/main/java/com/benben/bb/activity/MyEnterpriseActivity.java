@@ -38,12 +38,12 @@ public class MyEnterpriseActivity extends BaseActivity {
     ListView list;
     @Bind(R.id.myenterprise_name)
     TextView nameTv;
-    @Bind(R.id.myenterprise_category)
-    TextView categoryTv;
-    @Bind(R.id.myenterprise_truename)
-    TextView truenameTv;
-    @Bind(R.id.myenterprise_idno)
-    TextView idnoTv;
+//    @Bind(R.id.myenterprise_category)
+//    TextView categoryTv;
+//    @Bind(R.id.myenterprise_truename)
+//    TextView truenameTv;
+//    @Bind(R.id.myenterprise_idno)
+//    TextView idnoTv;
     private SettingAdapter adapter;
     private List<CompanyCategoryResponse.CategoryFirst> categoryList;
 
@@ -74,14 +74,14 @@ public class MyEnterpriseActivity extends BaseActivity {
 
             }
         });
-        truenameTv.setText(UserData.getUserData().getTrueName());
-        if (!TextUtils.isEmpty(UserData.getUserData().getIdentityCard())) {
-            try {
-                idnoTv.setText(UserData.getUserData().getIdentityCard().replace(UserData.getUserData().getIdentityCard().substring(4, 8), "****"));
-            }catch (Exception e){
-
-            }
-        }
+//        truenameTv.setText(UserData.getUserData().getTrueName());
+//        if (!TextUtils.isEmpty(UserData.getUserData().getIdentityCard())) {
+//            try {
+//                idnoTv.setText(UserData.getUserData().getIdentityCard().replace(UserData.getUserData().getIdentityCard().substring(4, 8), "****"));
+//            }catch (Exception e){
+//
+//            }
+//        }
         adapter = new SettingAdapter(this);
         list.setAdapter(adapter);
         List<SettingItem> data = new ArrayList<>();
@@ -91,7 +91,7 @@ public class MyEnterpriseActivity extends BaseActivity {
         data.add(new SettingItem(R.mipmap.myenterprise_employee, "应聘管理", ""));
         adapter.setData(data);
         list.setOnItemClickListener(onItemClickListener);
-        requestCategory();
+        getCompanyInfo();
     }
 
     private void requestCategory() {
@@ -123,11 +123,11 @@ public class MyEnterpriseActivity extends BaseActivity {
                 CompanyInfoResponse cir = (CompanyInfoResponse) baseResponse;
                 if (cir.getCode() == 1) {
                     nameTv.setText(cir.getData().getCompanyName());
-                    String category = cir.getData().getCategoriesId() + "";
-                    if (categoryList != null && !categoryList.isEmpty()) {
-                        category = findCategoryName(cir.getData().getCategoriesId());
-                    }
-                    categoryTv.setText(cir.getData().getCompanyAddr() + " | " + category);
+//                    String category = cir.getData().getCategoriesId() + "";
+//                    if (categoryList != null && !categoryList.isEmpty()) {
+//                        category = findCategoryName(cir.getData().getCategoriesId());
+//                    }
+//                    categoryTv.setText(cir.getData().getCompanyRegion());
                 }
             }
 

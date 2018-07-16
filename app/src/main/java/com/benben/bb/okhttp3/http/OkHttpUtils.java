@@ -217,6 +217,10 @@ public class OkHttpUtils {
      * @Description POST请求
      */
     public static void postAsyn(String url, Map<String, String> params, HttpCallback callback) {
+        postAsyn(url, params, BaseResponse.class, callback);
+    }
+
+    public static void postAsyn(String url, Map<String, String> params, Class baseResponseClass, HttpCallback callback) {
         if (params == null) {
             params = new HashMap<>();
         }
@@ -225,7 +229,7 @@ public class OkHttpUtils {
         }
         LogUtil.d("postAsyn url=" + url);
         Request request = OkHttpRequest.builderRequest(HttpMethodType.POST, url, params, null);
-        OkHttpRequest.doEnqueue(request, callback);
+        OkHttpRequest.doEnqueue(request, baseResponseClass, callback);
     }
 
     /**

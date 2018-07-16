@@ -66,6 +66,11 @@ public class NetWorkConfig {
      */
     public static final String INDEX_RECRUIT_SEARCH = HTTP + "/api/index/searchPositionList";
     /**
+     * GET /api/index/getPositionInfo
+     获取职位详情信息
+     */
+    public static final String INDEX_RECRUIT_DETAIL = HTTP + "/api/index/getPositionInfo";
+    /**
      * 实名认证
      */
     public static final String REALNAME_CERTIFY = HTTP + "/api/user/checkTrueName";
@@ -122,6 +127,11 @@ public class NetWorkConfig {
      * 企业行业分类
      */
     public static final String GET_COMPANY_CATEGORY = HTTP + "/api/index/getCategoryList";
+    /**
+     *GET /api/user/getResourcesList
+     获取邀请二维码用户列表
+     */
+    public static final String GET_MY_INVITE_RESOURCE = HTTP + "/api/user/getResourcesList";
     /**
      * 获取企业招聘信息列表
      */

@@ -126,6 +126,7 @@ public class CompanyRecruitResponse extends BaseResponse {
         private int positionStatus;
         private int dayworkHour;
         private int monthworkDay;
+        private int settlement;
         private int hiringCount;
         private int enrollNum;
         private String positionName;
@@ -135,7 +136,11 @@ public class CompanyRecruitResponse extends BaseResponse {
         private String houseImg;
         private String endTime;
         private String jobDemand;
-        private long createDate;
+        private String createDate;
+        private String staffHouse;
+        private String staffCanteen;
+        private String entryAge;
+        private String entrySex;
 
         public int getId() {
             return id;
@@ -241,11 +246,11 @@ public class CompanyRecruitResponse extends BaseResponse {
             this.jobDemand = jobDemand;
         }
 
-        public long getCreateDate() {
+        public String getCreateDate() {
             return createDate;
         }
 
-        public void setCreateDate(long createDate) {
+        public void setCreateDate(String createDate) {
             this.createDate = createDate;
         }
 
@@ -271,6 +276,46 @@ public class CompanyRecruitResponse extends BaseResponse {
 
         public void setEndTime(String endTime) {
             this.endTime = endTime;
+        }
+
+        public int getSettlement() {
+            return settlement;
+        }
+
+        public void setSettlement(int settlement) {
+            this.settlement = settlement;
+        }
+
+        public String getStaffHouse() {
+            return staffHouse;
+        }
+
+        public void setStaffHouse(String staffHouse) {
+            this.staffHouse = staffHouse;
+        }
+
+        public String getStaffCanteen() {
+            return staffCanteen;
+        }
+
+        public void setStaffCanteen(String staffCanteen) {
+            this.staffCanteen = staffCanteen;
+        }
+
+        public String getEntryAge() {
+            return entryAge;
+        }
+
+        public void setEntryAge(String entryAge) {
+            this.entryAge = entryAge;
+        }
+
+        public String getEntrySex() {
+            return entrySex;
+        }
+
+        public void setEntrySex(String entrySex) {
+            this.entrySex = entrySex;
         }
     }
 }

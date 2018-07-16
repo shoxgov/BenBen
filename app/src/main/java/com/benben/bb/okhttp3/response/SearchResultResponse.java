@@ -131,16 +131,18 @@ public class SearchResultResponse extends BaseResponse {
 
     public class RecruitInfo {
         private int id;
+        private int advSort;
         private float commision;
         private float salary;
-        private float focusSalary;
         private int hiringCount;
         private int enrollNum;
         private String positionName;
+        private String companyName;
         private String region;
         private String welfare;
         private String endTime;
-        private String houseImg;
+        private String companyMien;
+        private String focusSalary;
 
         public int getId() {
             return id;
@@ -166,11 +168,11 @@ public class SearchResultResponse extends BaseResponse {
             this.salary = salary;
         }
 
-        public float getFocusSalary() {
+        public String getFocusSalary() {
             return focusSalary;
         }
 
-        public void setFocusSalary(float focusSalary) {
+        public void setFocusSalary(String focusSalary) {
             this.focusSalary = focusSalary;
         }
 
@@ -222,12 +224,28 @@ public class SearchResultResponse extends BaseResponse {
             this.endTime = endTime;
         }
 
-        public String getHouseImg() {
-            return houseImg;
+        public int getAdvSort() {
+            return advSort;
         }
 
-        public void setHouseImg(String houseImg) {
-            this.houseImg = houseImg;
+        public void setAdvSort(int advSort) {
+            this.advSort = advSort;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getCompanyMien() {
+            return companyMien;
+        }
+
+        public void setCompanyMien(String companyMien) {
+            this.companyMien = companyMien;
         }
     }
 }

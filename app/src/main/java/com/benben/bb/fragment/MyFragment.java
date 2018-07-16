@@ -4,6 +4,7 @@ package com.benben.bb.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.benben.bb.MyApplication;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
-import com.benben.bb.activity.MySignupActivity;
 import com.benben.bb.activity.MyWalletActivity;
 import com.benben.bb.activity.PersonInfoActivity;
 import com.benben.bb.activity.PersonQrActivity;
@@ -57,6 +57,8 @@ public class MyFragment extends BaseFragment {
     RoundImageView personPhoto;
     @Bind(R.id.my_person_truename)
     TextView personTruename;
+    @Bind(R.id.my_person_id)
+    TextView personId;
     @Bind(R.id.my_person_signature)
     TextView personSignature;
     private SettingAdapter adapter;
@@ -79,6 +81,11 @@ public class MyFragment extends BaseFragment {
         adapter = new SettingAdapter(getActivity());
         settingList.setAdapter(adapter);
         settingList.setOnItemClickListener(onItemClickListener);
+        List<SettingItem> data = new ArrayList<>();
+        data.add(new SettingItem(R.mipmap.my_wallet, "钱包", ""));
+        data.add(new SettingItem(R.mipmap.qr_scan, "我的邀请码", ""));
+        data.add(new SettingItem(R.mipmap.my_setting, "设置", ""));
+        adapter.setData(data);
         freshUI();
     }
 
@@ -91,10 +98,10 @@ public class MyFragment extends BaseFragment {
                 Intent wallet = new Intent();
                 wallet.setClass(getActivity(), MyWalletActivity.class);
                 startActivity(wallet);
-            } else if (item.getTitle().equals("我的报名")) {
-                Intent mysignup = new Intent();
-                mysignup.setClass(getActivity(), MySignupActivity.class);
-                startActivity(mysignup);
+            } else if (item.getTitle().equals("我的邀请码")) {
+                Intent qr = new Intent();
+                qr.setClass(getActivity(), PersonQrActivity.class);
+                startActivity(qr);
             } else if (item.getTitle().equals("设置")) {
                 Intent setting = new Intent();
                 setting.setClass(getActivity(), SettingActivity.class);
@@ -135,18 +142,13 @@ public class MyFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.my_person_layout, R.id.my_person_qr})
+    @OnClick({R.id.my_person_layout})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.my_person_layout:
                 Intent person = new Intent();
                 person.setClass(getActivity(), PersonInfoActivity.class);
                 startActivityForResult(person, 12);
-                break;
-            case R.id.my_person_qr:
-                Intent qr = new Intent();
-                qr.setClass(getActivity(), PersonQrActivity.class);
-                startActivity(qr);
                 break;
         }
     }
@@ -166,22 +168,11 @@ public class MyFragment extends BaseFragment {
                     if (ui.getCode() == 1) {
                         UserData.updateUserInfo(ui.getData().getUser());
                         UserData.getUserData().setToken(ui.getData().getToken());
-                        if (!TextUtils.isEmpty(ui.getData().getUser().getAvatar())) {
-                            Glide.with(getActivity())
-                                    .load(ui.getData().getUser().getAvatar())
-                                    .into(personPhoto);
-                        }
-                        if (!TextUtils.isEmpty(ui.getData().getUser().getNickName())) {
-                            personTruename.setText(ui.getData().getUser().getNickName());
-                        }
-                        if (!TextUtils.isEmpty(ui.getData().getUser().getSignature())) {
-                            personSignature.setText(ui.getData().getUser().getSignature());
-                        }
+                        freshUI();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -193,13 +184,6 @@ public class MyFragment extends BaseFragment {
     }
 
     public void freshUI() {
-        List<SettingItem> data = new ArrayList<>();
-        data.add(new SettingItem(R.mipmap.my_wallet, "钱包", ""));
-        if (UserData.getUserData().getIsCompany() != 1) {
-            data.add(new SettingItem(R.mipmap.my_signup, "我的报名", ""));
-        }
-        data.add(new SettingItem(R.mipmap.my_setting, "设置", ""));
-        adapter.setData(data);
         if (!TextUtils.isEmpty(UserData.getUserData().getAvatar())) {
             Glide.with(getActivity())
                     .load(UserData.getUserData().getAvatar())
@@ -208,10 +192,23 @@ public class MyFragment extends BaseFragment {
                     .into(personPhoto);
         }
         if (!TextUtils.isEmpty(UserData.getUserData().getNickName())) {
-            personTruename.setText(MyApplication.userData.getNickName());
+            personTruename.setText(Html.fromHtml("<strong><big>" + MyApplication.userData.getNickName() + "</big></strong>" + "        " + getVip()));
+        }
+        if (!TextUtils.isEmpty(UserData.getUserData().getBenbenNum())) {
+            personId.setText("犇犇号:  " + MyApplication.userData.getBenbenNum());
         }
         if (!TextUtils.isEmpty(UserData.getUserData().getSignature())) {
             personSignature.setText(MyApplication.userData.getSignature());
+        }
+    }
+
+    private String getVip() {
+        if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
+            return "就业顾问";
+        } else if (UserData.getUserData().getIsCompany() > 0 && UserData.getUserData().getIsCompany() < 88) {
+            return "企业人";
+        } else {//普通用户
+            return "普通用户";
         }
     }
 }

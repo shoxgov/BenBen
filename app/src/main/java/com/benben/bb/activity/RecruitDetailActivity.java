@@ -2,17 +2,11 @@ package com.benben.bb.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.RelativeLayout;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.benben.bb.NetWorkConfig;
@@ -25,15 +19,16 @@ import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.CompanyRecruitResponse;
-import com.benben.bb.share.AndroidShare;
-import com.benben.bb.share.Defaultcontent;
-import com.benben.bb.share.ShareStyle;
+import com.benben.bb.okhttp3.response.RecruitDetailResponse;
+import com.benben.bb.stickLayout.StickLayout;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.ToastUtil;
-import com.benben.bb.view.NoAdWebViewClient;
+import com.benben.bb.view.BannerView;
+import com.benben.bb.view.CustumViewGroup;
+import com.benben.bb.view.MyTabIndicator;
 import com.benben.bb.view.TitleBar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,12 +43,55 @@ import butterknife.OnClick;
  */
 
 public class RecruitDetailActivity extends BaseActivity {
-    @Bind(R.id.webview)
-    WebView webView;
-    @Bind(R.id.recruit_detail_agentsignup)
-    TextView agentSignup;
 
-    private String url;
+    @Bind(R.id.recruit_detail_welfare_layout)
+    LinearLayout welfLayout;
+    @Bind(R.id.mTabIndicator)
+    MyTabIndicator tabIndicator;
+    @Bind(R.id.bannerlayout)
+    LinearLayout bannerlayout;
+    @Bind(R.id.recruit_detail_position_name)
+    TextView positionNameTv;
+    @Bind(R.id.recruit_detail_position_price)
+    TextView positionPriceTv;
+    @Bind(R.id.recruit_detail_addr)
+    TextView addrTv;
+    @Bind(R.id.recruit_detail_endtime)
+    TextView endtimeTv;
+    @Bind(R.id.recruit_detail_position_commission)
+    TextView commissionTv;
+    @Bind(R.id.recruit_detail_position_salary)
+    TextView salaryTv;
+    @Bind(R.id.recruit_detail_position_workday)
+    TextView workdayTv;
+    @Bind(R.id.recruit_detail_position_paytime)
+    TextView paytimeTv;
+    @Bind(R.id.recruit_detail_dining)
+    TextView diningTv;
+    @Bind(R.id.recruit_detail_dormitory)
+    TextView dormitoryTv;
+    @Bind(R.id.recruit_detail_position_age)
+    TextView ageTv;
+    @Bind(R.id.recruit_detail_position_sex)
+    TextView sexTv;
+    @Bind(R.id.recruit_detail_position_demand)
+    EditText demandTv;
+    @Bind(R.id.recruit_detail_ltd)
+    EditText ltdTv;
+    @Bind(R.id.recruit_detail_ltd_addr)
+    TextView ltdAddrTv;
+    @Bind(R.id.recruit_detail_self_signup)
+    TextView selfSignup;
+    @Bind(R.id.recruit_detail_other_signup)
+    TextView otherSignup;
+    private StickLayout mSl;
+    private View mTv2;
+    private View mTv3;
+    private View mTv5;
+    private View mTv4;
+    private int currentPosition = -1;
+    private BannerView bannerView;
+    private LinearLayout bannerLayout;
     /**
      * 职位
      */
@@ -64,11 +102,24 @@ public class RecruitDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit_detail);
-        ButterKnife.bind(this);
-        //H5 职位详情   http://ip或域名/show?id=职位ID
         positionId = getIntent().getIntExtra("positionId", 0);
         positionName = getIntent().getStringExtra("positionName");
-        url = NetWorkConfig.HTTP + "/show?id=" + positionId;//getIntent().getStringExtra("url");
+        ButterKnife.bind(this);
+        initViews();
+        if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
+            selfSignup.setText("自已报名");
+            otherSignup.setVisibility(View.VISIBLE);
+        }
+        init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
+    }
+
+    private void init() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.titlelayout);
         titleBar.setTitleBarListener(new TitleBarListener() {
             @Override
@@ -81,122 +132,173 @@ public class RecruitDetailActivity extends BaseActivity {
 
             }
         });
-        LogUtil.d("WebActivity url= " + url);
-        initWebview();
-        init();
-        if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
-            agentSignup.setVisibility(View.VISIBLE);
-        }
-    }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack();// 返回前一个页面
-            return true;
-        }
-        finish();
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private void initWebview() {
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        //启动缓存
-        settings.setAppCacheEnabled(true);
-        //设置缓存模式
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        // 设置加载进来的页面自适应手机屏幕 ,页面适应手机屏幕的分辨率，完整的显示在屏幕上，可以放大缩小
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//用WebView显示图片，可使用这个参数 设置网页布局类型： 1、LayoutAlgorithm.NARROW_COLUMNS ：适应内容大小 2、LayoutAlgorithm.SINGLE_COLUMN:适应屏幕，内容将自动缩放
-        settings.setUseWideViewPort(true);// 设置webview推荐使用的窗口，设置为true);设置此属性，可任意比例缩放。
-        settings.setLoadWithOverviewMode(true);// 设置webview加载的页面的模式，也设置为true
-        settings.setDisplayZoomControls(false); // 隐藏webview缩放按钮
-        settings.setSupportZoom(false); // 支持缩放
-        settings.setBuiltInZoomControls(true);
-        ///////////////
-        webView.clearHistory();
-        webView.clearFormData();
-        webView.clearCache(true);
-
-        CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(webView.getContext());
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();
-        cookieManager.removeAllCookie();
-        webView.setWebViewClient(new WebViewClient() {
+        initTabIndicator();
+//        mSl.setStickView(findViewById(R.id.tv2)); //设置粘性控件
+//        mSl.setStickView(findViewById(R.id.tv3));
+//        mSl.canScrollToEndViewTop(true);      //设置是否开启最后控件滑动到顶部
+        //设置滑动改变监听（一滑动就会有回调）
+        mSl.setOnScrollChangeListener(new StickLayout.OnScrollChangeListener() {
             @Override
-            public void onPageFinished(WebView view, String url) {
-                webView.loadUrl("javascript:ltxApp.resize(document.body.getBoundingClientRect().height)");
-                super.onPageFinished(view, url);
-            }
-        });
-        webView.addJavascriptInterface(this, "ltxApp");
-    }
-
-    private void init() {
-        gotoUrl();
-    }
-
-    private void gotoUrl() {
-        webView.loadUrl(url);
-        // 防止跳到系统浏览器
-        webView.setWebViewClient(new NoAdWebViewClient(this, webView) {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-//                webView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode,
-                                        String description, String failingUrl) {
-                ToastUtil.showText("网页加载出错!");
-                super.onReceivedError(view, errorCode, description, failingUrl);
-            }
-
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                //拦截垃圾电信运营商的广告方法  关键代码
-                if (!url.contains("zhibenben")) {
-                    return new WebResourceResponse(null, null, null);
+            public void onScrollChange(StickLayout v, View currentView, int position, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //直到当前控件改变在做事情
+//                LogUtil.d("setOnScrollChangeListener position="+position);
+                if (currentPosition != position && position <= 5) {
+                    currentPosition = position;
+                    switch (currentPosition) {
+                        case 0:
+                        case 2:
+                            tabIndicator.selectItem(0);
+                            break;
+                        case 3:
+                            tabIndicator.selectItem(1);
+                            break;
+                        case 4:
+                            tabIndicator.selectItem(2);
+                            break;
+                        case 5:
+                            tabIndicator.selectItem(3);
+                            break;
+                    }
                 }
-                return super.shouldInterceptRequest(view, url);
             }
         });
+        requestDetail();
     }
 
-    /**
-     * 重新计算Webview的高度，以便滑动
-     *
-     * @param height
-     */
-    @JavascriptInterface
-    public void resize(final float height) {
-        runOnUiThread(new Runnable() {
+    private void requestDetail() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", positionId + "");//id	职位ID
+        OkHttpUtils.getAsyn(NetWorkConfig.INDEX_RECRUIT_DETAIL, params, RecruitDetailResponse.class, new HttpCallback() {
             @Override
-            public void run() {
-                webView.setLayoutParams(new RelativeLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
+                RecruitDetailResponse rdi = (RecruitDetailResponse) br;
+                if (rdi.getData() == null) {
+                    return;
+                }
+                String houseImg = rdi.getData().getCompanyMien();
+                List<String> bannerData = new ArrayList<String>();
+                if (!TextUtils.isEmpty(houseImg) && houseImg.contains(",")) {
+                    bannerData.add(houseImg.split(",")[0]);
+                } else {
+                    bannerData.add(houseImg);
+                }
+                bannerView.setList(bannerData);
+                positionName = rdi.getData().getPositionName();
+                positionNameTv.setText(rdi.getData().getPositionName());
+                positionPriceTv.setText(rdi.getData().getFocusSalary() + "元");
+                initWelfare(rdi.getData().getWelfare());
+                addrTv.setText(rdi.getData().getRegion());
+                String updateDate = rdi.getData().getCreateDate();
+                if (updateDate.contains(" ")) {
+                    updateDate = updateDate.split(" ")[0];
+                }
+                endtimeTv.setText("更新时间：" + updateDate);
+                commissionTv.setText(rdi.getData().getCommision() + "元/小时");
+                salaryTv.setText(rdi.getData().getSalary() + "元/小时");
+                workdayTv.setText(rdi.getData().getDayworkHour() + "");
+                paytimeTv.setText(rdi.getData().getPayTime());
+                ageTv.setText(rdi.getData().getEntryAge());
+                sexTv.setText(rdi.getData().getEntrySex());
+                demandTv.setText(rdi.getData().getJobDemand());
+                ltdTv.setText(rdi.getData().getIntroduction());
+                ltdAddrTv.setText("公司地址：" + rdi.getData().getCompanyRegion() /*+ rdi.getData().getCompanyAddr()*/);
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
             }
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
+    private void initTabIndicator() {
+        //初始化数据
+        final List<String> titles = new ArrayList<>();
+        titles.add("薪资待遇");
+        titles.add("食宿情况");
+        titles.add("入职条件");
+        titles.add("公司简介");
+        tabIndicator.setTitles(titles);
+        //上面是有ViewPager的情况。如果不想与Viewpager绑定则可以调用：
+        tabIndicator.setTabSelectedListener(new MyTabIndicator.TabSelectedListener() {
+            @Override
+            public void tabClicked(int position) {
+                switch (position) {
+                    case 0:
+                        mSl.scrollToView(mTv2);
+                        break;
+                    case 1:
+                        mSl.scrollToView(mTv3);
+                        break;
+                    case 2:
+                        mSl.scrollToView(mTv4);
+                        break;
+                    case 3:
+                        mSl.scrollToView(mTv5);
+                        break;
+                }
+            }
+        });
+//        tabIndicator.setClicked(0);
     }
 
-    @OnClick({R.id.recruit_detail_signup, R.id.recruit_detail_share, R.id.recruit_detail_agentsignup})
+    private void initWelfare(String welfare) {
+        if (TextUtils.isEmpty(welfare)) {
+            return;
+        }
+        CustumViewGroup custumViewGroup = new CustumViewGroup(this);
+        if (welfare.contains(",")) {
+            String[] welfares = welfare.split(",");
+            for (int i = 0; i < welfares.length; i++) {
+                View view = LayoutInflater.from(this).inflate(R.layout.tag_layout, null);
+                TextView tag = (TextView) view.findViewById(R.id.tag_layout_text);
+                tag.setText(welfares[i]);
+                custumViewGroup.addView(view);
+            }
+        } else {
+            View view = LayoutInflater.from(this).inflate(R.layout.tag_layout, null);
+            TextView tag = (TextView) view.findViewById(R.id.tag_layout_text);
+            tag.setText(welfare);
+            custumViewGroup.addView(view);
+        }
+        welfLayout.removeAllViews();
+        welfLayout.addView(custumViewGroup);
+    }
+
+    private void initViews() {
+        bannerLayout = (LinearLayout) findViewById(R.id.bannerlayout);
+        bannerView = new BannerView(this);
+        bannerLayout.addView(bannerView);
+        mSl = findViewById(R.id.sl);
+        mTv2 = findViewById(R.id.tv2);
+        mTv3 = findViewById(R.id.tv3);
+        mTv4 = findViewById(R.id.tv4);
+        mTv5 = findViewById(R.id.tv5);
+    }
+
+    public void scrollTo2(View view) {
+        //滑动到指定子控件
+        mSl.scrollToView(mTv2);
+    }
+
+    public void scrollTo3(View view) {
+        mSl.scrollToView(mTv3);
+    }
+
+    public void scrollTo4(View view) {
+        mSl.scrollToView(mTv4);
+    }
+
+    public void scrollTo6(View view) {
+        mSl.scrollToView(mTv5);
+    }
+
+    @OnClick({R.id.recruit_detail_self_signup, R.id.recruit_detail_other_signup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.recruit_detail_signup:
+            case R.id.recruit_detail_self_signup:
                 if (UserData.getUserData().getValidateStatus() != 1) {//validateStatus 0未认证1已通过2认证失败3认证中
                     ToastUtil.showText("未实名认证用户不能报名");
                     return;
@@ -254,8 +356,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 });
                 signupDialog.show();
                 break;
-
-            case R.id.recruit_detail_agentsignup:
+            case R.id.recruit_detail_other_signup:
                 if (UserData.getUserData().getValidateStatus() != 1) {//validateStatus 0未认证1已通过2认证失败3认证中
                     ToastUtil.showText("未实名认证用户不能报名");
                     return;
@@ -269,16 +370,6 @@ public class RecruitDetailActivity extends BaseActivity {
                 intent.putExtra("positionId", positionId);
                 intent.putExtra("positionName", positionName);
                 startActivity(intent);
-                break;
-            case R.id.recruit_detail_share:
-                Intent share = new Intent();
-                share.setClass(this, AndroidShare.class);
-                share.putExtra("text", "犇犇分享！");
-                share.putExtra("type", ShareStyle.ShareType.WEB.ordinal());
-                share.putExtra("url", url);
-                share.putExtra("title", "一款好工作会赚钱的APP-职犇犇");
-                share.putExtra("description", Defaultcontent.description);
-                startActivity(share);
                 break;
         }
     }

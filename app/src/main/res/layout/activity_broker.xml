@@ -76,6 +76,7 @@
         android:orientation="horizontal"
         android:paddingBottom="10dip"
         android:paddingLeft="10dip"
+        android:visibility="gone"
         android:paddingRight="10dip"
         android:paddingTop="10dip">
 
@@ -112,6 +113,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingBottom="10dip"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"

@@ -11,8 +11,8 @@ android {
         applicationId "com.benben.bb"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //函数大于65535
         javaCompileOptions {

@@ -20,6 +20,7 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.benben.bb.MyApplication;
 import com.benben.bb.R;
 import com.benben.bb.activity.MessageDetailActivity;
+import com.benben.bb.activity.MySignupActivity;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.base.BaseFragment;
 import com.benben.bb.bean.UserData;
@@ -94,6 +95,28 @@ public class MessageFragment extends BaseFragment implements Observer {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        View signupView = LayoutInflater.from(getActivity()).inflate(R.layout.msg_content_item, null, false);
+        TextView signupMsgTitle = (TextView) signupView.findViewById(R.id.msg_title);
+        TextView signupMsgContent = (TextView) signupView.findViewById(R.id.msg_content);
+        signupView.findViewById(R.id.msg_count_layout).setVisibility(View.GONE);
+        signupView.findViewById(R.id.msg_date).setVisibility(View.INVISIBLE);
+        signupMsgTitle.setText("我的报名");
+        signupMsgContent.setText("我自已的报名及就业顾问推荐的职位");
+        signupView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mysignup = new Intent();
+                mysignup.setClass(getActivity(), MySignupActivity.class);
+                startActivity(mysignup);
+            }
+        });
+        recyclerSwipeLayout.createAdapter(R.layout.msg_content_item);
+        recyclerSwipeLayout.addHeaderView(signupView);
+        LinearLayout spanLine = new LinearLayout(getActivity());//LinearLayout.LayoutParams.MATCH_PARENT, Utils.dip2px(getActivity(),10));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dip2px(getActivity(), 10));
+        spanLine.setBackgroundResource(R.color.mainbg);
+        spanLine.setLayoutParams(params);
+        recyclerSwipeLayout.addHeaderView(spanLine);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.msg_content_item, null, false);
         benbenMsgLayout = (LinearLayout) header.findViewById(R.id.msg_count_layout);
         benbenMsg = (TextView) header.findViewById(R.id.msg_count);
@@ -101,13 +124,7 @@ public class MessageFragment extends BaseFragment implements Observer {
         benbenMsgContent = (TextView) header.findViewById(R.id.msg_content);
         TextView titleTv = (TextView) header.findViewById(R.id.msg_title);
         titleTv.setText("系统消息");
-//        LinearLayout spanLine = new LinearLayout(getActivity());//LinearLayout.LayoutParams.MATCH_PARENT, Utils.dip2px(getActivity(),10));
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dip2px(getActivity(), 10));
-//        spanLine.setBackgroundResource(R.color.mainbg);
-//        spanLine.setLayoutParams(params);
-        recyclerSwipeLayout.createAdapter(R.layout.msg_content_item);
         recyclerSwipeLayout.addHeaderView(header);
-//        recyclerSwipeLayout.addHeaderView(spanLine);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

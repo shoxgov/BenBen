@@ -105,7 +105,7 @@ public class PersonSexCheckActivity extends BaseActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", UserData.getUserData().getId() + "");
                 params.put("sex", "" + result);
-                OkHttpUtils.postAsyn(NetWorkConfig.USER_UPDATEINFO, params, new HttpCallback() {
+                OkHttpUtils.postAsynFile(NetWorkConfig.USER_UPDATEINFO, "", null, params, BaseResponse.class, new HttpCallback() {
                     @Override
                     public void onSuccess(BaseResponse baseResponse) {
                         super.onSuccess(baseResponse);

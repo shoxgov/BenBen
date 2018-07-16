@@ -30,11 +30,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
                 android:background="@color/white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -78,7 +76,8 @@
                         android:layout_height="wrap_content"
                         android:text="发布企业直聘、人力资源、简历精选"
                         android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/font_small" />
+                        android:textSize="@dimen/font_small"
+                        android:visibility="gone" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -100,7 +99,8 @@
                 android:paddingTop="10dip"
                 android:text="企业风采"
                 android:textColor="@color/textblack"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -131,13 +131,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
-                android:paddingTop="10dip"
-                android:text="企业性质"
+                android:layout_marginTop="10dip"
+                android:text="企业基本信息"
                 android:textColor="@color/textblack"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/enterprise_info_nature"
+            <LinearLayout
+                android:id="@+id/enterprise_certify_addr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -145,47 +146,120 @@
                 android:layout_marginTop="10dip"
                 android:background="@drawable/down_arrow"
                 android:gravity="center_vertical"
-                android:hint="民营公司"
-                android:paddingBottom="5dip"
-                android:paddingLeft="5dip"
-                android:paddingRight="5dip"
-                android:paddingTop="5dip"
-                android:text=""
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_normal" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_marginTop="10dip"
-                android:background="@color/line_color" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:paddingTop="10dip"
-                android:text="企业规模"
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_small" />
-
-            <TextView
-                android:id="@+id/enterprise_info_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:background="@drawable/down_arrow"
-                android:gravity="center_vertical"
-                android:hint="500-1000人"
                 android:paddingBottom="10dip"
-                android:paddingLeft="5dip"
-                android:paddingRight="5dip"
-                android:paddingTop="10dip"
-                android:text=""
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_normal" />
+                android:paddingLeft="10dip"
+                android:paddingTop="10dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="区域位置"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:id="@+id/enterprise_info_addr_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="3"
+                    android:text=""
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dip"
+                android:paddingLeft="10dip"
+                android:paddingTop="10dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="企业街道地址"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_normal" />
+
+                <EditText
+                    android:id="@+id/enterprise_info_addr_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@null"
+                    android:padding="5dip"
+                    android:text=""
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dip"
+                 android:paddingTop="10dip"
+                 android:text="企业性质"
+                 android:textColor="@color/textblack"
+                 android:textSize="@dimen/font_small" />
+
+             <TextView
+                 android:id="@+id/enterprise_info_nature"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dip"
+                 android:layout_marginRight="10dip"
+                 android:layout_marginTop="10dip"
+                 android:background="@drawable/down_arrow"
+                 android:gravity="center_vertical"
+                 android:hint="民营公司"
+                 android:paddingBottom="5dip"
+                 android:paddingLeft="5dip"
+                 android:paddingRight="5dip"
+                 android:paddingTop="5dip"
+                 android:text=""
+                 android:textColor="@color/textblack"
+                 android:textSize="@dimen/font_normal" />
+
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="1dip"
+                 android:layout_marginTop="10dip"
+                 android:background="@color/line_color" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dip"
+                 android:paddingTop="10dip"
+                 android:text="企业规模"
+                 android:textColor="@color/textblack"
+                 android:textSize="@dimen/font_small" />
+
+             <TextView
+                 android:id="@+id/enterprise_info_size"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dip"
+                 android:layout_marginRight="10dip"
+                 android:layout_marginTop="10dip"
+                 android:background="@drawable/down_arrow"
+                 android:gravity="center_vertical"
+                 android:hint="500-1000人"
+                 android:paddingBottom="10dip"
+                 android:paddingLeft="5dip"
+                 android:paddingRight="5dip"
+                 android:paddingTop="10dip"
+                 android:text=""
+                 android:textColor="@color/textblack"
+                 android:textSize="@dimen/font_normal" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -199,6 +273,7 @@
                 android:layout_marginLeft="10dip"
                 android:paddingTop="10dip"
                 android:text="企业简介"
+                android:textStyle="bold"
                 android:textColor="@color/textblack"
                 android:textSize="@dimen/font_small" />
 

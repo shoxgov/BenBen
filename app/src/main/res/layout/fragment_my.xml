@@ -16,61 +16,60 @@
             android:scaleType="fitStart"
             android:src="@mipmap/fragment_my_topbg" />
 
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/my_person_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@drawable/fragment_my_midbg">
 
-            <TextView
-                android:id="@+id/my_person_qr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="5dip"
-                android:layout_marginTop="5dip"
-                android:drawablePadding="3dip"
-                android:drawableTop="@mipmap/qr_scan"
-                android:gravity="center"
-                android:text="二维码"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_normal" />
+            <com.benben.bb.view.RoundImageView
+                android:id="@+id/my_person_photo"
+                android:layout_width="@dimen/img_huge"
+                android:layout_height="@dimen/img_huge"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dip"
+                android:src="@mipmap/ic_launcher"
+                app:type="circle" />
 
             <LinearLayout
-                android:id="@+id/my_person_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/fragment_my_midbg"
-                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/my_person_photo"
+                android:gravity="left"
                 android:orientation="vertical">
-
-                <com.benben.bb.view.RoundImageView
-                    android:id="@+id/my_person_photo"
-                    android:layout_width="@dimen/img_huge"
-                    android:layout_height="@dimen/img_huge"
-                    android:src="@mipmap/ic_launcher"
-                    app:type="circle" />
 
                 <TextView
                     android:id="@+id/my_person_truename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text=""
+                    android:singleLine="true"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:id="@+id/my_person_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text=""
                     android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_large" />
+                    android:textSize="@dimen/font_normal" />
 
                 <TextView
                     android:id="@+id/my_person_signature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dip"
+                    android:layout_marginTop="10dip"
                     android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
+        </RelativeLayout>
 
-        </LinearLayout>
     </FrameLayout>
 
     <ListView

@@ -14,74 +14,91 @@
         app:showRightBtn="true"
         app:titleName="二维码名片" />
 
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/person_qr_bg">
+        android:background="@mipmap/person_qr_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+        <!--      <Space
+                  android:layout_width="wrap_content"
+                  android:layout_height="0dp"
+                  android:layout_weight="8" />-->
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/person_invite_icon" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="8" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="20dip"
+            android:gravity="center">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/person_invite_icon" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="35"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dip"
-                    android:layout_marginRight="20dip"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/person_qr_iconbg" />
-
-                <ImageView
-                    android:id="@+id/my_person_qr_img"
-                    android:layout_width="@dimen/icon_qr_width"
-                    android:layout_height="@dimen/icon_qr_width"
-                    android:layout_gravity="center" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/my_person_qr_benbenid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/whitebg_transparent_corner"
-                android:paddingBottom="15dip"
-                android:paddingLeft="40dip"
-                android:paddingRight="40dip"
-                android:paddingTop="15dip"
-                android:text="我的邀请码："
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_large" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/person_qr_iconbg"
+                android:visibility="gone" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="10" />
+            <ImageView
+                android:id="@+id/my_person_qr_img"
+                android:layout_width="@dimen/icon_qr_width"
+                android:layout_height="@dimen/icon_qr_width"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/my_person_qr_benbenid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/whitebg_transparent_corner"
+            android:paddingBottom="10dip"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip"
+            android:paddingTop="10dip"
+            android:text="我的邀请码："
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large" />
+        <!--
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="10" />-->
+        <TextView
+            android:id="@+id/my_person_invite_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="已成功邀请20位好友加入职犇犇"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large" />
 
-    </FrameLayout>
+        <com.benben.bb.view.RecyclerViewSwipeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:background="@drawable/qr_invite_bg"
+            app:dividerColor="@color/transparent"
+            app:dividerHeight="0dip" />
+
+        <!-- <ListView
+             android:id="@+id/my_person_list"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_margin="10dip"
+             android:background="@drawable/qr_invite_bg" />-->
+    </LinearLayout>
 
 </LinearLayout>

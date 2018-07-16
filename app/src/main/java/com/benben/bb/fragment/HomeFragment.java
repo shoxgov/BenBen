@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -68,19 +69,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.recyclerRefreshLayout)
     RecyclerViewSwipeLayout recyclerSwipeLayout;
-    @Bind(R.id.search_bar_location)
-    TextView locationTv;
+//    @Bind(R.id.search_bar_location)
+//    TextView locationTv;
     /**
      * 请求的页数，从第1页开始
      * 每一页请求数固定10
      */
     private int pageNo = 1;
     private int totalPage = -1;
-    private int pageSize = 4;
+    private int pageSize = 10;
 
     private static final String ARG = "arg";
-    private BannerView bannerView;
-    private LinearLayout bannerLayout;
+    //    private BannerView bannerView;
+//    private LinearLayout bannerLayout;
     private LinearLayout brokerLayout, enterpriseLayout;
     private List<HomeBannerResponse.BannerInfo> bannerList;
 
@@ -111,9 +112,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         LogUtil.d("HomeFragment onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        getView().findViewById(R.id.search_bar_layout2).setOnClickListener(this);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.home_hot_employ_head, null, false);
-        bannerLayout = (LinearLayout) header.findViewById(R.id.bannerlayout);
+        header.findViewById(R.id.search_bar_layout2).setOnClickListener(this);
+//        bannerLayout = (LinearLayout) header.findViewById(R.id.bannerlayout);
         brokerLayout = (LinearLayout) header.findViewById(R.id.home_broker_layout);
         enterpriseLayout = (LinearLayout) header.findViewById(R.id.home_enterprise_layout);
         header.findViewById(R.id.home_employ_more).setOnClickListener(this);
@@ -122,8 +123,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //        recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
         recyclerSwipeLayout.setXCallBack(callBack);
         recyclerSwipeLayout.addHeaderView(header);
-        bannerView = new BannerView(getActivity());
-        bannerLayout.addView(bannerView);
+//        bannerView = new BannerView(getActivity());
+//        bannerLayout.addView(bannerView);
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(MyApplication.ADDRESS_CITY_ACTION);
         getActivity().registerReceiver(cityReceiver, mFilter);
@@ -150,31 +151,31 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         for (HomeBannerResponse.BannerInfo banner : bannerList) {
                             bannerData.add(banner.getPic());
                         }
-                        bannerView.setList(bannerData);
-                        bannerView.setOnBannerItemClickListener(new BannerView.OnBannerItemClickListener() {
-                            @Override
-                            public void onClick(int position) {
-                                if (Utils.isFastDoubleClick()) {
-                                    return;
-                                }
-                                try {
-                                    HomeBannerResponse.BannerInfo bi = bannerList.get(position);
-                                    String href = bi.getHref();
-                                    String positionName = bi.getPositionName();
-                                    String positionId = href.split("=")[1];
-                                    if (TextUtils.isEmpty(href) || TextUtils.isEmpty(positionId) || TextUtils.isEmpty(positionName)) {
-                                        return;
-                                    }
-                                    Intent detail = new Intent();
-                                    detail.setClass(getActivity(), RecruitDetailActivity.class);
-                                    detail.putExtra("positionId", positionId);
-                                    detail.putExtra("positionName", positionName);
-                                    startActivity(detail);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+//                        bannerView.setList(bannerData);
+//                        bannerView.setOnBannerItemClickListener(new BannerView.OnBannerItemClickListener() {
+//                            @Override
+//                            public void onClick(int position) {
+//                                if (Utils.isFastDoubleClick()) {
+//                                    return;
+//                                }
+//                                try {
+//                                    HomeBannerResponse.BannerInfo bi = bannerList.get(position);
+//                                    String href = bi.getHref();
+//                                    String positionName = bi.getPositionName();
+//                                    String positionId = href.split("=")[1];
+//                                    if (TextUtils.isEmpty(href) || TextUtils.isEmpty(positionId) || TextUtils.isEmpty(positionName)) {
+//                                        return;
+//                                    }
+//                                    Intent detail = new Intent();
+//                                    detail.setClass(getActivity(), RecruitDetailActivity.class);
+//                                    detail.putExtra("positionId", positionId);
+//                                    detail.putExtra("positionName", positionName);
+//                                    startActivity(detail);
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -208,21 +209,40 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
             final SearchResultResponse.RecruitInfo ri = (SearchResultResponse.RecruitInfo) itemModel;
             baseViewHolder.setText(R.id.home_employ_name, ri.getPositionName());
-            baseViewHolder.setText(R.id.home_employ_addr, "工作地点：" + ri.getRegion());
-            baseViewHolder.setText(R.id.home_employ_count, Html.fromHtml("报名：<font color=#FD7979>" + ri.getEnrollNum() + "/" + ri.getHiringCount() + "</font>(还剩<font color=#FD7979>" + DateUtils.dateDiffToday(ri.getEndTime()) + "</font>天)"));
-            if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
-                baseViewHolder.setText(R.id.home_employ_broker_price, ri.getCommision() + "元/小时");
-                baseViewHolder.setVisible(R.id.home_employ_broker_layout, true);
-                baseViewHolder.setText(R.id.home_employ_price, ri.getSalary() + "元/小时");
-            } else if (UserData.getUserData().getIsCompany() > 0 && UserData.getUserData().getIsCompany() < 88) {
-                baseViewHolder.setVisible(R.id.home_employ_broker_layout, false);
-                baseViewHolder.setText(R.id.home_employ_price, ri.getSalary() + "元/小时");
-            } else {//普通用户
-                baseViewHolder.setVisible(R.id.home_employ_broker_layout, false);
-                baseViewHolder.setText(R.id.home_employ_price, ri.getFocusSalary() + "元/月");
+            baseViewHolder.setText(R.id.home_employ_ltd, ri.getCompanyName());
+            String region = ri.getRegion();
+            if (region.contains(".")) {
+                String[] regions = region.split("\\.");
+                baseViewHolder.setText(R.id.home_employ_addr, regions[0]+"."+regions[1]);
+            } else {
+                baseViewHolder.setText(R.id.home_employ_addr, ri.getRegion());
             }
-            String img = ri.getHouseImg();
-            if (img.contains(",")) {
+            baseViewHolder.setText(R.id.home_employ_price, "¥" + ri.getFocusSalary());
+            switch (ri.getAdvSort()) {//advSort (1限时招聘2优质企业3犇犇推荐4可实习生5小时兼职)
+                case 1:
+                    baseViewHolder.setText(R.id.home_employ_tag, "限时招聘");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#fd7979"));
+                    break;
+                case 2:
+                    baseViewHolder.setText(R.id.home_employ_tag, "优质企业");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#94db46"));
+                    break;
+                case 3:
+                default:
+                    baseViewHolder.setText(R.id.home_employ_tag, "犇犇推荐");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, R.color.bluetheme);
+                    break;
+                case 4:
+                    baseViewHolder.setText(R.id.home_employ_tag, "可实习生");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#ffa23c"));
+                    break;
+                case 5:
+                    baseViewHolder.setText(R.id.home_employ_tag, "小时兼职");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#50e3c2"));
+                    break;
+            }
+            String img = ri.getCompanyMien();
+            if (!TextUtils.isEmpty(img) && img.contains(",")) {
                 img = img.split(",")[0];
             }
             Glide.with(getActivity())
@@ -240,29 +260,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     startActivity(detail);
                 }
             });
-            String welfare = ri.getWelfare();
-            if (TextUtils.isEmpty(welfare)) {
-                return;
-            }
-            LinearLayout frameLayout = (LinearLayout) baseViewHolder.getView(R.id.home_employ_welfare_layout);
-            CustumViewGroup custumViewGroup = new CustumViewGroup(getActivity());
-            custumViewGroup.removeAllViews();
-            if (welfare.contains(",")) {
-                String[] welfares = welfare.split(",");
-                for (int i = 0; i < welfares.length; i++) {
-                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.tag_layout, null);
-                    TextView tag = (TextView) view.findViewById(R.id.tag_layout_text);
-                    tag.setText(welfares[i]);
-                    custumViewGroup.addView(view);
-                }
-            } else {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.tag_layout, null);
-                TextView tag = (TextView) view.findViewById(R.id.tag_layout_text);
-                tag.setText(welfare);
-                custumViewGroup.addView(view);
-            }
-            frameLayout.removeAllViews();
-            frameLayout.addView(custumViewGroup);
         }
     };
 
@@ -583,13 +580,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.hasExtra("city")) {
-                locationTv.setText(intent.getStringExtra("city"));
+//                locationTv.setText(intent.getStringExtra("city"));
             }
         }
     };
 
     public void freshUI() {
-        initBanner();
+//        initBanner();
         requestEmployList();
     }
 }

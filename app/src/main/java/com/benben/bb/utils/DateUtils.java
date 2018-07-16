@@ -24,8 +24,11 @@ public class DateUtils {
      * @Description: long类型转换成日期
      */
     public static String longToDate(long lo) {
+        return longToDate(lo, "yyyy-MM-dd HH:mm:ss");
+    }
+    public static String longToDate(long lo, String format) {
         Date date = new Date(lo);
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sd = new SimpleDateFormat(format);
         return sd.format(date);
     }
 

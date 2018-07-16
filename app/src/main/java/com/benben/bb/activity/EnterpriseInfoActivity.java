@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
-import com.benben.bb.bean.UserData;
+import com.benben.bb.dialog.ThreeWheelViewDialogs;
 import com.benben.bb.dialog.WarnDialog;
-import com.benben.bb.dialog.WheelBottomDialog;
 import com.benben.bb.imp.DialogCallBack;
 import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
@@ -25,8 +24,6 @@ import com.benben.bb.okhttp3.response.CompanyCategoryResponse;
 import com.benben.bb.okhttp3.response.CompanyInfoResponse;
 import com.benben.bb.okhttp3.response.CompanyNatureResponse;
 import com.benben.bb.utils.GlideImageLoader;
-import com.benben.bb.utils.ImageUtils;
-import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.RoundImageView;
@@ -58,10 +55,14 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
     TextView infoName;
     @Bind(R.id.company_info_hint)
     TextView infoHint;
-    @Bind(R.id.enterprise_info_nature)
-    TextView infoNature;
-    @Bind(R.id.enterprise_info_size)
-    TextView infoSize;
+    @Bind(R.id.enterprise_info_addr_detail)
+    EditText addrDetailTv;
+    @Bind(R.id.enterprise_info_addr_name)
+    TextView addrNameTv;
+    //    @Bind(R.id.enterprise_info_nature)
+//    TextView infoNature;
+//    @Bind(R.id.enterprise_info_size)
+//    TextView infoSize;
     @Bind(R.id.enterprise_info_introduction)
     EditText infoIntroduction;
     List<String> pics = new ArrayList<>();
@@ -72,11 +73,12 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
      * 标记是否原来有图片
      */
     private boolean isHavePic = false;
+    private String companyRegion;
     /**
      * 保存选择的
      */
-    private CompanyNatureResponse.ScaleInfo selectScale;
-    private CompanyNatureResponse.NatureInfo selectNature;
+//    private CompanyNatureResponse.ScaleInfo selectScale;
+//    private CompanyNatureResponse.NatureInfo selectNature;
     private int companyId;
 
     @Override
@@ -106,12 +108,13 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
 
             }
         });
-        findViewById(R.id.enterprise_info_nature).setOnClickListener(this);
-        findViewById(R.id.enterprise_info_size).setOnClickListener(this);
+//        findViewById(R.id.enterprise_info_nature).setOnClickListener(this);
+//        findViewById(R.id.enterprise_info_size).setOnClickListener(this);
+        findViewById(R.id.enterprise_certify_addr).setOnClickListener(this);
         findViewById(R.id.enterprise_info_submit).setOnClickListener(this);
         pics.add("default");
         addPicLayout(gracefullLayout, pics);
-        requestCategory();
+        getCompanyInfo();
     }
 
     private void requestCategory() {
@@ -165,6 +168,7 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
                 CompanyInfoResponse cir = (CompanyInfoResponse) baseResponse;
                 if (cir.getCode() == 1) {
                     companyId = cir.getData().getId();
+                    companyRegion = cir.getData().getCompanyRegion();
                     String photo = cir.getData().getCompanyMien();
                     if (!TextUtils.isEmpty(photo)) {
                         isHavePic = true;
@@ -180,24 +184,31 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
                     } else {
                         isHavePic = false;
                     }
-                    infoName.setText(cir.getData().getCompanyName());
-                    String category = cir.getData().getCategoriesId() + "";
-                    if (categoryList != null && !categoryList.isEmpty()) {
-                        category = findCategoryName(cir.getData().getCategoriesId());
+                    if (!TextUtils.isEmpty(companyRegion)) {
+                        addrNameTv.setText(companyRegion.replace(".",""));
                     }
-                    infoHint.setText(cir.getData().getCompanyAddr() + " | " + category);
-                    String cpSize = "";
-                    if (scaleList != null && !scaleList.isEmpty()) {
-                        selectScale = scaleList.get(cir.getData().getCompanySize() - 1);
-                        cpSize = selectScale.getName();
+                    if (!TextUtils.isEmpty(cir.getData().getCompanyAddr())) {
+                        addrDetailTv.setText(cir.getData().getCompanyAddr());
                     }
-                    infoSize.setText(cpSize);
-                    String cpNature = "";
-                    if (natureList != null && !natureList.isEmpty()) {
-                        selectNature = natureList.get(cir.getData().getCompanyNature() - 1);
-                        cpNature = selectNature.getName();
-                    }
-                    infoNature.setText(cpNature);
+
+//                    infoName.setText(cir.getData().getCompanyName());
+//                    String category = cir.getData().getCategoriesId() + "";
+//                    if (categoryList != null && !categoryList.isEmpty()) {
+//                        category = findCategoryName(cir.getData().getCategoriesId());
+//                    }
+//                    infoHint.setText(cir.getData().getCompanyRegion() + " | " + cir.getData().getCompanyAddr());
+//                    String cpSize = "";
+//                    if (scaleList != null && !scaleList.isEmpty()) {
+//                        selectScale = scaleList.get(cir.getData().getCompanySize() - 1);
+//                        cpSize = selectScale.getName();
+//                    }
+//                    infoSize.setText(cpSize);
+//                    String cpNature = "";
+//                    if (natureList != null && !natureList.isEmpty()) {
+//                        selectNature = natureList.get(cir.getData().getCompanyNature() - 1);
+//                        cpNature = selectNature.getName();
+//                    }
+//                    infoNature.setText(cpNature);
                     if (!TextUtils.isEmpty(cir.getData().getIntroduction())) {
                         infoIntroduction.setText(cir.getData().getIntroduction() + "");
                     }
@@ -248,6 +259,27 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
             return;
         }
         switch (v.getId()) {
+            case R.id.enterprise_certify_addr:
+                ThreeWheelViewDialogs addressDla = new ThreeWheelViewDialogs(this, new DialogCallBack() {
+                    @Override
+                    public void OkDown(Object obj) {
+                        try {
+                            if (!TextUtils.isEmpty(obj.toString())) {
+                                companyRegion = obj.toString();
+                                addrNameTv.setText(companyRegion.replace(".", ""));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void CancleDown() {
+
+                    }
+                });
+                addressDla.show();
+                break;
             case R.id.gracefull_img_clear:
                 if (isHavePic) {
                     WarnDialog warnDialog = new WarnDialog(EnterpriseInfoActivity.this, "中途删除会清除所有旧图片，确定删除？", new DialogCallBack() {
@@ -271,72 +303,75 @@ public class EnterpriseInfoActivity extends BaseActivity implements View.OnClick
                 }
                 break;
 
-            case R.id.enterprise_info_nature:
-                if (natureList == null) {
-                    return;
-                }
-                final String[] nature = new String[natureList.size()];
-                int i = 0;
-                for (CompanyNatureResponse.NatureInfo ni : natureList) {
-                    nature[i] = ni.getName();
-                    i++;
-                }
-                WheelBottomDialog sexDla = new WheelBottomDialog(this, nature, new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object score) {
-                        int position = (int) score;
-                        selectNature = natureList.get(position);
-                        infoNature.setText(selectNature.getName());
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                sexDla.show();
-                break;
-
-            case R.id.enterprise_info_size:
-                if (scaleList == null) {
-                    return;
-                }
-                final String[] scale = new String[scaleList.size()];
-                int ii = 0;
-                for (CompanyNatureResponse.ScaleInfo si : scaleList) {
-                    scale[ii] = si.getName();
-                    ii++;
-                }
-                WheelBottomDialog scaleDla = new WheelBottomDialog(this, scale, new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object score) {
-                        int position = (int) score;
-                        selectScale = scaleList.get(position);
-                        infoSize.setText(selectScale.getName());
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                scaleDla.show();
-                break;
+//            case R.id.enterprise_info_nature:
+//                if (natureList == null) {
+//                    return;
+//                }
+//                final String[] nature = new String[natureList.size()];
+//                int i = 0;
+//                for (CompanyNatureResponse.NatureInfo ni : natureList) {
+//                    nature[i] = ni.getName();
+//                    i++;
+//                }
+//                WheelBottomDialog sexDla = new WheelBottomDialog(this, nature, new DialogCallBack() {
+//                    @Override
+//                    public void OkDown(Object score) {
+//                        int position = (int) score;
+//                        selectNature = natureList.get(position);
+//                        infoNature.setText(selectNature.getName());
+//                    }
+//
+//                    @Override
+//                    public void CancleDown() {
+//
+//                    }
+//                });
+//                sexDla.show();
+//                break;
+//
+//            case R.id.enterprise_info_size:
+//                if (scaleList == null) {
+//                    return;
+//                }
+//                final String[] scale = new String[scaleList.size()];
+//                int ii = 0;
+//                for (CompanyNatureResponse.ScaleInfo si : scaleList) {
+//                    scale[ii] = si.getName();
+//                    ii++;
+//                }
+//                WheelBottomDialog scaleDla = new WheelBottomDialog(this, scale, new DialogCallBack() {
+//                    @Override
+//                    public void OkDown(Object score) {
+//                        int position = (int) score;
+//                        selectScale = scaleList.get(position);
+//                        infoSize.setText(selectScale.getName());
+//                    }
+//
+//                    @Override
+//                    public void CancleDown() {
+//
+//                    }
+//                });
+//                scaleDla.show();
+//                break;
 
             case R.id.enterprise_info_submit:
                 String tempIntr = infoIntroduction.getText().toString();
-                if (TextUtils.isEmpty(tempIntr)) {
+                String tempAddr = addrDetailTv.getText().toString();
+                if (TextUtils.isEmpty(tempIntr) || TextUtils.isEmpty(companyRegion) || TextUtils.isEmpty(tempAddr)) {
                     ToastUtil.showText("请完善简介");
                     return;
                 }
-                if (selectNature == null || selectScale == null) {
-                    ToastUtil.showText("请选择企业属性或规模");
-                    return;
-                }
+//                if (selectNature == null || selectScale == null) {
+//                    ToastUtil.showText("请选择企业属性或规模");
+//                    return;
+//                }
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("companyNature", selectNature.getId() + "");
-                params.put("companySize", selectScale.getId() + "");
+//                params.put("companyNature", selectNature.getId() + "");
+//                params.put("companySize", selectScale.getId() + "");
                 params.put("introduction", tempIntr);
+                params.put("companyRegion", companyRegion);
+                params.put("companyAddr", tempAddr);
                 params.put("id", companyId + "");
                 String filekey = "file";
                 List<File> files = new ArrayList<>();

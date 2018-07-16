@@ -167,6 +167,37 @@
                 android:textColor="@color/textblack" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dip"
+                android:paddingLeft="10dip"
+                android:paddingTop="10dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="企业名称"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_normal" />
+
+                <EditText
+                    android:id="@+id/enterprise_certify_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@null"
+                    android:padding="5dip"
+                    android:text=""
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/enterprise_certify_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,7 +208,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="10dip"
                 android:paddingLeft="10dip"
-                android:paddingTop="10dip">
+                android:paddingTop="10dip"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -236,26 +268,25 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
+                android:background="@drawable/edittext_background"
                 android:gravity="center_vertical"
                 android:paddingBottom="10dip"
                 android:paddingLeft="10dip"
                 android:paddingTop="10dip">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="企业名称"
+                    android:text="企业街道地址"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/font_normal" />
 
                 <EditText
-                    android:id="@+id/enterprise_certify_name"
-                    android:layout_width="0dp"
+                    android:id="@+id/enterprise_certify_addr_detail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:layout_weight="3"
-                    android:background="@drawable/edittext_background"
+                    android:background="@null"
                     android:padding="5dip"
                     android:text=""
                     android:textColor="@color/textblack"

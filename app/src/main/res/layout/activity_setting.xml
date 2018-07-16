@@ -12,6 +12,42 @@
         app:titleName="设置" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="10dip">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:src="@mipmap/setting_bg" />
+
+        <TextView
+            android:id="@+id/setting_version_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:text="版本号:1.0"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/setting_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="检查更新"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_small" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/setting_reputation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +55,8 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dip">
+        android:padding="10dip"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,7 +102,7 @@
         android:id="@+id/setting_quit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="20dip"
         android:background="@color/white"
         android:gravity="center"
         android:padding="10dip">
@@ -83,14 +120,6 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/setting_version_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="V1.0"
-        android:textColor="@color/textblack"
-        android:textSize="@dimen/font_small" />
 
     <TextView
         android:layout_width="wrap_content"

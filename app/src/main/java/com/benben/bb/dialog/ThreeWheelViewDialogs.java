@@ -107,7 +107,11 @@ public class ThreeWheelViewDialogs extends Dialog implements OnWheelChangedListe
             @Override
             public void onClick(View v) {
                 if (dialogcallback != null) {
-                    dialogcallback.OkDown(mCurrentProviceName + mCurrentCityName + mCurrentDistrictName);
+                    if (mCurrentProviceName.contains("市")) {
+                        dialogcallback.OkDown(mCurrentCityName + "." + mCurrentDistrictName);
+                    } else {
+                        dialogcallback.OkDown(mCurrentProviceName + "." + mCurrentCityName + "." + mCurrentDistrictName);
+                    }
                 }
                 dismiss();
             }
@@ -165,10 +169,10 @@ public class ThreeWheelViewDialogs extends Dialog implements OnWheelChangedListe
         int pCurrent = mViewCity.getCurrentItem();
         mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[pCurrent];
         String[] areas = mDistrictDatasMap.get(mCurrentCityName);
-
         if (areas == null) {
             areas = new String[]{""};
         }
+        mCurrentDistrictName = areas[0];
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(context, areas));
         mViewDistrict.setCurrentItem(0);
     }

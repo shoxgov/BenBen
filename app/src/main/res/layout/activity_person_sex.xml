@@ -41,7 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dip"
-            android:checked="true" />
+            android:button="@drawable/commission_settle_selector"
+            android:checked="true"
+            android:enabled="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +74,9 @@
             android:id="@+id/my_person_sex_group_woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dip" />
+            android:layout_marginRight="10dip"
+            android:button="@drawable/commission_settle_selector"
+            android:enabled="false" />
     </LinearLayout>
 
     <Button

@@ -54,8 +54,10 @@ public class EnterpriseCertifyActivity extends BaseActivity {
     ImageView picFront;
     @Bind(R.id.enterprise_certify_2)
     ImageView picBack;
-    @Bind(R.id.enterprise_certify_category_name)
-    TextView categoryNameTv;
+    //    @Bind(R.id.enterprise_certify_category_name)
+//    TextView categoryNameTv;
+    @Bind(R.id.enterprise_certify_addr_detail)
+    EditText addrDetailTv;
     @Bind(R.id.enterprise_certify_addr_name)
     TextView addrNameTv;
     @Bind(R.id.enterprise_certify_name)
@@ -75,6 +77,7 @@ public class EnterpriseCertifyActivity extends BaseActivity {
      * 2 3 4 5 6（等后期扩展使用）
      */
     private int status = 0;
+    private String companyRegion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,16 +142,16 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                 }
             }
         } else if (requestCode == HAND_CATEGORY && resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
+//            Bundle bundle = data.getExtras();
             //显示选中的内容
-            categoryNameTv.setText(bundle.getString("result"));
-            categoryNameTv.setTag(bundle.getInt("id")+"");
+//            categoryNameTv.setText(bundle.getString("result"));
+//            categoryNameTv.setTag(bundle.getInt("id")+"");
         }
     }
 
     @OnClick({R.id.enterprise_certify_1, R.id.enterprise_certify_2, R.id.enterprise_certify_category, R.id.enterprise_certify_addr, R.id.enterprise_certify_submit})
     public void onViewClicked(View view) {
-        if(Utils.isFastDoubleClick()){
+        if (Utils.isFastDoubleClick()) {
             return;
         }
         switch (view.getId()) {
@@ -180,18 +183,21 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                 break;
 
             case R.id.enterprise_certify_category:
-                Intent category = new Intent();
-                category.setClass(this, EnterpriseCategoryActivity.class);
-                startActivityForResult(category, HAND_CATEGORY);
+//                Intent category = new Intent();
+//                category.setClass(this, EnterpriseCategoryActivity.class);
+//                startActivityForResult(category, HAND_CATEGORY);
                 break;
 
             case R.id.enterprise_certify_addr:
                 ThreeWheelViewDialogs addressDla = new ThreeWheelViewDialogs(this, new DialogCallBack() {
+
+
                     @Override
                     public void OkDown(Object obj) {
                         try {
                             if (!TextUtils.isEmpty(obj.toString())) {
-                                addrNameTv.setText(obj.toString());
+                                companyRegion = obj.toString();
+                                addrNameTv.setText(companyRegion.replace(".", ""));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -212,13 +218,17 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                     ToastUtil.showText("请选择图片");
                     return;
                 }
-                String categoryName = categoryNameTv.getText().toString();
-                if (TextUtils.isEmpty(categoryName)) {
-                    ToastUtil.showText("请选择分类");
+//                String categoryName = categoryNameTv.getText().toString();
+//                if (TextUtils.isEmpty(categoryName)) {
+//                    ToastUtil.showText("请选择分类");
+//                    return;
+//                }
+                String addrDetail = addrDetailTv.getText().toString();
+                if (TextUtils.isEmpty(addrDetail)) {
+                    ToastUtil.showText("请输入街道地址");
                     return;
                 }
-                String addr = addrNameTv.getText().toString();
-                if (TextUtils.isEmpty(addr)) {
+                if (TextUtils.isEmpty(companyRegion)) {
                     ToastUtil.showText("请输入区域");
                     return;
                 }
@@ -228,9 +238,10 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                     return;
                 }
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("categoriesId", categoryNameTv.getTag().toString());
+//                params.put("categoriesId", addrDetail);
                 params.put("companyName", name);
-                params.put("companyAddr", addr);
+                params.put("companyRegion", companyRegion);//companyRegion 区域
+                params.put("companyAddr", addrDetail);//公司地址街道
                 List<File> files = new ArrayList<>();
                 if (!TextUtils.isEmpty(frontPath)) {
                     files.add(new File(frontPath));
@@ -238,7 +249,7 @@ public class EnterpriseCertifyActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(backPath)) {
                     files.add(new File(backPath));
                 }
-                DialogUtil.showDialogLoading(EnterpriseCertifyActivity.this,"");
+                DialogUtil.showDialogLoading(EnterpriseCertifyActivity.this, "");
                 OkHttpUtils.postAsynFiles(NetWorkConfig.COMPANY_CERTIFY, "file", files, params, new HttpCallback() {
 
                     @Override

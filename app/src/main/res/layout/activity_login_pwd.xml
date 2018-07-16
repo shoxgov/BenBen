@@ -77,6 +77,8 @@
             android:layout_weight="12"
             android:background="@null"
             android:hint="密码"
+            android:inputType="textPassword"
+            android:password="true"
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_large" />
 

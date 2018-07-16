@@ -33,10 +33,10 @@ public class BrokerActivity extends BaseActivity {
     ListView list;
     @Bind(R.id.broker_vip)
     TextView vipTv;
-    @Bind(R.id.broker_truename)
-    TextView truenameTv;
-    @Bind(R.id.broker_id)
-    TextView idTv;
+//    @Bind(R.id.broker_truename)
+//    TextView truenameTv;
+//    @Bind(R.id.broker_id)
+//    TextView idTv;
     private SettingAdapter adapter;
 
     @Override
@@ -67,14 +67,14 @@ public class BrokerActivity extends BaseActivity {
             }
         });
         vipTv.setText(Html.fromHtml("就业顾问V" + UserData.getUserData().getIsAgent() + "<font color=#cccccc>（可设置" + (UserData.getUserData().getIsAgent() - 1) + "个就业顾问）</font>"));
-        truenameTv.setText(UserData.getUserData().getTrueName());
-        if (!TextUtils.isEmpty(UserData.getUserData().getIdentityCard())) {
-            try {
-                idTv.setText(UserData.getUserData().getIdentityCard().replace(UserData.getUserData().getIdentityCard().substring(4, 8), "****"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        truenameTv.setText(UserData.getUserData().getTrueName());
+//        if (!TextUtils.isEmpty(UserData.getUserData().getIdentityCard())) {
+//            try {
+//                idTv.setText(UserData.getUserData().getIdentityCard().replace(UserData.getUserData().getIdentityCard().substring(4, 8), "****"));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
         adapter = new SettingAdapter(this);
         list.setAdapter(adapter);
         List<SettingItem> data = new ArrayList<>();

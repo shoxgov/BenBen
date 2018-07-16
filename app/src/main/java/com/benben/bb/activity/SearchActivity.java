@@ -1,29 +1,29 @@
 package com.benben.bb.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
-import com.benben.bb.bean.UserData;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.SearchResultResponse;
-import com.benben.bb.utils.DateUtils;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
 import com.benben.bb.view.SpinerPopWindow;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -73,7 +73,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void init() {
-        recyclerSwipeLayout.createAdapter(R.layout.list_fragment_employ);
+        recyclerSwipeLayout.createAdapter(R.layout.list_home_hot_employ);
         recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
         recyclerSwipeLayout.setXCallBack(callBack);
         String[] data = getResources().getStringArray(R.array.search_type_updown);
@@ -170,21 +170,48 @@ public class SearchActivity extends BaseActivity {
         @Override
         public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
             final SearchResultResponse.RecruitInfo ri = (SearchResultResponse.RecruitInfo) itemModel;
-            baseViewHolder.setText(R.id.employ_job_name, ri.getPositionName());
-            baseViewHolder.setText(R.id.employ_job_welfare, ri.getWelfare().replace(",", "|"));
-            baseViewHolder.setText(R.id.employ_job_count, Html.fromHtml("报名：<font color=#FD7979>" + ri.getEnrollNum() + "/" + ri.getHiringCount() + "</font>(还剩<font color=#FD7979>" + DateUtils.dateDiffToday(ri.getEndTime()) + "</font>天)"));
-            baseViewHolder.setText(R.id.employ_job_addr, "工作地点：" + ri.getRegion());
-            if (UserData.getUserData().getIsAgent() > 0 && UserData.getUserData().getIsAgent() < 88) {
-                baseViewHolder.setVisible(R.id.employ_job_broker_layout, true);
-                baseViewHolder.setText(R.id.employ_job_broker_price, ri.getCommision() + "元/小时");
-                baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
-            } else if (UserData.getUserData().getIsCompany() > 0 && UserData.getUserData().getIsCompany() < 88) {
-                baseViewHolder.setVisible(R.id.employ_job_broker_layout, false);
-                baseViewHolder.setText(R.id.employ_job_price, ri.getSalary() + "元/小时");
-            } else {//普通用户
-                baseViewHolder.setVisible(R.id.employ_job_broker_layout, false);
-                baseViewHolder.setText(R.id.employ_job_price, ri.getFocusSalary() + "元/月");
+            baseViewHolder.setText(R.id.home_employ_name, ri.getPositionName());
+            baseViewHolder.setText(R.id.home_employ_ltd, ri.getCompanyName());
+            String region = ri.getRegion();
+            if (region.contains(".")) {
+                String[] regions = region.split("\\.");
+                baseViewHolder.setText(R.id.home_employ_addr, regions[0]+"."+regions[1]);
+            } else {
+                baseViewHolder.setText(R.id.home_employ_addr, ri.getRegion());
             }
+            baseViewHolder.setText(R.id.home_employ_price, "¥" + ri.getFocusSalary());
+            switch (ri.getAdvSort()) {//advSort (1限时招聘2优质企业3犇犇推荐4可实习生5小时兼职)
+                case 1:
+                    baseViewHolder.setText(R.id.home_employ_tag, "限时招聘");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#fd7979"));
+                    break;
+                case 2:
+                    baseViewHolder.setText(R.id.home_employ_tag, "优质企业");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#94db46"));
+                    break;
+                case 3:
+                default:
+                    baseViewHolder.setText(R.id.home_employ_tag, "犇犇推荐");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, R.color.bluetheme);
+                    break;
+                case 4:
+                    baseViewHolder.setText(R.id.home_employ_tag, "可实习生");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#ffa23c"));
+                    break;
+                case 5:
+                    baseViewHolder.setText(R.id.home_employ_tag, "小时兼职");
+                    baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#50e3c2"));
+                    break;
+            }
+            String img = ri.getCompanyMien();
+            if (img.contains(",")) {
+                img = img.split(",")[0];
+            }
+            Glide.with(SearchActivity.this)
+                    .load(img)
+                    .placeholder(R.mipmap.default_image)
+                    .error(R.mipmap.default_image)
+                    .into((ImageView) baseViewHolder.getView(R.id.home_employ_logo));
             baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

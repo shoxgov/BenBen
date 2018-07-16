@@ -15,6 +15,7 @@ import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.utils.ToastUtil;
+import com.benben.bb.utils.Utils;
 import com.benben.bb.view.TitleBar;
 
 import java.util.HashMap;
@@ -80,8 +81,12 @@ public class PersonRefValueActivity extends BaseActivity {
             return;
         }
         Map<String, String> params = new HashMap<String, String>();
-        params.put("id", UserData.getUserData().getId()+"");
+        params.put("id", UserData.getUserData().getId() + "");
         if (title.equals("昵称")) {
+            if (Utils.getTextLength(result) > 8) {
+                ToastUtil.showText("呢称不能超过4个汉字长度");
+                return;
+            }
             params.put("nickName", result);
         } else if (title.equals("年龄")) {
             params.put("age", result);

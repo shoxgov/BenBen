@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
+import com.benben.bb.bean.UserData;
 import com.benben.bb.dialog.WarnDialog;
 import com.benben.bb.imp.DialogCallBack;
 import com.benben.bb.imp.TitleBarListener;
@@ -157,7 +158,7 @@ public class MySignupActivity extends BaseActivity {
                             @Override
                             public void OkDown(Object obj) {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("positionId", si.getPositionUserId() + "");//职位ID
+                                params.put("positionUserId", si.getPositionUserId() + "");//职位ID
                                 OkHttpUtils.getAsyn(NetWorkConfig.USER_AGREEN_SIGNUP_EVENT, params, BaseResponse.class, new HttpCallback() {
                                     @Override
                                     public void onSuccess(BaseResponse br) {

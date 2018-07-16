@@ -85,4 +85,23 @@
         </attr>
         <attr name="radius" format="dimension"/>
     </declare-styleable>
+    <!--stickLayout 上滑停留控件属性-->
+    <declare-styleable name="StickLayout_Layout">
+        <!--是否粘性停留-->
+        <attr name="wkp_stick" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="StickLayout">
+        <!--是否开启滑动到最后一个控件的顶部，默认不开启-->
+        <attr name="wkp_canScrollToEndViewTop" format="boolean"/>
+    </declare-styleable>
+    <!--end stickLayout-->
+    <declare-styleable name="MyTabIndicator">
+        <attr name="textNormalColor" format="color"/>
+        <attr name="textSelectedColor" format="color"/>
+        <attr name="textNormalSize" format="dimension"/>
+        <attr name="textSelectedSize" format="dimension"/>
+        <attr name="backGroundColor" format="color"/>
+        <attr name="tabIndicatorColor" format="color"/>
+        <attr name="tabIndicatorWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

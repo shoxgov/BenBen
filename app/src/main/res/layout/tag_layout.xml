@@ -12,6 +12,6 @@
         android:background="@drawable/toast_bg"
         android:padding="5dip"
         android:text=""
-        android:textColor="@color/gray_dark" />
+        android:textColor="@color/bluetheme" />
 
 </LinearLayout>

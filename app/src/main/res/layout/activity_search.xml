@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dip"
                 android:background="@null"
-                android:hint="输入搜索职位"
+                android:hint="搜索职位名称"
                 android:singleLine="true"
                 android:textColor="#8c8d91" />
 
@@ -62,6 +62,7 @@
         android:layout_height="wrap_content"
         android:background="@color/bluetheme"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:padding="10dip">
 
