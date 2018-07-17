@@ -551,7 +551,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         List<SearchResultResponse.RecruitInfo> temp = crr.getData().getList();
                         if (temp == null || temp.isEmpty()) {
                             if (totalPage == 0) {
-                                recyclerSwipeLayout.setEmpty();
+                                ToastUtil.showText("当前无数据");
+//                                recyclerSwipeLayout.setEmpty();
                             }
                             return;
                         }

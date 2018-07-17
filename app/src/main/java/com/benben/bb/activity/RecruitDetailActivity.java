@@ -194,6 +194,16 @@ public class RecruitDetailActivity extends BaseActivity {
                 if (updateDate.contains(" ")) {
                     updateDate = updateDate.split(" ")[0];
                 }
+                if(!TextUtils.isEmpty(rdi.getData().getStaffCanteen())){
+                    diningTv.setText(rdi.getData().getStaffCanteen());
+                }else{
+                    diningTv.setText("不限");
+                }
+                if(!TextUtils.isEmpty(rdi.getData().getStaffHouse())){
+                    dormitoryTv.setText(rdi.getData().getStaffHouse());
+                }else{
+                    dormitoryTv.setText("不限");
+                }
                 endtimeTv.setText("更新时间：" + updateDate);
                 commissionTv.setText(rdi.getData().getCommision() + "元/小时");
                 salaryTv.setText(rdi.getData().getSalary() + "元/小时");
