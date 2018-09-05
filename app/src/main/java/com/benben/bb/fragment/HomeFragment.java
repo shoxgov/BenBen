@@ -7,49 +7,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Html;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.benben.bb.MyApplication;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
-import com.benben.bb.activity.BrokerActivity;
-import com.benben.bb.activity.EnterpriseCertifyActivity;
+import com.benben.bb.activity.EmployActivity;
 import com.benben.bb.activity.MainFragmentActivity;
-import com.benben.bb.activity.MyEnterpriseActivity;
-import com.benben.bb.activity.RealNameCertifyActivity;
+import com.benben.bb.activity.MyWalletActivity;
+import com.benben.bb.activity.PersonQrActivity;
 import com.benben.bb.activity.RecruitDetailActivity;
 import com.benben.bb.activity.SearchActivity;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.base.BaseFragment;
-import com.benben.bb.bean.UserData;
-import com.benben.bb.dialog.BecomeBrokerDialog;
-import com.benben.bb.dialog.BecomeBrokerRunningDialog;
-import com.benben.bb.dialog.BecomeEnterpriseDialog;
-import com.benben.bb.dialog.RealnameCertifyDialog;
-import com.benben.bb.imp.DialogCallBack;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.HomeBannerResponse;
 import com.benben.bb.okhttp3.response.SearchResultResponse;
-import com.benben.bb.okhttp3.response.UserInfoResponse;
-import com.benben.bb.utils.DateUtils;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.BannerView;
-import com.benben.bb.view.CustumViewGroup;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.ArrayList;
@@ -69,6 +58,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.recyclerRefreshLayout)
     RecyclerViewSwipeLayout recyclerSwipeLayout;
+    @Bind(R.id.home_search_main_layout)
+    LinearLayout llMain;
+    @Bind(R.id.home_search_child_layout)
+    LinearLayout llChild;
 //    @Bind(R.id.search_bar_location)
 //    TextView locationTv;
     /**
@@ -78,12 +71,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private int pageNo = 1;
     private int totalPage = -1;
     private int pageSize = 10;
-
+    //状态栏的高度
+    private int statusHeight;
     private static final String ARG = "arg";
-    //    private BannerView bannerView;
-//    private LinearLayout bannerLayout;
-    private LinearLayout brokerLayout, enterpriseLayout;
+    private BannerView bannerView;
+    private LinearLayout bannerLayout;
     private List<HomeBannerResponse.BannerInfo> bannerList;
+    private GradientDrawable mainDrawable;
+    private GradientDrawable childDrawable;
 
     public HomeFragment() {
         LogUtil.d("HomeFragment non-parameter constructor");
@@ -105,6 +100,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void init() {
+        mainDrawable = new GradientDrawable();
+        mainDrawable.setColor(Color.parseColor("#003b9cff"));
+        llMain.setBackground(mainDrawable);
+        childDrawable = new GradientDrawable();
+        childDrawable.setColor(Color.parseColor("#00FFFFFF"));
+//        childDrawable.setStroke(Utils.dip2px(getActivity(), 1), Color.parseColor("#FFFFFF"));
+        childDrawable.setCornerRadius(Utils.dip2px(getActivity(), 5));
+        llChild.setBackground(childDrawable);
 
     }
 
@@ -112,23 +115,99 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         LogUtil.d("HomeFragment onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+        statusHeight = Utils.getStatusHeight(getActivity());
+        getView().findViewById(R.id.home_search_child_layout).setOnClickListener(this);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.home_hot_employ_head, null, false);
-        header.findViewById(R.id.search_bar_layout2).setOnClickListener(this);
-//        bannerLayout = (LinearLayout) header.findViewById(R.id.bannerlayout);
-        brokerLayout = (LinearLayout) header.findViewById(R.id.home_broker_layout);
-        enterpriseLayout = (LinearLayout) header.findViewById(R.id.home_enterprise_layout);
-        header.findViewById(R.id.home_employ_more).setOnClickListener(this);
-        brokerLayout.setOnClickListener(this);
-        enterpriseLayout.setOnClickListener(this);
+//        header.findViewById(R.id.search_bar_layout2).setOnClickListener(this);
+        bannerLayout = (LinearLayout) header.findViewById(R.id.bannerlayout);
+        header.findViewById(R.id.home_employ_change).setOnClickListener(this);
+        header.findViewById(R.id.home_rights_layout).setOnClickListener(this);
+        header.findViewById(R.id.home_employ_layout).setOnClickListener(this);
+        header.findViewById(R.id.home_share_layout).setOnClickListener(this);
+        header.findViewById(R.id.home_wallet_layout).setOnClickListener(this);
 //        recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
         recyclerSwipeLayout.setXCallBack(callBack);
         recyclerSwipeLayout.addHeaderView(header);
-//        bannerView = new BannerView(getActivity());
-//        bannerLayout.addView(bannerView);
+        bannerView = new BannerView(getActivity());
+        bannerLayout.addView(bannerView);
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(MyApplication.ADDRESS_CITY_ACTION);
         getActivity().registerReceiver(cityReceiver, mFilter);
         freshUI();
+        initBanner();
+        recyclerSwipeLayout.addOnScrollListener(onScrollListener);
+    }
+
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        //监听滑动状态的改变
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        }
+
+        @Override
+        //用于监听ListView屏幕滚动
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            int[] ints = new int[2];
+            bannerLayout.getLocationOnScreen(ints);
+            /**
+             * mImage距离屏幕顶部的距离(图片顶部在屏幕最上面，向上滑动为负数，所以取反)
+             * 如果不隐藏状态栏，需要加上状态栏的高度；隐藏状态栏就不用加了；
+             */
+            if (ints[1] == 0) {
+                return;
+            }
+            int scrollY = -ints[1] + statusHeight;
+            //mImage这个view的高度
+            int imageHeight = bannerLayout.getHeight();
+            if (bannerLayout != null && imageHeight > 0) {
+                //如果“图片”没有向上滑动，设置为全透明
+                if (scrollY < 0) {
+                    mainDrawable.setColor(Color.parseColor("#003b9cff"));
+                    llMain.setBackground(mainDrawable);
+                    childDrawable.setColor(Color.parseColor("#00FFFFFF"));
+                    llChild.setBackground(childDrawable);
+                } else {
+                    //“图片”已经滑动，而且还没有全部滑出屏幕，根据滑出高度的比例设置透明度的比例
+                    if (scrollY < imageHeight) {
+                        int progress = (int) (new Float(scrollY) / new Float(imageHeight) * 255);//255
+                        mainDrawable.setColor(Color.parseColor("#" + decimalToHex(progress) + "3b9cff"));
+                        llMain.setBackground(mainDrawable);
+                        childDrawable.setColor(Color.parseColor("#" + decimalToHex(progress) + "FFFFFF"));
+                        llChild.setBackground(childDrawable);
+                    } else {
+                        //“图片”全部滑出屏幕的时候，设为完全不透明
+                        mainDrawable.setColor(Color.parseColor("#ff3b9cff"));
+                        llMain.setBackground(mainDrawable);
+                        childDrawable.setColor(Color.parseColor("#FFFFFFFF"));
+                        llChild.setBackground(childDrawable);
+                    }
+                }
+            }
+        }
+    };
+
+    private String decimalToHex(int decimal) {
+        String hex = "";
+        if (decimal == 0) {
+            return "00";
+        }
+        while (decimal != 0) {
+            int hexValue = decimal % 16;
+            hex = toHexChar(hexValue) + hex;
+            decimal = decimal / 16;
+        }
+        if (hex.length() == 1) {
+            return "0" + hex;
+        }
+        return hex;
+    }
+
+    //将0~15的十进制数转换成0~F的十六进制数
+    private char toHexChar(int hexValue) {
+        if (hexValue <= 9 && hexValue >= 0)
+            return (char) (hexValue + '0');
+        else
+            return (char) (hexValue - 10 + 'A');
     }
 
     private void initBanner() {
@@ -151,31 +230,31 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         for (HomeBannerResponse.BannerInfo banner : bannerList) {
                             bannerData.add(banner.getPic());
                         }
-//                        bannerView.setList(bannerData);
-//                        bannerView.setOnBannerItemClickListener(new BannerView.OnBannerItemClickListener() {
-//                            @Override
-//                            public void onClick(int position) {
-//                                if (Utils.isFastDoubleClick()) {
-//                                    return;
-//                                }
-//                                try {
-//                                    HomeBannerResponse.BannerInfo bi = bannerList.get(position);
-//                                    String href = bi.getHref();
-//                                    String positionName = bi.getPositionName();
-//                                    String positionId = href.split("=")[1];
-//                                    if (TextUtils.isEmpty(href) || TextUtils.isEmpty(positionId) || TextUtils.isEmpty(positionName)) {
-//                                        return;
-//                                    }
-//                                    Intent detail = new Intent();
-//                                    detail.setClass(getActivity(), RecruitDetailActivity.class);
-//                                    detail.putExtra("positionId", positionId);
-//                                    detail.putExtra("positionName", positionName);
-//                                    startActivity(detail);
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
+                        bannerView.setList(bannerData);
+                        bannerView.setOnBannerItemClickListener(new BannerView.OnBannerItemClickListener() {
+                            @Override
+                            public void onClick(int position) {
+                                if (Utils.isFastDoubleClick()) {
+                                    return;
+                                }
+                                try {
+                                    HomeBannerResponse.BannerInfo bi = bannerList.get(position);
+                                    String href = bi.getHref();
+                                    String positionName = bi.getPositionName();
+                                    String positionId = href.split("=")[1];
+                                    if (TextUtils.isEmpty(href) || TextUtils.isEmpty(positionId) /*|| TextUtils.isEmpty(positionName)*/) {
+                                        return;
+                                    }
+                                    Intent detail = new Intent();
+                                    detail.setClass(getActivity(), RecruitDetailActivity.class);
+                                    detail.putExtra("positionId", positionId);
+                                    detail.putExtra("positionName", positionName);
+                                    startActivity(detail);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -213,7 +292,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             String region = ri.getRegion();
             if (region.contains(".")) {
                 String[] regions = region.split("\\.");
-                baseViewHolder.setText(R.id.home_employ_addr, regions[0]+"."+regions[1]);
+                if (regions.length == 3) {
+                    baseViewHolder.setText(R.id.home_employ_addr, regions[1] + "." + regions[2]);
+                } else {
+                    baseViewHolder.setText(R.id.home_employ_addr, regions[0] + "." + regions[1]);
+                }
             } else {
                 baseViewHolder.setText(R.id.home_employ_addr, ri.getRegion());
             }
@@ -241,7 +324,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     baseViewHolder.setBackgroundColor(R.id.home_employ_tag, Color.parseColor("#50e3c2"));
                     break;
             }
-            String img = ri.getCompanyMien();
+            String img = ri.getHouseImg();
             if (!TextUtils.isEmpty(img) && img.contains(",")) {
                 img = img.split(",")[0];
             }
@@ -269,260 +352,45 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             return;
         }
         switch (v.getId()) {
-            case R.id.home_employ_more:
-                ((MainFragmentActivity) getActivity()).changeFragment(1);
-                break;
-            case R.id.home_broker_layout:
-                if (UserData.getUserData().getValidateStatus() == 3 || UserData.getUserData().getIsAgent() == 99 || UserData.getUserData().getIsAgent() == 88) {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("id", UserData.getUserData().getId() + "");//id	用户ID
-                    OkHttpUtils.getAsyn(NetWorkConfig.GET_USERINFO, params, UserInfoResponse.class, new HttpCallback() {
-                        @Override
-                        public void onSuccess(BaseResponse br) {
-                            super.onSuccess(br);
-                            try {
-                                UserInfoResponse ui = (UserInfoResponse) br;
-                                UserData.updateUserInfo(ui.getData().getUser());
-                                UserData.getUserData().setToken(ui.getData().getToken());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            brokerClick();
-                        }
-
-                        @Override
-                        public void onFailure(int code, String message) {
-                            super.onFailure(code, message);
-                            brokerClick();
-                        }
-                    });
-                } else {
-                    brokerClick();
+            case R.id.home_employ_change:
+                if (totalPage == 1) {
+                    ToastUtil.showText("暂无更新");
+                    return;
                 }
-                break;
-
-            case R.id.home_enterprise_layout:
-                if (UserData.getUserData().getValidateStatus() == 3 || UserData.getUserData().getIsCompany() == 99 || UserData.getUserData().getIsCompany() == 88) {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("id", UserData.getUserData().getId() + "");//id	用户ID
-                    OkHttpUtils.getAsyn(NetWorkConfig.GET_USERINFO, params, UserInfoResponse.class, new HttpCallback() {
-                        @Override
-                        public void onSuccess(BaseResponse br) {
-                            super.onSuccess(br);
-                            try {
-                                UserInfoResponse ui = (UserInfoResponse) br;
-                                UserData.updateUserInfo(ui.getData().getUser());
-                                UserData.getUserData().setToken(ui.getData().getToken());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            enterpriseClick();
-                        }
-
-                        @Override
-                        public void onFailure(int code, String message) {
-                            super.onFailure(code, message);
-                            enterpriseClick();
-                        }
-                    });
+                if (pageNo < totalPage) {
+                    recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+                    pageNo++;
+                    requestEmployList();
                 } else {
-                    enterpriseClick();
+                    pageNo = 1;
+                    requestEmployList();
                 }
+//                ((MainFragmentActivity) getActivity()).changeFragment(1);
                 break;
 
-            case R.id.search_bar_layout2:
+            case R.id.home_search_child_layout:
                 Intent search = new Intent();
                 search.setClass(getActivity(), SearchActivity.class);
                 startActivity(search);
                 break;
-        }
-    }
-
-    private void enterpriseClick() {
-        switch (UserData.getUserData().getValidateStatus()) {//validateStatus 0未认证1已通过2认证失败3认证中
-            case 2:
-                ToastUtil.showText("上次提交的实名认证申核失败，需要重新认证");
-            case 0:
-                RealnameCertifyDialog realnameCertifyDialog = new RealnameCertifyDialog(getActivity(), "认证为企业人需先完成实名认证", new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                        Intent realname = new Intent();
-                        realname.setClass(getActivity(), RealNameCertifyActivity.class);
-                        realname.putExtra("status", UserData.getUserData().getValidateStatus());
-                        startActivityForResult(realname, 11);
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                realnameCertifyDialog.show();
-                return;
-            case 3:
-                BecomeBrokerRunningDialog dialog2 = new BecomeBrokerRunningDialog(getActivity(), "实名认证正在审核中", new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog2.show();
-                return;
-        }
-        int agent2 = UserData.getUserData().getIsAgent();
-        if (agent2 > 0 && agent2 < 88) {
-            ToastUtil.showText("您已经认证为就业顾问将不能认证成为企业");
-            return;
-        }
-        final int company = UserData.getUserData().getIsCompany();
-        switch (company) {
-            case 88://申请失败
-                ToastUtil.showText("上次提交的企业人认证申核失败，是否重新认证");
-            case 0://未认证
-                BecomeEnterpriseDialog dialog = new BecomeEnterpriseDialog(getActivity(), "是否认证为企业人", new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                        Intent enterprise = new Intent();
-                        enterprise.setClass(getActivity(), EnterpriseCertifyActivity.class);
-                        startActivityForResult(enterprise, 11);
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog.show();
+            case R.id.home_rights_layout:
+                ((MainFragmentActivity) getActivity()).changeFragment(3);
                 break;
-            case 99://申请中
-                BecomeBrokerRunningDialog dialog2 = new BecomeBrokerRunningDialog(getActivity(), new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog2.show();
+            case R.id.home_employ_layout:
+                Intent employ = new Intent();
+                employ.setClass(getActivity(), EmployActivity.class);
+                startActivity(employ);
                 break;
-            default://大于0 小于88 都是就业顾问
-                if (company > 0 && company < 88) {
-                    Intent enterprise = new Intent();
-                    enterprise.setClass(getActivity(), MyEnterpriseActivity.class);
-                    enterprise.putExtra("status", company);
-                    startActivity(enterprise);
-                }
+            case R.id.home_wallet_layout:
+                Intent wallet = new Intent();
+                wallet.setClass(getActivity(), MyWalletActivity.class);
+                startActivity(wallet);
                 break;
-        }
-    }
-
-    private void brokerClick() {
-        switch (UserData.getUserData().getValidateStatus()) {//validateStatus 0未认证1已通过2认证失败3认证中
-            case 2:
-                ToastUtil.showText("上次提交的实名认证申核失败，需要重新认证");
-            case 0:
-                RealnameCertifyDialog realnameCertifyDialog = new RealnameCertifyDialog(getActivity(), "认证为就业顾问需先完成实名认证", new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                        Intent realname = new Intent();
-                        realname.setClass(getActivity(), RealNameCertifyActivity.class);
-                        realname.putExtra("status", UserData.getUserData().getValidateStatus());
-                        startActivityForResult(realname, 11);
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                realnameCertifyDialog.show();
-                return;
-            case 3:
-                BecomeBrokerRunningDialog dialog2 = new BecomeBrokerRunningDialog(getActivity(), "实名认证正在审核中", new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog2.show();
-                return;
-        }
-        int company2 = UserData.getUserData().getIsCompany();
-        if (company2 > 0 && company2 < 88) {
-            ToastUtil.showText("您已认证为企业人将不能认证就业顾问");
-            return;
-        }
-        final int agent = UserData.getUserData().getIsAgent();
-        switch (agent) {
-            case 88://申请失败
-                ToastUtil.showText("上次提交的就业顾问认证申核失败，是否重新认证");
-            case 0://未认证
-                String info = "1.免费认证\n" +
-                        "通过【我的】-【二维码】-【分享】-成功邀请10位好友加入职犇犇\n" +
-                        "2.收费认证\n" +
-                        "缴纳认证费 200.00元";
-                BecomeBrokerDialog dialog = new BecomeBrokerDialog(getActivity(), info, new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                        OkHttpUtils.getAsyn(NetWorkConfig.BROKER_CHECK_AGENTS, BaseResponse.class, new HttpCallback() {
-                            @Override
-                            public void onSuccess(BaseResponse br) {
-                                super.onSuccess(br);
-                                if (br.getCode() == 1) {
-                                    ToastUtil.showText("申请就业顾问已提交，申核需要1-2个工作日");
-                                    Utils.updateUserInfomation();
-                                } else {
-                                    ToastUtil.showText(br.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(int code, String message) {
-                                super.onFailure(code, message);
-                                ToastUtil.showText(message);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog.show();
+            case R.id.home_share_layout:
+                Intent qr = new Intent();
+                qr.setClass(getActivity(), PersonQrActivity.class);
+                startActivity(qr);
                 break;
-            case 99://申请中
-                BecomeBrokerRunningDialog dialog2 = new BecomeBrokerRunningDialog(getActivity(), new DialogCallBack() {
-                    @Override
-                    public void OkDown(Object obj) {
-                    }
-
-                    @Override
-                    public void CancleDown() {
-
-                    }
-                });
-                dialog2.show();
-                break;
-            default://大于0 小于88 都是就业顾问
-                if (agent > 0 && agent < 88) {
-                    Intent broker = new Intent();
-                    broker.setClass(getActivity(), BrokerActivity.class);
-                    startActivity(broker);
-                }
-                break;
-
         }
     }
 

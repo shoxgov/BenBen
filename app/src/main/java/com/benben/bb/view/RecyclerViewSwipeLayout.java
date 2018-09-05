@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
@@ -34,6 +36,8 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
     private LinearLayout noDataView;
     private RecycleViewDivider recycleViewDivider;
     private DividerItemDecoration dividerItemDecoration;
+    private ImageView noDataImg;
+    private TextView noDataHint;
 
     public RecyclerViewSwipeLayout(Context context) {
         super(context);
@@ -72,6 +76,8 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         noDataView = (LinearLayout) findViewById(R.id.searchbar_nodata);
+        noDataImg = (ImageView) findViewById(R.id.searchbar_nodata_img);
+        noDataHint = (TextView) findViewById(R.id.searchbar_nodata_txt);
         swipeRefreshLayout.setEnabled(isHeaderFresh);
         //////////////////////////
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -104,6 +110,16 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
         adapter.setAdapter(recyclerView);
     }
 
+    public void createAdapter(int itemLayout, boolean isAnimation) {
+        this.itemLayout = itemLayout;
+        adapter = new CustomBaseQuickAdapter(itemLayout, null);//itemLayout);
+        if (isAnimation) {
+            adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        }
+        adapter.isFirstOnly(false);
+        adapter.setAdapter(recyclerView);
+    }
+
     public void setDividerColor(Context context, int dividerColor, int dividerHeight) {
         this.dividerColor = dividerColor;
         this.dividerHeight = dividerHeight;
@@ -126,6 +142,7 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
         }
         recyclerView.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, dividerDrawable));
     }
+
     public void setDividerDashline(Context context, int dividerColor, int dividerHeight) {
         this.dividerColor = dividerColor;
         this.dividerHeight = dividerHeight;
@@ -136,7 +153,7 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
             recyclerView.removeItemDecoration(dividerItemDecoration);
         }
         //设置分割线
-        recyclerView.addItemDecoration(new DashlineItemDivider(dividerColor,dividerHeight));
+        recyclerView.addItemDecoration(new DashlineItemDivider(dividerColor, dividerHeight));
     }
 
     public ViewGroup getBaseParent() {
@@ -165,8 +182,36 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
     }
 
     //设置页数量
-    public void openLoadMore(int pageSize) {
-        adapter.openLoadMore(pageSize);
+    public void openLoadMore(int totalPage) {
+        adapter.openLoadMore(totalPage);
+    }
+
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    public void notifyItemChanged(int poisition) {
+        adapter.notifyItemChanged(poisition);
+    }
+
+    public void notifyItemRemoved(int poisition) {
+        adapter.notifyItemRemoved(poisition);
+    }
+
+    public void notifyItemChanged(int poisition, Object obj) {
+        adapter.notifyItemChanged(poisition, obj);
+    }
+
+    public void remove(int poisition) {
+        adapter.remove(poisition);
+    }
+
+    public Object getItem(int position) {
+        return adapter.getItem(position);
+    }
+
+    public int getItemCount() {
+        return adapter.getItemCount();
     }
 
     //本次数据加载结束并且还有下页数据
@@ -197,6 +242,12 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
         noDataView.setVisibility(View.VISIBLE);
     }
 
+    public void setEmpty(int imgResId, String hint) {
+        noDataView.setVisibility(View.VISIBLE);
+        noDataImg.setImageResource(imgResId);
+        noDataHint.setText(hint);
+    }
+
     public void setEmptyView(View view) {
         adapter.setEmptyView(view);
     }
@@ -214,5 +265,9 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
     public void setNewData(List<T> data) {
         noDataView.setVisibility(View.GONE);
         adapter.setNewData(data);
+    }
+
+    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+        recyclerView.addOnScrollListener(onScrollListener);
     }
 }

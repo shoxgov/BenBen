@@ -89,6 +89,17 @@ public class PersonRefValueActivity extends BaseActivity {
             }
             params.put("nickName", result);
         } else if (title.equals("年龄")) {
+            int rage = -1;
+            try {
+                rage = Integer.parseInt(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+                rage = -1;
+            }
+            if (rage == -1) {
+                ToastUtil.showText("请输入正确的年龄");
+                return;
+            }
             params.put("age", result);
         } else if (title.equals("民族")) {
             params.put("nation", result);

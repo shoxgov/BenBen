@@ -1,104 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/person_qr_bg"
     android:orientation="vertical">
 
     <com.benben.bb.view.TitleBar
+        android:id="@id/titlelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightBtnBackground="@mipmap/share_blackbg"
+        app:leftBtnBackground="@mipmap/whiteback"
+        app:rightBtnBackground="@mipmap/share"
         app:rightBtnText="分享"
-        app:rightBtnTextcolor="@color/textblack"
+        app:rightBtnTextcolor="@color/white"
         app:showRightBtn="true"
-        app:titleName="二维码名片" />
+        app:titleBackground="@color/transparent"
+        app:titleName=""
+        app:titleTextColor="@color/white" />
 
+    <LinearLayout
+        android:id="@+id/my_person_qr_whitebg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titlelayout"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="40dip"
+        android:layout_marginLeft="30dip"
+        android:layout_marginRight="30dip"
+        android:layout_marginTop="80dip"
+        android:background="@mipmap/person_qr_whitebg"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/person_qr_bg"
+        android:layout_below="@id/titlelayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:layout_marginTop="35dip"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!--      <Space
-                  android:layout_width="wrap_content"
-                  android:layout_height="0dp"
-                  android:layout_weight="8" />-->
+        <com.benben.bb.view.RoundImageView
+            android:id="@+id/my_person_qr_photo"
+            android:layout_width="@dimen/broker_layout"
+            android:layout_height="@dimen/broker_layout"
+            android:src="@mipmap/default_image"
+            app:type="circle" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/my_person_invite_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/person_invite_icon" />
+            android:layout_marginTop="10dip"
+            android:text="张三"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_large" />
 
-        <FrameLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:layout_marginTop="20dip"
-            android:gravity="center">
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:src="@mipmap/person_qr_mid_bg" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/person_qr_iconbg"
-                android:visibility="gone" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/textgreydim"
+            android:paddingBottom="5dip"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="5dip"
+            android:text="一款好工作会赚钱的APP"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/my_person_qr_img"
                 android:layout_width="@dimen/icon_qr_width"
-                android:layout_height="@dimen/icon_qr_width"
-                android:layout_gravity="center" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/my_person_qr_benbenid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:background="@drawable/whitebg_transparent_corner"
-            android:paddingBottom="10dip"
-            android:paddingLeft="30dip"
-            android:paddingRight="30dip"
-            android:paddingTop="10dip"
-            android:text="我的邀请码："
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_large" />
-        <!--
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="10" />-->
-        <TextView
-            android:id="@+id/my_person_invite_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="已成功邀请20位好友加入职犇犇"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_large" />
-
-        <com.benben.bb.view.RecyclerViewSwipeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dip"
-            android:background="@drawable/qr_invite_bg"
-            app:dividerColor="@color/transparent"
-            app:dividerHeight="0dip" />
-
-        <!-- <ListView
-             android:id="@+id/my_person_list"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_margin="10dip"
-             android:background="@drawable/qr_invite_bg" />-->
+                android:layout_height="@dimen/icon_qr_width" />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

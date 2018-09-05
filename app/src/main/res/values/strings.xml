@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">职犇犇</string>
-    <string name="versionCode">4</string>
-    <string name="versionName">1.1.0</string>
+    <string name="versionCode">6</string>
+    <string name="versionName">1.1.2</string>
     <string name="loading">正在加载中，请稍后...</string>
     <string name="editInputtype">1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM</string>
 

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showLeftBtn="true"
+        app:titleName="编辑企业信息" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/line_color" />
+
+    <FrameLayout
+        android:id="@+id/enterprise_info_edit_ground"
+        android:layout_width="match_parent"
+        android:layout_height="200dip">
+
+        <include
+            android:id="@+id/enterprise_cover_add"
+            layout="@layout/drawable_enterprise_cover" />
+
+        <TextView
+            android:id="@+id/enterprise_info_edit_ground_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="15dip"
+            android:background="#aacccccc"
+            android:padding="5dip"
+            android:text="更换企业封面"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#77000000"
+            android:orientation="vertical"
+            android:padding="10dip">
+
+            <TextView
+                android:id="@+id/enterprise_info_edit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="企业人"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/enterprise_info_edit_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="湖南.长沙.岳麓区"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/enterprise_info_edit_addr_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_blue_corner"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip"
+                    android:paddingTop="3dip"
+                    android:text="修改区域"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <ImageView
+                    android:id="@+id/enterprise_info_edit_certify_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:src="@mipmap/enterprise_certify_tag" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/enterprise_info_edit_introduction"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="1"
+        android:background="@drawable/bg_white_bigradius_coner"
+        android:gravity="left|top"
+        android:hint="这里是简单介绍"
+        android:padding="5dip"
+        android:text=""
+        android:textColor="@color/textblack"
+        android:textSize="@dimen/font_small" />
+
+    <Button
+        android:id="@+id/enterprise_info_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:background="@color/bluetheme"
+        android:text="保存企业信息"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
+</LinearLayout>

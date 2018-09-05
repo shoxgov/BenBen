@@ -1,6 +1,7 @@
 package com.benben.bb.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.activity.EnterpriseEmployeeDetailActivity;
+import com.benben.bb.activity.UserInfoActivity;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.base.BaseFragment;
 import com.benben.bb.dialog.WarnDialog;
@@ -142,6 +144,8 @@ public class EnterpriseEmployeeEntryedFragment extends BaseFragment {
                     .load(eei.getAvatar())
                     .error(R.mipmap.default_image)
                     .into((ImageView) baseViewHolder.getView(R.id.enterprise_employee_entry_photo));
+            baseViewHolder.setOnClickListener(R.id.enterprise_employee_entry_photo, new UserInfoListener(eei.getUserId()));
+            baseViewHolder.setOnClickListener(R.id.enterprise_employee_entry_name, new UserInfoListener(eei.getUserId()));
             baseViewHolder.setText(R.id.enterprise_employee_entry_name, eei.getTrueName());
             baseViewHolder.setText(R.id.enterprise_employee_entry_hint, eei.getUserName());
             baseViewHolder.setVisible(R.id.employ_entry_btn2, false);
@@ -153,7 +157,8 @@ public class EnterpriseEmployeeEntryedFragment extends BaseFragment {
 
                         @Override
                         public void OkDown(Object obj) {
-                            userStatusOp(eei.getPositionUserId(), 91);
+//                            userStatusOp(eei.getPositionUserId(), 91);
+                            userDismiss(eei.getPositionUserId(),eei.getUserId(),91);
                         }
 
                         @Override
@@ -167,11 +172,53 @@ public class EnterpriseEmployeeEntryedFragment extends BaseFragment {
         }
     };
 
+    class UserInfoListener implements View.OnClickListener {
+        private int userId;
+
+        public UserInfoListener(int userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent userInfo = new Intent();
+            userInfo.setClass(getActivity(), UserInfoActivity.class);
+            userInfo.putExtra("userId", userId + "");
+            startActivity(userInfo);
+        }
+    }
+
     private void userStatusOp(int id, int entryStatus) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", id + "");
         params.put("entryStatus", entryStatus + "");//entryStatus 0 取消报名-用户;1 取消报名-系统;2 取消报名-企业;3 取消报名-经纪人;77 报名中-经纪人代报名;88 报名中-待系统审核;89 报名中-待企业审核;90 待入职;99 已入职;91辞退
         OkHttpUtils.getAsyn(NetWorkConfig.COMPANY_EMPLOYEE_USER_STATUS, params, BaseResponse.class, new HttpCallback() {
+            @Override
+            public void onSuccess(BaseResponse br) {
+                super.onSuccess(br);
+                ToastUtil.showText(br.getMessage());
+                if (br.getCode() == 1) {
+                    pageNo = 1;
+                    totalPage = -1;
+                    recyclerSwipeLayout.setNewData(new ArrayList<CompanyEmployeeEntryResponse.EmployeeEntryInfo>());
+                    requestEmployPosition();
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
+                ToastUtil.showText(message);
+            }
+        });
+    }
+    private void userDismiss(int id,int userId, int entryStatus) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", id + "");
+        params.put("userId", userId + "");
+        params.put("positionId", ((EnterpriseEmployeeDetailActivity) getActivity()).getPositionId() + "");
+        params.put("entryStatus", entryStatus + "");//entryStatus 0 取消报名-用户;1 取消报名-系统;2 取消报名-企业;3 取消报名-经纪人;77 报名中-经纪人代报名;88 报名中-待系统审核;89 报名中-待企业审核;90 待入职;99 已入职;91辞退
+        OkHttpUtils.getAsyn(NetWorkConfig.COMPANY_EMPLOYEE_USER_DISMISS, params, BaseResponse.class, new HttpCallback() {
             @Override
             public void onSuccess(BaseResponse br) {
                 super.onSuccess(br);

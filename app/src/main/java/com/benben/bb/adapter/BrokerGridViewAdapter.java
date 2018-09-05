@@ -1,6 +1,8 @@
 package com.benben.bb.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.benben.bb.R;
+import com.benben.bb.activity.UserInfoActivity;
 import com.benben.bb.okhttp3.response.MyResourceResponse;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BrokerGridViewAdapter extends BaseAdapter {
@@ -29,6 +33,14 @@ public class BrokerGridViewAdapter extends BaseAdapter {
 
     public void setData(List<MyResourceResponse.EntryPositionInfo> mList) {
         this.mList = mList;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<MyResourceResponse.EntryPositionInfo> mList) {
+        if (this.mList == null) {
+            this.mList = new ArrayList<MyResourceResponse.EntryPositionInfo>();
+        }
+        this.mList.addAll(mList);
         notifyDataSetChanged();
     }
 
@@ -83,7 +95,11 @@ public class BrokerGridViewAdapter extends BaseAdapter {
                 .load(epi.getAvatar())
                 .error(R.mipmap.default_image)
                 .into(holder.icon);
-        holder.name.setText(epi.getTrueName());
+        if(TextUtils.isEmpty(epi.getTrueName())){
+            holder.name.setText("未实名认证");
+        }else {
+            holder.name.setText(epi.getTrueName());
+        }
         holder.hint.setText(epi.getUserName());
         if (iscbVisible) {
             holder.iccb.setVisibility(View.VISIBLE);
@@ -101,6 +117,16 @@ public class BrokerGridViewAdapter extends BaseAdapter {
                         selectedTag = selectedTag.concat("#" + epi.getUserId() + "@");
                     }
                     notifyDataSetChanged();
+                }
+            });
+        } else {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent userInfo = new Intent();
+                    userInfo.setClass(mContext, UserInfoActivity.class);
+                    userInfo.putExtra("userId", epi.getUserId() + "");
+                    mContext.startActivity(userInfo);
                 }
             });
         }

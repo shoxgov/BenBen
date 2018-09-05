@@ -58,7 +58,7 @@ public class EnterpriseEmployeeActivity extends BaseActivity {
 
     private void initViews() {
         TitleBar titleLayout = (TitleBar) findViewById(R.id.titlelayout);
-        titleLayout.setTitleName("应聘管理");
+        titleLayout.setTitleName("应聘人员");
         titleLayout.setTitleBarListener(new TitleBarListener() {
 
             @Override

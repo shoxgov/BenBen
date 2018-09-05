@@ -109,7 +109,7 @@ public class LoginPwdActivity extends BaseActivity {
         super.finish();
     }
 
-    @OnClick({R.id.loginpwd_clear, R.id.loginpwd_code, R.id.loginpwd_ok})
+    @OnClick({R.id.loginpwd_clear, R.id.loginpwd_code, R.id.loginpwd_ok,R.id.login_findpwd})
     public void onViewClicked(View view) {
         if (Utils.isFastDoubleClick()) {
             return;
@@ -134,6 +134,12 @@ public class LoginPwdActivity extends BaseActivity {
                 i.setClass(LoginPwdActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
+                break;
+
+            case R.id.login_findpwd:
+                Intent find = new Intent();
+                find.setClass(LoginPwdActivity.this, FindPwdActivity.class);
+                startActivity(find);
                 break;
         }
     }

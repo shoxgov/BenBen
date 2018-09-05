@@ -14,9 +14,8 @@
         android:layout_width="@dimen/img_large"
         android:layout_height="@dimen/img_large"
         android:layout_marginLeft="10dip"
-        android:src="@mipmap/ic_launcher"
-        app:radius="5dip"
-        app:type="round" />
+        android:src="@mipmap/logo_bg"
+        app:type="circle" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -76,10 +75,10 @@
         android:layout_marginRight="10dip"
         android:background="@drawable/boarder_btn_bg_semicircle"
         android:paddingBottom="5dip"
-        android:paddingLeft="20dip"
-        android:paddingRight="20dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:paddingTop="5dip"
-        android:text="取消"
+        android:text="取消顾问"
         android:textColor="@color/textblack" />
 
 </LinearLayout>

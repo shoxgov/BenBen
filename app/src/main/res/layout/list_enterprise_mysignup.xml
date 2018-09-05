@@ -8,82 +8,122 @@
     android:paddingBottom="10dip"
     android:paddingTop="10dip">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/mysignup_positionname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_toLeftOf="@+id/mysignup_price"
-            android:singleLine="true"
-            android:text="行政主管"
-            android:textColor="@color/textblack"
-            android:textSize="@dimen/font_normal"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/mysignup_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="15dip"
-            android:singleLine="true"
-            android:text="300.0元/小时"
-            android:textColor="@color/textred"
-            android:textSize="@dimen/font_small" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/mysignup_welfare"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginTop="10dip"
-        android:text="公积金｜班车接送｜保险"
-        android:textColor="@color/gray_dark"
-        android:textSize="@dimen/font_small" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/mysignup_positionname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="操作工"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mysignup_job_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/mysignup_positionname"
+                    android:background="@color/red"
+                    android:paddingBottom="2dip"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip"
+                    android:paddingTop="2dip"
+                    android:singleLine="true"
+                    android:text="限时招聘"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/mysignup_job_ltd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="天尊有限公司"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_normal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mysignup_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="¥5000-6000"
+                    android:textColor="@color/textred"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mysignup_addr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="湖南省-长沙"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.benben.bb.view.RoundImageView
+            android:id="@+id/employ_job_logo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/img_max"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_image"
+            app:radius="5dip"
+            app:type="round" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip">
-
-            <TextView
-                android:id="@+id/mysignup_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:text="报名：1/5（还剩8天）"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/font_small" />
-
-            <TextView
-                android:id="@+id/mysignup_addr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginTop="10dip"
-                android:text="工作地点："
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/font_small" />
-
-        </LinearLayout>
 
         <Space
             android:layout_width="0dp"
@@ -95,14 +135,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dip"
-            android:background="@drawable/boarder_btn_yellowbg"
-            android:paddingBottom="10dip"
-            android:paddingLeft="5dip"
-            android:paddingRight="5dip"
-            android:paddingTop="10dip"
+            android:background="@drawable/drawable_buttonbg"
+            android:paddingBottom="5dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:paddingTop="5dip"
             android:text="同意应聘职位"
             android:textColor="@color/white" />
     </LinearLayout>
-
-
 </LinearLayout>

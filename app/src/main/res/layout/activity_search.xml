@@ -62,7 +62,6 @@
         android:layout_height="wrap_content"
         android:background="@color/bluetheme"
         android:gravity="center_vertical"
-        android:visibility="gone"
         android:orientation="horizontal"
         android:padding="10dip">
 
@@ -129,7 +128,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dividerColor="@color/line_color"
-        app:dividerHeight="1dip"
-        app:itemlayout="@layout/list_fragment_employ" />
+        app:dividerHeight="1dip" />
 
 </LinearLayout>

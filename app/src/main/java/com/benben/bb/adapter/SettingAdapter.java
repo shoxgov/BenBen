@@ -59,7 +59,9 @@ public class SettingAdapter extends BaseAdapter {
         }
         final SettingItem si = data.get(position);
         viewHolder.title.setText(si.getTitle());
-        viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(si.getIconResId()), null, null, null);
+        if (si.getIconResId() > 0) {
+            viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(si.getIconResId()), null, null, null);
+        }
         viewHolder.content.setText(si.getContent());
         return convertView;
     }

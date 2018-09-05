@@ -141,6 +141,7 @@ public class SearchResultResponse extends BaseResponse {
         private String region;
         private String welfare;
         private String endTime;
+        private String houseImg;
         private String companyMien;
         private String focusSalary;
 
@@ -230,6 +231,14 @@ public class SearchResultResponse extends BaseResponse {
 
         public void setAdvSort(int advSort) {
             this.advSort = advSort;
+        }
+
+        public String getHouseImg() {
+            return houseImg;
+        }
+
+        public void setHouseImg(String houseImg) {
+            this.houseImg = houseImg;
         }
 
         public String getCompanyName() {

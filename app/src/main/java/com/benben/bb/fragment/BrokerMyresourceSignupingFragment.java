@@ -1,32 +1,25 @@
 package com.benben.bb.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
-import com.benben.bb.activity.BrokerMyresSignupDetailActivity;
-import com.benben.bb.adapter.CustomBaseQuickAdapter;
+import com.benben.bb.adapter.BrokerSingupingExpandableListAdapter;
 import com.benben.bb.base.BaseFragment;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.BrokerEnrollSignupPositionResponse;
-import com.benben.bb.okhttp3.response.MyResourceResponse;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.ToastUtil;
-import com.benben.bb.view.RecyclerViewSwipeLayout;
-import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.benben.bb.view.AutoLoadListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -38,15 +31,19 @@ import butterknife.Bind;
 
 public class BrokerMyresourceSignupingFragment extends BaseFragment {
     private static final String ARG = "arg";
-    @Bind(R.id.recyclerRefreshLayout)
-    RecyclerViewSwipeLayout recyclerSwipeLayout;
+    @Bind(R.id.searchbar_nodata)
+    LinearLayout nodataLayout;
+    @Bind(R.id.expand_list)
+    ExpandableListView expandableList;
     /**
      * 请求的页数，从第1页开始
      * 每一页请求数固定10
      */
     private int pageNo = 1;
+    private int requestPageNo = 1;
     private int totalPage = -1;
     private int pageSize = 10;
+    private BrokerSingupingExpandableListAdapter adapter;
 
     public BrokerMyresourceSignupingFragment() {
         LogUtil.d("BrokerMyresourceSignupingFragment non-parameter constructor");
@@ -62,7 +59,7 @@ public class BrokerMyresourceSignupingFragment extends BaseFragment {
 
     @Override
     protected int provieResourceID() {
-        return R.layout.fragment_recyclerview;
+        return R.layout.fragment_broker_myres_signuping;
     }
 
     @Override
@@ -72,20 +69,83 @@ public class BrokerMyresourceSignupingFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerSwipeLayout.createAdapter(R.layout.list_broker_myres_signuping);
-        recyclerSwipeLayout.setOnLoadMoreListener(quickAdapterListener);
-        recyclerSwipeLayout.setXCallBack(callBack);
-        initdata();
-    }
-
-    private void initdata() {
-        requestPosition();
+        adapter = new BrokerSingupingExpandableListAdapter(getActivity());
+        expandableList.setAdapter(adapter);
+        expandableList.setGroupIndicator(null);
+        expandableList.setOnScrollListener(new AutoLoadListener(new AutoLoadListener.AutoLoadCallBack() {
+            @Override
+            public void execute() {
+                if (requestPageNo == pageNo && pageNo < totalPage) {
+                    pageNo++;
+                    requestSignuping();
+                } else {
+                }
+            }
+        }));
+//        expandableList.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                switch (scrollState) {
+//                    // 当不滚动时
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+//                        // 判断滚动到底部
+//                        if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+//                            if (requestPageNo == pageNo && pageNo < totalPage) {
+//                                pageNo++;
+//                                requestSignuping();
+//                            } else {
+//                            }
+//                        }
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem,
+//                                 int visibleItemCount, int totalItemCount) {
+//            }
+//        });
+        requestSignuping();
     }
 
     /**
-     * 该接口按code的值来分，1表示的是我的资源下的已报名的数据
+     * 该接口按code的值来分，表示的是我的资源下的已报名的数据
      */
-    private void requestPosition() {
+//    private void requestResource() {
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("pageNum", pageNo + "");
+//        params.put("pageSize", pageSize + "");
+//        params.put("code", "1");
+//        OkHttpUtils.getAsyn(NetWorkConfig.BROKER_RESOURCE_ISENTRY, params, MyResourceResponse.class, new HttpCallback() {
+//            @Override
+//            public void onSuccess(BaseResponse resultDesc) {
+//                super.onSuccess(resultDesc);
+//                try {
+//                    MyResourceResponse mar = (MyResourceResponse) resultDesc;
+//                    if (mar.getCode() == 1) {
+//                        pageNo = mar.getData().getPageNum();
+//                        totalPage = mar.getData().getPages();
+//                        if (totalPage == 0) {
+//                            recyclerSwipeLayout.setEmpty();
+//                            return;
+//                        }
+//                        recyclerSwipeLayout.openLoadMore(totalPage);
+//                        recyclerSwipeLayout.addData(mar.getData().getList());
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String message) {
+//                super.onFailure(code, message);
+//                ToastUtil.showText(message);
+//            }
+//        });
+//    }
+    private void requestSignuping() {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("pageNum", pageNo + "");
         params.put("pageSize", pageSize + "");
@@ -98,13 +158,18 @@ public class BrokerMyresourceSignupingFragment extends BaseFragment {
                     BrokerEnrollSignupPositionResponse bpr = (BrokerEnrollSignupPositionResponse) resultDesc;
                     if (bpr.getCode() == 1) {
                         pageNo = bpr.getData().getPageNum();
+                        requestPageNo = pageNo;
                         totalPage = bpr.getData().getPages();
                         if (totalPage == 0) {
-                            recyclerSwipeLayout.setEmpty();
+                            nodataLayout.setVisibility(View.VISIBLE);
+                            expandableList.setVisibility(View.GONE);
                             return;
                         }
-                        recyclerSwipeLayout.openLoadMore(totalPage);
-                        recyclerSwipeLayout.addData(bpr.getData().getList());
+                        adapter.setData(bpr.getData().getList());
+                        //遍历所有group,将所有项设置成默认展开
+                        for (int i = 0; i < adapter.getGroupCount(); i++) {
+                            expandableList.expandGroup(i);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -120,42 +185,4 @@ public class BrokerMyresourceSignupingFragment extends BaseFragment {
         });
     }
 
-    BaseQuickAdapter.RequestLoadMoreListener quickAdapterListener = new BaseQuickAdapter.RequestLoadMoreListener() {
-
-        @Override
-        public void onLoadMoreRequested() {
-            if (pageNo < totalPage) {
-                pageNo++;
-                requestPosition();
-            } else {
-                recyclerSwipeLayout.loadComplete();
-            }
-        }
-    };
-
-
-    CustomBaseQuickAdapter.QuickXCallBack callBack = new CustomBaseQuickAdapter.QuickXCallBack() {
-
-        @Override
-        public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
-            final BrokerEnrollSignupPositionResponse.SignupPositionInfo spi = (BrokerEnrollSignupPositionResponse.SignupPositionInfo) itemModel;
-            Glide.with(getActivity())
-                    .load(spi.getAvatar())
-                    .placeholder(R.mipmap.default_image)
-                    .error(R.mipmap.default_image)
-                    .into((ImageView) baseViewHolder.getView(R.id.broker_myres_signuping_photo));
-            baseViewHolder.setText(R.id.broker_myres_signuping_name, spi.getPositionName());
-            baseViewHolder.setText(R.id.broker_myres_signuping_region, "工作地点：" + spi.getRegion());
-            baseViewHolder.setText(R.id.broker_myres_signuping_price, spi.getCommision() + "元/小时");
-            baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent detail = new Intent();
-                    detail.setClass(getActivity(), BrokerMyresSignupDetailActivity.class);
-                    detail.putExtra("positionId", spi.getPositionId());
-                    startActivity(detail);
-                }
-            });
-        }
-    };
 }

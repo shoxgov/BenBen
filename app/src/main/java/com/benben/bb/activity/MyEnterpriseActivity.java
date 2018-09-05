@@ -2,7 +2,6 @@ package com.benben.bb.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,7 +11,6 @@ import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.SettingAdapter;
 import com.benben.bb.bean.SettingItem;
-import com.benben.bb.bean.UserData;
 import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
@@ -122,7 +120,7 @@ public class MyEnterpriseActivity extends BaseActivity {
                 super.onSuccess(baseResponse);
                 CompanyInfoResponse cir = (CompanyInfoResponse) baseResponse;
                 if (cir.getCode() == 1) {
-                    nameTv.setText(cir.getData().getCompanyName());
+                    nameTv.setText(cir.getData().getCompanyInfo().getCompanyName()+"");
 //                    String category = cir.getData().getCategoriesId() + "";
 //                    if (categoryList != null && !categoryList.isEmpty()) {
 //                        category = findCategoryName(cir.getData().getCategoriesId());
@@ -160,12 +158,12 @@ public class MyEnterpriseActivity extends BaseActivity {
             switch (position) {
                 case 0:
                     Intent info = new Intent();
-                    info.setClass(MyEnterpriseActivity.this, EnterpriseInfoActivity.class);
+                    info.setClass(MyEnterpriseActivity.this, EnterpriseCooperationActivity.class);
                     startActivity(info);
                     break;
                 case 1:
                     Intent recruit = new Intent();
-                    recruit.setClass(MyEnterpriseActivity.this, EnterpriseRecruitActivity.class);
+                    recruit.setClass(MyEnterpriseActivity.this, EnterpriseRecruitFragmentActivity.class);
                     startActivity(recruit);
                     break;
                 case 2:

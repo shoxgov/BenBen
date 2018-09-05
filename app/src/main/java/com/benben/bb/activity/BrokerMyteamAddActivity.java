@@ -2,7 +2,7 @@ package com.benben.bb.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.GridView;
+import android.widget.ListView;
 
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
@@ -18,6 +18,7 @@ import com.benben.bb.utils.Utils;
 import com.benben.bb.view.AutoLoadListener;
 import com.benben.bb.view.TitleBar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ import butterknife.OnClick;
  */
 
 public class BrokerMyteamAddActivity extends BaseActivity {
-    @Bind(R.id.gridview)
-    GridView gridview;
+    @Bind(R.id.broker_myteam_add_list)
+    ListView listView;
     /**
      * 请求的页数，从第1页开始
      * 每一页请求数固定10
@@ -65,9 +66,9 @@ public class BrokerMyteamAddActivity extends BaseActivity {
             }
         });
         adapter = new BrokerAddGridViewAdapter(this, true);
-        gridview.setAdapter(adapter);
+        listView.setAdapter(adapter);
         AutoLoadListener autoLoadListener = new AutoLoadListener(callBack);
-        gridview.setOnScrollListener(autoLoadListener);
+        listView.setOnScrollListener(autoLoadListener);
         requestAddAgents();
     }
 

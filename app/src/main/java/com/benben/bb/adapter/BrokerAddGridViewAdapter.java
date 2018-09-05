@@ -69,11 +69,13 @@ public class BrokerAddGridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(this.mContext).inflate(
-                    R.layout.gridview_broker_myres_item, null);
+                    R.layout.list_broker_myteam_add_item, null);
             holder.icon = (ImageView) convertView.findViewById(R.id.item_img);
-            holder.iccb = (CheckBox) convertView.findViewById(R.id.item_img_cb);
+            holder.iccb = (CheckBox) convertView.findViewById(R.id.item_cb);
             holder.name = (TextView) convertView.findViewById(R.id.item_name);
-            holder.hint = (TextView) convertView.findViewById(R.id.item_hint);
+            holder.sex = (TextView) convertView.findViewById(R.id.item_sex);
+            holder.year = (TextView) convertView.findViewById(R.id.item_year);
+            holder.edu = (TextView) convertView.findViewById(R.id.item_edu);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,7 +86,7 @@ public class BrokerAddGridViewAdapter extends BaseAdapter {
                 .error(R.mipmap.default_image)
                 .into(holder.icon);
         holder.name.setText(epi.getTrueName());
-        holder.hint.setText(epi.getUserName());
+//        holder.sex.setText(epi.get());
         if (iscbVisible) {
             holder.iccb.setVisibility(View.VISIBLE);
             if (selectedTag.contains("#" + epi.getUserId() + "@")) {
@@ -109,7 +111,9 @@ public class BrokerAddGridViewAdapter extends BaseAdapter {
 
     private class ViewHolder {
         public TextView name;
-        public TextView hint;
+        public TextView sex;
+        public TextView year;
+        public TextView edu;
         public ImageView icon;
         public CheckBox iccb;
     }

@@ -6,8 +6,14 @@
         <item>工资降序</item>
     </array>
     <array name="broker_myres_signuping_status">
-        <item>未入职</item>
+        <item>我的资源</item>
+        <item>可报名</item>
         <item>报名中</item>
+        <item>已入职</item>
+    </array>
+    <array name="enterprise_recruit_type">
+        <item>企业直聘</item>
+        <item>合作招聘</item>
     </array>
 
     <array name="enterprise_job_welfare">

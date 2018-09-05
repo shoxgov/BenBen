@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="10dip">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip"
+        android:layout_toLeftOf="@+id/list_cooperation_search_collaborate"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_cooperation_search_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:singleLine="true"
+            android:text="长沙和阳医疗器械有限公司"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_large" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/list_cooperation_search_company_addr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:singleLine="true"
+                android:text="湖南.长沙.岳麓区"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/font_normal" />
+
+            <ImageView
+                android:id="@+id/list_cooperation_search_company_certify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:src="@mipmap/enterprise_certify_tag" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/list_cooperation_search_collaborate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/edittext_blue_corner"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:gravity="center"
+        android:paddingRight="10dip"
+        android:paddingTop="5dip"
+        android:text="合作"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_large" />
+
+
+</RelativeLayout>

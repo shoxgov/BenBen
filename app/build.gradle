@@ -11,8 +11,8 @@ android {
         applicationId "com.benben.bb"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 6
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //函数大于65535
         javaCompileOptions {
@@ -95,6 +95,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -102,7 +103,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.0'
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.0.0
     compile 'com.android.support:design:26+'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
     //    compile 'com.tencent.bugly:crashreport:latest.release'

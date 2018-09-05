@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleName="搜索合作企业" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip">
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:src="@mipmap/search_icon" />
+
+            <EditText
+                android:id="@+id/search_key_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@null"
+                android:hint="输入您要合作的企业全称"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="#8c8d91"
+                android:textColorHint="@color/textgreydim" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:text="确定"
+            android:textColor="@color/bluetheme"
+            android:textSize="@dimen/font_normal"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/search_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="5dip"
+        android:text="例如：犇犇智慧科技有限公司"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/font_small" />
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dip"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:dividerColor="@color/line_color"
+        app:dividerHeight="1dip"
+        app:itemlayout="@layout/list_enterprise_cooperation_search" />
+
+    <LinearLayout
+        android:id="@+id/search_nodata_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未搜索到相关的企业，您可以"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_large" />
+
+        <TextView
+            android:id="@+id/search_add_enterprise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/edittext_blue_corner"
+            android:paddingBottom="5dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:paddingTop="5dip"
+            android:text="新增并合作该企业"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large" />
+    </LinearLayout>
+
+</LinearLayout>

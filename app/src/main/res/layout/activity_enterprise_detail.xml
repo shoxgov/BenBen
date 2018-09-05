@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.benben.bb.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showLeftBtn="true"
+        app:titleName="编辑企业信息" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/mainbg" />
+    <!--app:wkp_canScrollToEndViewTop="true"-->
+    <com.benben.bb.stickLayout.StickLayout
+        android:id="@+id/sl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never">
+
+        <FrameLayout
+            android:id="@+id/enterprise_info_edit_ground"
+            android:layout_width="match_parent"
+            android:layout_height="200dip">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#77000000"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/enterprise_info_edit_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="企业人"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_large" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/enterprise_detail_certify_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/enterprise_certify_tag" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/enterprise_info_edit_addr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="湖南.长沙.岳麓区"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_normal" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+
+                    <TextView
+                        android:id="@+id/enterprise_detail_remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐指数：5.0"
+                        android:textColor="#FFA23C" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:wkp_stick="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dip"
+                android:background="@color/mainbg" />
+
+            <com.benben.bb.view.MyTabIndicator
+                android:id="@+id/mTabIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="44dip"
+                app:backGroundColor="@color/white"
+                app:tabIndicatorColor="@color/bluetheme"
+                app:textNormalColor="@color/textblack"
+                app:textNormalSize="@dimen/font_normal"
+                app:textSelectedColor="@color/bluetheme"
+                app:textSelectedSize="@dimen/font_normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/mainbg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:text="企业简介"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/company_detail_introduce_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="@null"
+                android:enabled="false"
+                android:gravity="left|top"
+                android:hint="薪资待遇"
+                android:padding="5dip"
+                android:textColor="@color/textblack"
+                android:textColorHint="@color/gray_dark"
+                android:textSize="@dimen/font_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/mainbg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:text="企业直聘"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/company_detail_employee_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@color/white"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/line_color"
+                android:dividerHeight="1dip"
+                android:footerDividersEnabled="true"
+                android:listSelector="@android:color/transparent"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/mainbg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tv4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:text="合作招聘"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/company_detail_combination_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@color/white"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/line_color"
+                android:dividerHeight="1dip"
+                android:footerDividersEnabled="true"
+                android:listSelector="@android:color/transparent"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/mainbg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tv5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:text="企业评分"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:text="综合指数    4.9分"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="工资待遇"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    android:id="@+id/enterprise_detail_remark_rating_salry"
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="员工福利"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    android:id="@+id/enterprise_detail_remark_rating_welfare"
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="食宿条件"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    android:id="@+id/enterprise_detail_remark_rating_doorm"
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/mainbg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:text="综合指数"
+                android:textColor="@color/textblack"
+                android:textSize="@dimen/font_normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/enterprise_detail_critic_rating_salry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="工资待遇"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="员工福利"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    android:id="@+id/enterprise_detail_critic_rating_welfare"
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="食宿条件"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <RatingBar
+                    android:id="@+id/enterprise_detail_critic_rating_doorm"
+                    style="@style/myratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ratingBarHeight"
+                    android:layout_marginLeft="15dip"
+                    android:numStars="5" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.benben.bb.stickLayout.StickLayout>
+
+    <Button
+        android:id="@+id/enterprise_detail_critic_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:text="自己要评分"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal"
+        android:visibility="gone" />
+</LinearLayout>

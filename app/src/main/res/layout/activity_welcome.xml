@@ -22,7 +22,7 @@
             android:layout_height="100dip"
             app:type="round"
             app:radius="15dip"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/logo_bg" />
 
         <LinearLayout
             android:layout_width="wrap_content"

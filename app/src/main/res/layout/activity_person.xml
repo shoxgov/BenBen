@@ -49,7 +49,7 @@
                     android:layout_width="@dimen/img_normal"
                     app:type="circle"
                     android:layout_height="@dimen/img_normal"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/logo_bg" />
             </LinearLayout>
 
             <LinearLayout
@@ -335,6 +335,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/my_person_qr_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dip"

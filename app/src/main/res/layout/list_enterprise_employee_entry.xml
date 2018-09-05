@@ -14,7 +14,7 @@
         android:layout_width="@dimen/img_large"
         android:layout_height="@dimen/img_large"
         android:layout_marginLeft="10dip"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/logo_bg"
         app:radius="5dip"
         app:type="round" />
 

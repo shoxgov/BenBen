@@ -79,7 +79,7 @@ public class BrokerActivity extends BaseActivity {
         list.setAdapter(adapter);
         List<SettingItem> data = new ArrayList<>();
         data.add(new SettingItem(R.mipmap.broker_myresource, "我的资源", ""));
-        data.add(new SettingItem(R.mipmap.broker_statics, "业务统计", ""));
+//        data.add(new SettingItem(R.mipmap.broker_statics, "业务统计", ""));
         data.add(new SettingItem(R.mipmap.broker_myteam, "我的就业顾问", ""));
         adapter.setData(data);
         list.setOnItemClickListener(onItemClickListener);
@@ -96,11 +96,11 @@ public class BrokerActivity extends BaseActivity {
                     startActivity(res);
                     break;
                 case 1:
-                    Intent statistics = new Intent();
-                    statistics.setClass(BrokerActivity.this, BrokerBusinessStatisticsActivity.class);
-                    startActivity(statistics);
-                    break;
-                case 2:
+//                    Intent statistics = new Intent();
+//                    statistics.setClass(BrokerActivity.this, BrokerBusinessStatisticsActivity.class);
+//                    startActivity(statistics);
+//                    break;
+//                case 2:
                     Intent team = new Intent();
                     team.setClass(BrokerActivity.this, BrokerMyteamActivity.class);
                     startActivity(team);

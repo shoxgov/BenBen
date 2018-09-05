@@ -27,6 +27,34 @@ public class CustomBaseQuickAdapter<T> {
         adapter.loadComplete();
     }
 
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    public void notifyItemChanged(int poisition) {
+        adapter.notifyItemChanged(poisition);
+    }
+
+    public void notifyItemChanged(int poisition, Object obj) {
+        adapter.notifyItemChanged(poisition, obj);
+    }
+
+    public void remove(int poisition) {
+        adapter.remove(poisition);
+    }
+
+    public T getItem(int position) {
+        return adapter.getItem(position);
+    }
+
+    public int getItemCount() {
+        return adapter.getItemCount();
+    }
+
+    public void notifyItemRemoved(int poisition) {
+        adapter.notifyItemRemoved(poisition);
+    }
+
     public void addData(List<T> data) {
         adapter.addData(data);
     }

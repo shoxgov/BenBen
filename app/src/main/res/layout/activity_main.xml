@@ -36,13 +36,14 @@
             android:id="@+id/rb_employ"
             style="@style/rg_btn_style"
             android:drawableTop="@drawable/main_employ_selector"
-            android:text="@string/enroll" />
+            android:text="@string/enroll"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/rb_msg"
             style="@style/rg_btn_style"
             android:drawableTop="@drawable/main_msg_selector"
-            android:text="@string/community"/>
+            android:text="@string/community" />
 
         <RadioButton
             android:id="@+id/rb_my"

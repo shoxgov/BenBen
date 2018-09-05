@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_bar_condition_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip">
+
+        <TextView
+            android:id="@+id/search_bar_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="招聘类别"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <GridView
+            android:id="@+id/search_bar_model_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:horizontalSpacing="10dip"
+            android:numColumns="3"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:verticalSpacing="10dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip">
+
+        <TextView
+            android:id="@+id/search_bar_wages"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="综合薪资"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal" />
+
+        <GridView
+            android:id="@+id/search_bar_wages_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:horizontalSpacing="10dip"
+            android:numColumns="3"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:verticalSpacing="10dip" />
+    </LinearLayout>
+
+</LinearLayout>

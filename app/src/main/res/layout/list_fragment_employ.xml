@@ -9,21 +9,10 @@
     android:paddingTop="10dip">
 
 
-    <com.benben.bb.view.RoundImageView
-        android:id="@+id/employ_job_logo"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/img_max"
-        android:layout_marginLeft="10dip"
-        android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:src="@mipmap/default_image"
-        app:radius="5dip"
-        app:type="round" />
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dip"
+        android:layout_marginLeft="10dip"
         android:layout_weight="2"
         android:orientation="vertical">
 
@@ -111,4 +100,15 @@
 
     </LinearLayout>
 
+    <com.benben.bb.view.RoundImageView
+        android:id="@+id/employ_job_logo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/img_max"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@mipmap/default_image"
+        app:radius="5dip"
+        app:type="round" />
 </LinearLayout>

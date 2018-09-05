@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bluetheme"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip">
+
+        <ImageView
+            android:id="@+id/search_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:src="@mipmap/whiteback" />
+
+        <LinearLayout
+            android:id="@+id/search_bar_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_weight="1"
+            android:background="@drawable/boarder_search_bg"
+            android:descendantFocusability="beforeDescendants"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip">
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:src="@mipmap/search_icon" />
+
+            <TextView
+                android:id="@+id/search_key_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dip"
+                android:background="@null"
+                android:enabled="false"
+                android:hint="搜索职位名称"
+                android:singleLine="true"
+                android:textColor="#8c8d91" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!--    <include layout="@layout/employ_search_head" />-->
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dividerColor="@color/line_color"
+        app:dividerHeight="1dip"
+        app:itemlayout="@layout/list_fragment_employ" />
+
+</LinearLayout>

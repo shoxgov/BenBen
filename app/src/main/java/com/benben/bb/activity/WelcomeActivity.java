@@ -15,6 +15,7 @@ import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.LoginResponse;
+import com.benben.bb.utils.Constant;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.ToastUtil;
@@ -36,12 +37,9 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         LogUtil.d("WelcomeActivity onCreate");
         setContentView(R.layout.activity_welcome);
-        //获取剪贴板管理器：
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-// 创建普通字符型ClipData
-        ClipData mClipData = ClipData.newPlainText("Label", "支付宝发红包啦！即日起还有机会额外获得余额宝消费红包！长按复制此消息，打开最新版支付宝就能领取！a3oAgG56Ip");
-// 将ClipData内容放到系统剪贴板里。
-        cm.setPrimaryClip(mClipData);
+        ClipData mClipData = ClipData.newPlainText("Label", Constant.ALIPAY);// 创建普通字符型ClipData
+        cm.setPrimaryClip(mClipData);// 将ClipData内容放到系统剪贴板里。
         PreferenceUtil.init(this);
         loginTel = PreferenceUtil.getString("LoginTel", "");
         passWord = PreferenceUtil.getString("passWord", "");

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginTop="10dip"
-            android:text="基本薪资：100.0元/小时    就业顾问佣金：1.0元/小时"
+            android:text="综合薪资：100.0元/小时    就业顾问佣金：1.0元/小时"
             android:textColor="@color/textblack"
             android:textSize="@dimen/font_small" />
     </LinearLayout>
@@ -55,7 +55,18 @@
         android:textColor="@color/textblack"
         android:textSize="@dimen/font_normal" />
 
-    <GridView
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/mainbg" />
+
+    <com.benben.bb.view.RecyclerViewSwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:dividerColor="@color/mainbg"
+        app:dividerHeight="1dip" />
+    <!--<GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,5 +78,5 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:verticalSpacing="2dip" />
+        android:verticalSpacing="2dip" />-->
 </LinearLayout>

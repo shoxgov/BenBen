@@ -73,6 +73,10 @@
             android:name="com.benben.bb.activity.MessageDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.benben.bb.activity.EmployActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.benben.bb.activity.BrokerActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -115,14 +119,22 @@
             android:name="com.benben.bb.activity.EnterpriseCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.benben.bb.activity.EnterpriseInfoActivity"
+            android:name="com.benben.bb.activity.EnterpriseCooperationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.benben.bb.activity.EnterpriseCooperationSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.benben.bb.activity.EnterpriseInfoEditActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.benben.bb.activity.RecruitDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.benben.bb.activity.EnterpriseRecruitActivity"
+            android:name="com.benben.bb.activity.EnterpriseRecruitFragmentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.benben.bb.activity.EnterpriseSalaryActivity"
@@ -132,6 +144,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.benben.bb.activity.EnterpriseSalaryDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.benben.bb.activity.EnterpriseDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -158,6 +174,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.benben.bb.activity.FindPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.benben.bb.activity.PhoneVertifyCodeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.benben.bb.activity.LoginPwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -180,6 +204,9 @@
             android:name="com.benben.bb.activity.PersonInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.benben.bb.activity.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.benben.bb.activity.PersonRefValueActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -187,7 +214,11 @@
             android:name="com.benben.bb.activity.PersonSexCheckActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.benben.bb.activity.MyInviteActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.benben.bb.activity.PersonQrActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.benben.bb.activity.PersonEduActivity"

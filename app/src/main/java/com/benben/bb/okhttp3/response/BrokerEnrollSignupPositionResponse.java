@@ -3,26 +3,102 @@ package com.benben.bb.okhttp3.response;
 import java.util.List;
 
 /**
- * "code":1, "message":"验证码已发送", "data":"1823"
+ * "list": [
+ * {
+ * "positionName": "点焊工",
+ * "userlist": [
+ * {
+ * "userId": 134,
+ * "userName": "15910686219",
+ * "avatar": "http://www.zhibenben.cn/upload/face.jpg",
+ * "trueName": "",
+ * "age": null,
+ * "nickName": null,
+ * "sex": 0,
+ * "education": null,
+ * "fromId": null,
+ * "positionUserId": null,
+ * "resourcesSum": 0,
+ * "benbenNum": null,
+ * "createDate": null
+ * },
+ * {
+ * "userId": 135,
+ * "userName": "18872078123",
+ * "avatar": "http://www.zhibenben.cn/upload/face.jpg",
+ * "trueName": "",
+ * "age": null,
+ * "nickName": null,
+ * "sex": 0,
+ * "education": null,
+ * "fromId": null,
+ * "positionUserId": null,
+ * "resourcesSum": 0,
+ * "benbenNum": null,
+ * "createDate": null
+ * }
+ * ],
+ * "focusSalary": "3000-6000",
+ * "companyName": "长沙卡斯马汽车系统有限公司",
+ * "region": "湖南省.长沙市.长沙县"
+ * },
+ * {
+ * "positionName": "点焊工",
+ * "userlist": [
+ * {
+ * "userId": 134,
+ * "userName": "15910686219",
+ * "avatar": "http://www.zhibenben.cn/upload/face.jpg",
+ * "trueName": "",
+ * "age": null,
+ * "nickName": null,
+ * "sex": 0,
+ * "education": null,
+ * "fromId": null,
+ * "positionUserId": null,
+ * "resourcesSum": 0,
+ * "benbenNum": null,
+ * "createDate": null
+ * },
+ * {
+ * "userId": 135,
+ * "userName": "18872078123",
+ * "avatar": "http://www.zhibenben.cn/upload/face.jpg",
+ * "trueName": "",
+ * "age": null,
+ * "nickName": null,
+ * "sex": 0,
+ * "education": null,
+ * "fromId": null,
+ * "positionUserId": null,
+ * "resourcesSum": 0,
+ * "benbenNum": null,
+ * "createDate": null
+ * }
+ * ],
+ * "focusSalary": "3000-6000",
+ * "companyName": "长沙卡斯马汽车系统有限公司",
+ * "region": "湖南省.长沙市.长沙县"
+ * }
+ * ],
  */
 public class BrokerEnrollSignupPositionResponse extends BaseResponse {
 
-    private Data data;
+    private DataMap data;
 
-    public Data getData() {
+    public DataMap getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(DataMap data) {
         this.data = data;
     }
 
-    public class Data {
+    public class DataMap {
         private int pageNum;
-        private int pageSize;
         private int total;
         private int pages;
-        private List<SignupPositionInfo> list;
+        private List<SignData> list;
 
         public int getPageNum() {
             return pageNum;
@@ -30,14 +106,6 @@ public class BrokerEnrollSignupPositionResponse extends BaseResponse {
 
         public void setPageNum(int pageNum) {
             this.pageNum = pageNum;
-        }
-
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
         }
 
         public int getTotal() {
@@ -56,35 +124,24 @@ public class BrokerEnrollSignupPositionResponse extends BaseResponse {
             this.pages = pages;
         }
 
-        public List<SignupPositionInfo> getList() {
+        public List<SignData> getList() {
             return list;
         }
 
-        public void setList(List<SignupPositionInfo> list) {
+        public void setList(List<SignData> list) {
             this.list = list;
         }
     }
 
-    public class SignupPositionInfo {
+    public class SignData {
         private int positionId;
-        private float commision;
         private float salary;
-        private int hiringCount;
-        private int enrollNum;
-        private int agreeNum;
-        private int applyNum;
-        private String avatar;
+        private float commision;
         private String positionName;
+        private String focusSalary;
+        private String companyName;
         private String region;
-
-
-        public String getAvatar() {
-            return avatar;
-        }
-
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
+        private List<SignupPositionInfo> userlist;
 
         public int getPositionId() {
             return positionId;
@@ -92,14 +149,6 @@ public class BrokerEnrollSignupPositionResponse extends BaseResponse {
 
         public void setPositionId(int positionId) {
             this.positionId = positionId;
-        }
-
-        public float getCommision() {
-            return commision;
-        }
-
-        public void setCommision(float commision) {
-            this.commision = commision;
         }
 
         public float getSalary() {
@@ -110,36 +159,12 @@ public class BrokerEnrollSignupPositionResponse extends BaseResponse {
             this.salary = salary;
         }
 
-        public int getHiringCount() {
-            return hiringCount;
+        public float getCommision() {
+            return commision;
         }
 
-        public void setHiringCount(int hiringCount) {
-            this.hiringCount = hiringCount;
-        }
-
-        public int getEnrollNum() {
-            return enrollNum;
-        }
-
-        public void setEnrollNum(int enrollNum) {
-            this.enrollNum = enrollNum;
-        }
-
-        public int getAgreeNum() {
-            return agreeNum;
-        }
-
-        public void setAgreeNum(int agreeNum) {
-            this.agreeNum = agreeNum;
-        }
-
-        public int getApplyNum() {
-            return applyNum;
-        }
-
-        public void setApplyNum(int applyNum) {
-            this.applyNum = applyNum;
+        public void setCommision(float commision) {
+            this.commision = commision;
         }
 
         public String getPositionName() {
@@ -150,12 +175,111 @@ public class BrokerEnrollSignupPositionResponse extends BaseResponse {
             this.positionName = positionName;
         }
 
+        public String getFocusSalary() {
+            return focusSalary;
+        }
+
+        public void setFocusSalary(String focusSalary) {
+            this.focusSalary = focusSalary;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
         public String getRegion() {
             return region;
         }
 
         public void setRegion(String region) {
             this.region = region;
+        }
+
+        public List<SignupPositionInfo> getUserlist() {
+            return userlist;
+        }
+
+        public void setUserlist(List<SignupPositionInfo> userlist) {
+            this.userlist = userlist;
+        }
+    }
+
+    public class SignupPositionInfo {
+        private int userId;
+        private int age;
+        private int sex;
+        private String avatar;
+        private String userName;
+        private String trueName;
+        private String nickName;
+        private String education;
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getTrueName() {
+            return trueName;
+        }
+
+        public void setTrueName(String trueName) {
+            this.trueName = trueName;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getEducation() {
+            return education;
+        }
+
+        public void setEducation(String education) {
+            this.education = education;
         }
     }
 

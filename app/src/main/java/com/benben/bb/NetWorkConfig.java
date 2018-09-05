@@ -50,6 +50,10 @@ public class NetWorkConfig {
      */
     public static final String REGISTER = HTTP + "/user/account/register";
     /**
+     * 修改密码
+     */
+    public static final String RESET_PWD = HTTP + "/user/account/resetPassword";
+    /**
      获取用户信息
      */
     public static final String GET_USERINFO = HTTP + "/api/user/getUserInfo";
@@ -104,9 +108,13 @@ public class NetWorkConfig {
      */
     public static final String BROKER_DEL_AGENTS = HTTP + "/api/agent/delMyAgent";
     /**
-     * 获取是否入职资源列表
+     * 获取资源数
      */
-    public static final String BROKER_RESOURCE_ISENTRY = HTTP + "/api/agent/getResourcesList";
+    public static final String BROKER_RESOURCE_COUNTS = HTTP + "/api/agent/getMatterSum";
+    /**
+     * 获取经纪人可报名资源列表
+     */
+    public static final String BROKER_RESOURCE_ISCAN_ENTRY = HTTP + "/api/agent/getResourcesList";
     /**
      * 企业认证
      */
@@ -115,6 +123,30 @@ public class NetWorkConfig {
      * 企业信息
      */
     public static final String GET_COMPANY_INFO = HTTP + "/api/company/getCompanyInfo";
+    /**
+     获取默认企业信息
+     */
+    public static final String GET_MY_COMPANY = HTTP + "/api/company/getMyCompany";
+    /**
+     * 获取合作企业列表
+     */
+    public static final String GET_COOPERATE_ENTERPRISE = HTTP + "/api/company/getHZCompanyList";
+    /**
+     * 搜索合作企业
+     */
+    public static final String SEARCH_COOPERATE_ENTERPRISE = HTTP + "/api/company/searchCompany";
+    /**
+     * 确定合作
+     */
+    public static final String ADD_COOPERATE_ENTERPRISE = HTTP + "/api/company/addHZCompany";
+    /**
+     新增合作企业
+     */
+    public static final String SAVE_COOPERATE_ENTERPRISE_INFO = HTTP + "/api/company/saveCompany";
+    /**
+     * 合作企业开关
+     */
+    public static final String COOPERATE_ENTERPRISE_OPEN = HTTP + "/api/company/upCompanyStatus";
     /**
      * 修改企业信息
      */
@@ -131,7 +163,7 @@ public class NetWorkConfig {
      *GET /api/user/getResourcesList
      获取邀请二维码用户列表
      */
-    public static final String GET_MY_INVITE_RESOURCE = HTTP + "/api/user/getResourcesList";
+    public static final String GET_MY_INVITE_RESOURCE = HTTP + "/api/agent/getMatterList";
     /**
      * 获取企业招聘信息列表
      */
@@ -157,6 +189,12 @@ public class NetWorkConfig {
      * //entryStatus 0 取消报名-用户;1 取消报名-系统;2 取消报名-企业;3 取消报名-经纪人;77 报名中-经纪人代报名;88 报名中-待系统审核;89 报名中-待企业审核;90 待入职;99 已入职;91辞退
      */
     public static final String COMPANY_EMPLOYEE_USER_STATUS = HTTP + "/api/company/saveOrUpPositionUser";
+    /**
+     * /api/company/dismissUser   辞退操作调用
+     增加两个参数  userId, positionId
+     报名接口   已报名返回状态码 100  ， msg 内容为当前报名状态
+     */
+    public static final String COMPANY_EMPLOYEE_USER_DISMISS = HTTP + "/api/company/dismissUser";
     /**
      * 批量新增工资核算
      */

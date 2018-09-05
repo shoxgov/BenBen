@@ -102,12 +102,17 @@ public class SignupResponse extends BaseResponse {
     }
 
     public class SignupInfo {
-        private float salary;
+        private int id;
+        private int positionId;
+        private int settlement;
+        private int advSort;
         private int hiringCount;
         private int enrollNum;
-        private int positionUserId;
         private int entryStatus;
         private String positionName;
+        private String companyName;
+        private String houseImg;
+        private String focusSalary;
         private String region;
         private String welfare;
         private String endTime;
@@ -120,12 +125,60 @@ public class SignupResponse extends BaseResponse {
             this.entryStatus = entryStatus;
         }
 
-        public float getSalary() {
-            return salary;
+        public int getId() {
+            return id;
         }
 
-        public void setSalary(float salary) {
-            this.salary = salary;
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getPositionId() {
+            return positionId;
+        }
+
+        public void setPositionId(int positionId) {
+            this.positionId = positionId;
+        }
+
+        public int getSettlement() {
+            return settlement;
+        }
+
+        public void setSettlement(int settlement) {
+            this.settlement = settlement;
+        }
+
+        public int getAdvSort() {
+            return advSort;
+        }
+
+        public void setAdvSort(int advSort) {
+            this.advSort = advSort;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getHouseImg() {
+            return houseImg;
+        }
+
+        public void setHouseImg(String houseImg) {
+            this.houseImg = houseImg;
+        }
+
+        public String getFocusSalary() {
+            return focusSalary;
+        }
+
+        public void setFocusSalary(String focusSalary) {
+            this.focusSalary = focusSalary;
         }
 
         public int getHiringCount() {
@@ -142,14 +195,6 @@ public class SignupResponse extends BaseResponse {
 
         public void setEnrollNum(int enrollNum) {
             this.enrollNum = enrollNum;
-        }
-
-        public int getPositionUserId() {
-            return positionUserId;
-        }
-
-        public void setPositionUserId(int positionUserId) {
-            this.positionUserId = positionUserId;
         }
 
         public String getPositionName() {

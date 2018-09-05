@@ -66,17 +66,61 @@ public class MyResourceResponse extends BaseResponse {
     }
 
     /**
-     * "userId": 2,
-     * "userName": "15574205949",
-     * "avatar": "http://120.79.155.10http://120.79.155.10/2",
-     * "trueName": "周航",
-     * "positionUserId": null
+     "userId": 116,
+     "userName": "13574851212",
+     "avatar": "http://www.zhibenben.cn/upload/face.jpg",
+     "trueName": "",
+     "age": "0",
+     "nickName": "犇犇用户",
+     "sex": 0,
+     "education": "最高学历",
+     "fromId": null,
+     "positionUserId": null,
+     "resourcesSum": 0,
+     "benbenNum": "10116",
+     "createDate": "2018-07-24"
      */
     public class EntryPositionInfo {
         private int userId;
+        private int age;
+        private int sex;
         private String userName;
         private String trueName;
+        private String nickName;
         private String avatar;
+        private String education;
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getEducation() {
+            return education;
+        }
+
+        public void setEducation(String education) {
+            this.education = education;
+        }
 
         public int getUserId() {
             return userId;

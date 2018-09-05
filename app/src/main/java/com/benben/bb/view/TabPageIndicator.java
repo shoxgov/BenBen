@@ -60,7 +60,7 @@ public class TabPageIndicator extends HorizontalScrollView {
     private int underlineColor = 0xFFdcdcdc;// 默认指示线的颜色
     private int dividerColor = 0x00000000;// 分割线的颜色
 
-    private boolean isSameLine;// 设置导航先是否跟文字长度一至
+    private boolean isSameLine = false;// 设置导航先是否跟文字长度一至
     private boolean textAllCaps;
 
     private boolean isExpand;// 是否可扩展
@@ -194,12 +194,12 @@ public class TabPageIndicator extends HorizontalScrollView {
             case MODE_WEIGHT_NOEXPAND_SAME:
                 isExpand = false;
                 isSameLine = true;
-                tabPadding=0;
+                tabPadding = 0;
                 break;
             case MODE_WEIGHT_NOEXPAND_NOSAME:
                 isExpand = false;
                 isSameLine = false;
-                tabPadding=0;
+                tabPadding = 0;
                 break;
             case MODE_NOWEIGHT_NOEXPAND_SAME:
                 isExpand = false;
@@ -343,7 +343,7 @@ public class TabPageIndicator extends HorizontalScrollView {
             setIndicatorPaddingRight(myWidth - childWidth - tabPadding * 2 * tabCount);
             tabsContainer.setPadding(indicatorPaddingLeft, 0, indicatorPaddingRight, 0);
         }
-        if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME){
+        if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME) {
             setIndicatorPaddingRight(myWidth - childWidth - tabPadding * 2 * tabCount);
             tabsContainer.setPadding(indicatorPaddingLeft, 0, indicatorPaddingRight, 0);
         }
@@ -422,9 +422,9 @@ public class TabPageIndicator extends HorizontalScrollView {
             lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
             lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
         }
-        if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME){
-            canvas.drawRect(lineLeft-tabPadding, height - indicatorHeight, lineRight+tabPadding, height, rectPaint);
-        }else{
+        if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME) {
+            canvas.drawRect(lineLeft - tabPadding, height - indicatorHeight, lineRight + tabPadding, height, rectPaint);
+        } else {
             canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
         }
 //        if(isExpand&&!isExpandSameLine){
@@ -566,7 +566,7 @@ public class TabPageIndicator extends HorizontalScrollView {
         invalidate();
     }
 
-    public void setDividerWidth(int dividerWidth){
+    public void setDividerWidth(int dividerWidth) {
         this.dividerWidth = dividerWidth;
         dividerPaint.setStrokeWidth(dividerWidth);
     }
@@ -722,306 +722,297 @@ public class TabPageIndicator extends HorizontalScrollView {
 
 /**
  * 使用方法
- 项目中经常会用到类似今日头条中顶部的导航指示器，我也经常用一个类似的库PagerSlidingTabStrip，但是有时并不能小伙伴们的所有需求，
- 所以我在这个类的基础上就所有能用到的情况做了一个简单的封装。大家知道做一个功能比较简单，但是封装好几种功能到一个类里面就需要处理的好多逻辑了，
- 所以对于小编这种小白也是花了好久的业余时间才搞完的，希望大家能够多多支持，更希望我的绵薄之力能够帮助大家。源码和Demo已经上传到github了，欢迎大家多多fork和star。
- github地址：https://github.com/shanyao0/TabPagerIndicatorDemo
-
- 好了废话不多说，直接上图来看下效果吧。
-
- 六种效果图
-
- 一：MODE_WEIGHT_NOEXPAND_SAME
-
- 几个标题均分宽度，不能扩展，底部导航线跟标题宽度一致
-
-
-
- 二：MODE_WEIGHT_NOEXPAND_NOSAME
-
- 几个标题均分宽度，不能扩展，底部导航线跟标题宽度不一致
-
-
-
- 三：MODE_NOWEIGHT_NOEXPAND_SAME
-
- 标题不均分宽度，不能扩展，底部导航线跟标题宽度一致
-
-
-
- 四：MODE_NOWEIGHT_NOEXPAND_NOSAME
-
- 标题不均分宽度，不能扩展，底部导航线跟标题宽度不一致
-
- 这里写图片描述
-
- 五：MODE_NOWEIGHT_EXPAND_SAME
-
- 标题不均分宽度，能扩展，底部导航线跟标题宽度一致
-
-
-
- 六：MODE_NOWEIGHT_EXPAND_NOSAME
-
- 标题不均分宽度，能扩展，底部导航线跟标题宽度不一致
-
-
-
- 使用方法
-
- 一般来说这个类是ViewPager+TabPagerIndicator+Fragment来使用的
-
- 1. 关联类库
-
- 首先，下载我上面的TabPagerIndicatorDemo，然后将里面的tabpagerindicator类库import Module到你的项目，并关联
-
- 2. xml布局
-
- <?xml version="1.0" encoding="utf-8"?>
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
- android:layout_width="match_parent"
- android:layout_height="match_parent"
- android:background="#fff"
- android:orientation="vertical">
-
- <shanyao.tabpagerindictor.TabPageIndicator
- android:id="@+id/indicator"
- android:layout_width="match_parent"
- android:layout_height="40dp"
- />
- <android.support.v4.view.ViewPager
- android:id="@+id/viewPager"
- android:layout_width="match_parent"
- android:layout_height="match_parent"
- android:background="#fff" />
- </LinearLayout>
- 3. 代码使用
-
- @Override
- public void onCreate(Bundle savedInstanceState) {
- super.onCreate(savedInstanceState);
- setContentView(R.layout.viewpager_indicator);
- indicator = (TabPageIndicator)findViewById(R.id.indicator);
- viewPager = (ViewPager)findViewById(R.id.viewPager);
- BasePagerAdapter adapter = new BasePagerAdapter(getSupportFragmentManager());
-
- viewPager.setAdapter(adapter);// 设置adapter
- indicator.setViewPager(viewPager);// 绑定indicator
-
- setTabPagerIndicator();
- }
- // 通过一些set方法，设置控件的属性
-private void setTabPagerIndicator() {
-    indicator.setIndicatorMode(TabPageIndicator.IndicatorMode.MODE_WEIGHT_NOEXPAND_SAME);// 设置模式，一定要先设置模式
-    indicator.setDividerColor(Color.parseColor("#00bbcf"));// 设置分割线的颜色
-    indicator.setDividerPadding(10);//设置
-    indicator.setIndicatorColor(Color.parseColor("#43A44b"));// 设置底部导航线的颜色
-    indicator.setTextColorSelected(Color.parseColor("#43A44b"));// 设置tab标题选中的颜色
-    indicator.setTextColor(Color.parseColor("#797979"));// 设置tab标题未被选中的颜色
-    indicator.setTextSize(16);// 设置字体大小
-}
-        常用方法说明
-
-        setIndicatorMode()//设置控件的模式，上面是提到的6种模式
-        setDividerColor()//设置两个标题之间的竖直分割线的颜色，如果不需要显示这个，设置颜色为透明即可
-        setDividerPadding()//设置中间竖线上下的padding值
-        setIndicatorColor()//设置底部导航线的颜色，就是上面演示图的绿色导航线
-        setIndicatorHeight()// 设置底部导航线的高度
-        setDividerPadding()// 设置Tab标题之间的间距
-        setTextColorSelected()//设置tab标题选中的颜色
-        setTextColor()//设置tab标题未被选中的颜色
-        setTextSize()//设置字体的大小
-        setUnderlineColor()// 设置最下面一条的横线的颜色
-        setUnderlineHeight()//设置最下面一条的横线的高度
-        setScrollOffset()// 这个方法是当选择MODE_NOWEIGHT_EXPAND_NOSAME和MODE_NOWEIGHT_EXPAND_SAME这两个模式的时候有作用
-        具体作用大家，可以下载Demo自己试一试
-        可能还有一些不是常用的方法，大家可以自己下载Demo去试试
-
-        实现步骤和原理
-
-        这里带大家简单的分析一下原理，具体的大家可以下载源码自己研究下。
-
-        创建TabPagerIndicator类继承HorizontalScrollView
-
-        这个主要是当顶部标题超过整个屏幕的时候，我们可以滑动它，主要是后两种模式会用到
-        这里会提供一些属性让我们设置，我们可以通过set方法设置
-
-        创建一个LinearLayout来维护容纳几个TextView标题
-
-        tabsContainer = new LinearLayout(context);
-        tabsContainer.setOrientation(LinearLayout.HORIZONTAL);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        tabsContainer.setLayoutParams(layoutParams);
-        addView(tabsContainer);//将这个线性布局添加到TabPagerIndicator
-        给TabPagerIndicator设置ViewPager
-public void setViewPager(ViewPager pager) {
-        this.pager = pager;
-
-        if (pager.getAdapter() == null) {
-        throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-
-        pager.setOnPageChangeListener(pageListener);
-
-        notifyDataSetChanged();
-        }
-        通过这个方法，将ViewPager和TabPagerIndicator给关联起来，并实现联动效果。
- 拿到ViewPager的对象我们就可以获取它的adapter从而我们可以通过adapter里面的方法获取tab的标题。
- 我们可以设置监听器，通过监听器，我们可以根据ViewPager的移动来移动我们的TabPagerIndicator。
-        LinearLayout里面添加TextView
-        // 看看这里我们就用到了那个ViewPager的对象pager
-        tabCount = pager.getAdapter().getCount();
-        for (int i = 0; i < tabCount; i++) {
-        // 循环遍历给TextView设置文字和属性
-        addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
-        }
-
-private void addTextTab(final int position, String title) {
-
-        TextView tab = new TextView(getContext());
-        tab.setText(title);
-        tab.setFocusable(true);
-        tab.setGravity(Gravity.CENTER);
-        tab.setSingleLine();
-        tab.setOnClickListener(new OnClickListener() {
-@Override
-public void onClick(View v) {
-        pager.setCurrentItem(position);
-        }
-        });
-        if (isExpand && !isExpandSameLine) {// 注意这里跟我们的几种模式有关
-        tab.setPadding(tabPadding, 0, tabPadding, 0);
-        } else {// 其实模式一和模式二就一个Padding和Margin的区别
-        wrapTabLayoutParams.setMargins(tabPadding, 0, tabPadding, 0);
-        weightTabLayoutParams.setMargins(tabPadding, 0, tabPadding, 0);
-        }
-        tabsContainer.addView(tab, position, isSameLine ? wrapTabLayoutParams : weightTabLayoutParams);
-        }
-        开始onDraw里面画
-        这个里面主要是利用drawRect方法，画一些矩形线条
-@Override
-protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (isInEditMode() || tabCount == 0) {
-        return;
-        }
-
-final int height = getHeight();
-
-        // draw底部的导航线
-
-        rectPaint.setColor(indicatorColor);
-        View currentTab = tabsContainer.getChildAt(currentPosition);
-        float currentOffWid;
-        if (isExpand) {
-        currentOffWid = 0;
-        } else {
-        currentOffWid = (currentTab.getWidth() - widths[currentPosition]) / 2;
-        }
-
-        float lineLeft = currentTab.getLeft() + currentOffWid;
-        float lineRight = currentTab.getRight() - currentOffWid;
-
-        if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
-        View nextTab = tabsContainer.getChildAt(currentPosition + 1);
-        float nextOffWid; //nextOffWid
-        if (isExpand) {//如果是可扩展的，尤其是模式6，这个值必须为0
-        nextOffWid = 0;
-        } else {//差值的计算，widths是一个数组，存取了几个TextView的宽度，后面具体会说
-        nextOffWid = (nextTab.getWidth() - widths[currentPosition + 1]) / 2;
-        }
-// getLeft和getRight方法，是获取的相对于父类即LinearLayout的位置
-final float nextTabLeft = nextTab.getLeft() + nextOffWid;
-final float nextTabRight = nextTab.getRight() - nextOffWid;
-        // currentPositionOffset是一个0到1之间的变化值，
-        // 在OnPageChangeListener的方法里我们可以获取到，
-        lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
-        lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
-        }
-        //这里的这个判断是经过我多次实验得出的。。。
-        if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME){
-        canvas.drawRect(lineLeft-tabPadding, height - indicatorHeight, lineRight+tabPadding, height, rectPaint);
-        }else{
-        canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
-        }
-         // draw underline
-
-        rectPaint.setColor(underlineColor);
-        canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
-
-         // draw divider：分割线
-        dividerPaint.setColor(dividerColor);
-        for (int i = 0; i < tabCount - 1; i++) {
-        View tab = tabsContainer.getChildAt(i);
-        if (!isExpandSameLine) {
-        canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
-        } else {
-        canvas.drawLine(tab.getRight() + tabPadding, dividerPadding, tab.getRight() + tabPadding, height - dividerPadding, dividerPaint);
-        }
-        }
-        }
-// 几个变量值得说明
-
-         * nextOffWid:导航线和文字宽度长的差距
-         *  后面我们的left+它，right-它，我们就可以实现 导航线跟文字一样长了
-        图示
-
-        这里写图片描述
-
-        OnPageChangeListener和ScrollTo决定联动
-private class PageListener implements OnPageChangeListener {
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        // positionOffset这变量的值会随着ViewPager的移动从0到1变化
-        currentPosition = position;
-        currentPositionOffset = positionOffset;
-        Log.e("shanyao", positionOffset + "");
-        scrollToChild(position, (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
-        invalidate();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        if (state == ViewPager.SCROLL_STATE_IDLE) {
-            scrollToChild(pager.getCurrentItem(), 0);
-        }
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        //使当前item高亮
-        for (int i = 0; i < tabCount; i++) {
-            View v = tabsContainer.getChildAt(i);
-            if (v instanceof TextView) {
-                TextView textView = (TextView) v;
-                textView.setTextColor(i == pager.getCurrentItem() ? tabTextColorSelected : tabTextColor);
-            }
-        }
-    }
-}
-
-    private void scrollToChild(int position, int offset) {
-        if (tabCount == 0 || offset == 0) {
-            return;
-        }
-
-        int newScrollX = tabsContainer.getChildAt(position).getLeft() + offset;
-
-        if (position > 0 || offset > 0) {
-            newScrollX -= scrollOffset;
-        }
-
-        if (newScrollX != lastScrollX) {
-            lastScrollX = newScrollX;
-            scrollTo(newScrollX, 0);
-        }
-
-    }
-        总结
-
-        从效果图的展示，到使用，再到原理分析，我相信小伙们已经对这个库有了大致的了解，有你需要的模式，直接拿去用就行，类库很小就一个类和一个attr文件，使用起来很简单的。
-有能力有兴趣的可以多看看源码，自己可以根据自己的需求在完善下。第一次写开源的小项目，
-虽然很简单，但是我也经过了很多的设计和调试才写出来的，其中可能好多的缺陷，希望大家多多指教，我会第一时间改掉的。以后我也会带给大家一些比较实用的、比较常用的的小Demo的。
-希望大家能够多多支持我，去我的github上面多多star和fork，您的支持就是我最大的动力，谢谢大家。。。
+ * 项目中经常会用到类似今日头条中顶部的导航指示器，我也经常用一个类似的库PagerSlidingTabStrip，但是有时并不能小伙伴们的所有需求，
+ * 所以我在这个类的基础上就所有能用到的情况做了一个简单的封装。大家知道做一个功能比较简单，但是封装好几种功能到一个类里面就需要处理的好多逻辑了，
+ * 所以对于小编这种小白也是花了好久的业余时间才搞完的，希望大家能够多多支持，更希望我的绵薄之力能够帮助大家。源码和Demo已经上传到github了，欢迎大家多多fork和star。
+ * github地址：https://github.com/shanyao0/TabPagerIndicatorDemo
+ * <p>
+ * 好了废话不多说，直接上图来看下效果吧。
+ * <p>
+ * 六种效果图
+ * <p>
+ * 一：MODE_WEIGHT_NOEXPAND_SAME
+ * <p>
+ * 几个标题均分宽度，不能扩展，底部导航线跟标题宽度一致
+ * <p>
+ * <p>
+ * <p>
+ * 二：MODE_WEIGHT_NOEXPAND_NOSAME
+ * <p>
+ * 几个标题均分宽度，不能扩展，底部导航线跟标题宽度不一致
+ * <p>
+ * <p>
+ * <p>
+ * 三：MODE_NOWEIGHT_NOEXPAND_SAME
+ * <p>
+ * 标题不均分宽度，不能扩展，底部导航线跟标题宽度一致
+ * <p>
+ * <p>
+ * <p>
+ * 四：MODE_NOWEIGHT_NOEXPAND_NOSAME
+ * <p>
+ * 标题不均分宽度，不能扩展，底部导航线跟标题宽度不一致
+ * <p>
+ * 这里写图片描述
+ * <p>
+ * 五：MODE_NOWEIGHT_EXPAND_SAME
+ * <p>
+ * 标题不均分宽度，能扩展，底部导航线跟标题宽度一致
+ * <p>
+ * <p>
+ * <p>
+ * 六：MODE_NOWEIGHT_EXPAND_NOSAME
+ * <p>
+ * 标题不均分宽度，能扩展，底部导航线跟标题宽度不一致
+ * <p>
+ * <p>
+ * <p>
+ * 使用方法
+ * <p>
+ * 一般来说这个类是ViewPager+TabPagerIndicator+Fragment来使用的
+ * <p>
+ * 1. 关联类库
+ * <p>
+ * 首先，下载我上面的TabPagerIndicatorDemo，然后将里面的tabpagerindicator类库import Module到你的项目，并关联
+ * <p>
+ * 2. xml布局
+ * <p>
+ * <?xml version="1.0" encoding="utf-8"?>
+ * <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ * android:layout_width="match_parent"
+ * android:layout_height="match_parent"
+ * android:background="#fff"
+ * android:orientation="vertical">
+ * <p>
+ * <shanyao.tabpagerindictor.TabPageIndicator
+ * android:id="@+id/indicator"
+ * android:layout_width="match_parent"
+ * android:layout_height="40dp"
+ * />
+ * <android.support.v4.view.ViewPager
+ * android:id="@+id/viewPager"
+ * android:layout_width="match_parent"
+ * android:layout_height="match_parent"
+ * android:background="#fff" />
+ * </LinearLayout>
+ * 3. 代码使用
+ *
+ * @Override public void onCreate(Bundle savedInstanceState) {
+ * super.onCreate(savedInstanceState);
+ * setContentView(R.layout.viewpager_indicator);
+ * indicator = (TabPageIndicator)findViewById(R.id.indicator);
+ * viewPager = (ViewPager)findViewById(R.id.viewPager);
+ * BasePagerAdapter adapter = new BasePagerAdapter(getSupportFragmentManager());
+ * <p>
+ * viewPager.setAdapter(adapter);// 设置adapter
+ * indicator.setViewPager(viewPager);// 绑定indicator
+ * <p>
+ * setTabPagerIndicator();
+ * }
+ * // 通过一些set方法，设置控件的属性
+ * private void setTabPagerIndicator() {
+ * indicator.setIndicatorMode(TabPageIndicator.IndicatorMode.MODE_WEIGHT_NOEXPAND_SAME);// 设置模式，一定要先设置模式
+ * indicator.setDividerColor(Color.parseColor("#00bbcf"));// 设置分割线的颜色
+ * indicator.setDividerPadding(10);//设置
+ * indicator.setIndicatorColor(Color.parseColor("#43A44b"));// 设置底部导航线的颜色
+ * indicator.setTextColorSelected(Color.parseColor("#43A44b"));// 设置tab标题选中的颜色
+ * indicator.setTextColor(Color.parseColor("#797979"));// 设置tab标题未被选中的颜色
+ * indicator.setTextSize(16);// 设置字体大小
+ * }
+ * 常用方法说明
+ * <p>
+ * setIndicatorMode()//设置控件的模式，上面是提到的6种模式
+ * setDividerColor()//设置两个标题之间的竖直分割线的颜色，如果不需要显示这个，设置颜色为透明即可
+ * setDividerPadding()//设置中间竖线上下的padding值
+ * setIndicatorColor()//设置底部导航线的颜色，就是上面演示图的绿色导航线
+ * setIndicatorHeight()// 设置底部导航线的高度
+ * setDividerPadding()// 设置Tab标题之间的间距
+ * setTextColorSelected()//设置tab标题选中的颜色
+ * setTextColor()//设置tab标题未被选中的颜色
+ * setTextSize()//设置字体的大小
+ * setUnderlineColor()// 设置最下面一条的横线的颜色
+ * setUnderlineHeight()//设置最下面一条的横线的高度
+ * setScrollOffset()// 这个方法是当选择MODE_NOWEIGHT_EXPAND_NOSAME和MODE_NOWEIGHT_EXPAND_SAME这两个模式的时候有作用
+ * 具体作用大家，可以下载Demo自己试一试
+ * 可能还有一些不是常用的方法，大家可以自己下载Demo去试试
+ * <p>
+ * 实现步骤和原理
+ * <p>
+ * 这里带大家简单的分析一下原理，具体的大家可以下载源码自己研究下。
+ * <p>
+ * 创建TabPagerIndicator类继承HorizontalScrollView
+ * <p>
+ * 这个主要是当顶部标题超过整个屏幕的时候，我们可以滑动它，主要是后两种模式会用到
+ * 这里会提供一些属性让我们设置，我们可以通过set方法设置
+ * <p>
+ * 创建一个LinearLayout来维护容纳几个TextView标题
+ * <p>
+ * tabsContainer = new LinearLayout(context);
+ * tabsContainer.setOrientation(LinearLayout.HORIZONTAL);
+ * LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+ * tabsContainer.setLayoutParams(layoutParams);
+ * addView(tabsContainer);//将这个线性布局添加到TabPagerIndicator
+ * 给TabPagerIndicator设置ViewPager
+ * public void setViewPager(ViewPager pager) {
+ * this.pager = pager;
+ * <p>
+ * if (pager.getAdapter() == null) {
+ * throw new IllegalStateException("ViewPager does not have adapter instance.");
+ * }
+ * <p>
+ * pager.setOnPageChangeListener(pageListener);
+ * <p>
+ * notifyDataSetChanged();
+ * }
+ * 通过这个方法，将ViewPager和TabPagerIndicator给关联起来，并实现联动效果。
+ * 拿到ViewPager的对象我们就可以获取它的adapter从而我们可以通过adapter里面的方法获取tab的标题。
+ * 我们可以设置监听器，通过监听器，我们可以根据ViewPager的移动来移动我们的TabPagerIndicator。
+ * LinearLayout里面添加TextView
+ * // 看看这里我们就用到了那个ViewPager的对象pager
+ * tabCount = pager.getAdapter().getCount();
+ * for (int i = 0; i < tabCount; i++) {
+ * // 循环遍历给TextView设置文字和属性
+ * addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+ * }
+ * <p>
+ * private void addTextTab(final int position, String title) {
+ * <p>
+ * TextView tab = new TextView(getContext());
+ * tab.setText(title);
+ * tab.setFocusable(true);
+ * tab.setGravity(Gravity.CENTER);
+ * tab.setSingleLine();
+ * tab.setOnClickListener(new OnClickListener() {
+ * @Override public void onClick(View v) {
+ * pager.setCurrentItem(position);
+ * }
+ * });
+ * if (isExpand && !isExpandSameLine) {// 注意这里跟我们的几种模式有关
+ * tab.setPadding(tabPadding, 0, tabPadding, 0);
+ * } else {// 其实模式一和模式二就一个Padding和Margin的区别
+ * wrapTabLayoutParams.setMargins(tabPadding, 0, tabPadding, 0);
+ * weightTabLayoutParams.setMargins(tabPadding, 0, tabPadding, 0);
+ * }
+ * tabsContainer.addView(tab, position, isSameLine ? wrapTabLayoutParams : weightTabLayoutParams);
+ * }
+ * 开始onDraw里面画
+ * 这个里面主要是利用drawRect方法，画一些矩形线条
+ * @Override protected void onDraw(Canvas canvas) {
+ * super.onDraw(canvas);
+ * if (isInEditMode() || tabCount == 0) {
+ * return;
+ * }
+ * <p>
+ * final int height = getHeight();
+ * <p>
+ * // draw底部的导航线
+ * <p>
+ * rectPaint.setColor(indicatorColor);
+ * View currentTab = tabsContainer.getChildAt(currentPosition);
+ * float currentOffWid;
+ * if (isExpand) {
+ * currentOffWid = 0;
+ * } else {
+ * currentOffWid = (currentTab.getWidth() - widths[currentPosition]) / 2;
+ * }
+ * <p>
+ * float lineLeft = currentTab.getLeft() + currentOffWid;
+ * float lineRight = currentTab.getRight() - currentOffWid;
+ * <p>
+ * if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
+ * View nextTab = tabsContainer.getChildAt(currentPosition + 1);
+ * float nextOffWid; //nextOffWid
+ * if (isExpand) {//如果是可扩展的，尤其是模式6，这个值必须为0
+ * nextOffWid = 0;
+ * } else {//差值的计算，widths是一个数组，存取了几个TextView的宽度，后面具体会说
+ * nextOffWid = (nextTab.getWidth() - widths[currentPosition + 1]) / 2;
+ * }
+ * // getLeft和getRight方法，是获取的相对于父类即LinearLayout的位置
+ * final float nextTabLeft = nextTab.getLeft() + nextOffWid;
+ * final float nextTabRight = nextTab.getRight() - nextOffWid;
+ * // currentPositionOffset是一个0到1之间的变化值，
+ * // 在OnPageChangeListener的方法里我们可以获取到，
+ * lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
+ * lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
+ * }
+ * //这里的这个判断是经过我多次实验得出的。。。
+ * if (currentIndicatorMode == IndicatorMode.MODE_NOWEIGHT_NOEXPAND_NOSAME){
+ * canvas.drawRect(lineLeft-tabPadding, height - indicatorHeight, lineRight+tabPadding, height, rectPaint);
+ * }else{
+ * canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+ * }
+ * // draw underline
+ * <p>
+ * rectPaint.setColor(underlineColor);
+ * canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+ * <p>
+ * // draw divider：分割线
+ * dividerPaint.setColor(dividerColor);
+ * for (int i = 0; i < tabCount - 1; i++) {
+ * View tab = tabsContainer.getChildAt(i);
+ * if (!isExpandSameLine) {
+ * canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
+ * } else {
+ * canvas.drawLine(tab.getRight() + tabPadding, dividerPadding, tab.getRight() + tabPadding, height - dividerPadding, dividerPaint);
+ * }
+ * }
+ * }
+ * // 几个变量值得说明
+ * <p>
+ * nextOffWid:导航线和文字宽度长的差距
+ * 后面我们的left+它，right-它，我们就可以实现 导航线跟文字一样长了
+ * 图示
+ * <p>
+ * 这里写图片描述
+ * <p>
+ * OnPageChangeListener和ScrollTo决定联动
+ * private class PageListener implements OnPageChangeListener {
+ * @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+ * // positionOffset这变量的值会随着ViewPager的移动从0到1变化
+ * currentPosition = position;
+ * currentPositionOffset = positionOffset;
+ * Log.e("shanyao", positionOffset + "");
+ * scrollToChild(position, (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
+ * invalidate();
+ * }
+ * @Override public void onPageScrollStateChanged(int state) {
+ * if (state == ViewPager.SCROLL_STATE_IDLE) {
+ * scrollToChild(pager.getCurrentItem(), 0);
+ * }
+ * }
+ * @Override public void onPageSelected(int position) {
+ * //使当前item高亮
+ * for (int i = 0; i < tabCount; i++) {
+ * View v = tabsContainer.getChildAt(i);
+ * if (v instanceof TextView) {
+ * TextView textView = (TextView) v;
+ * textView.setTextColor(i == pager.getCurrentItem() ? tabTextColorSelected : tabTextColor);
+ * }
+ * }
+ * }
+ * }
+ * <p>
+ * private void scrollToChild(int position, int offset) {
+ * if (tabCount == 0 || offset == 0) {
+ * return;
+ * }
+ * <p>
+ * int newScrollX = tabsContainer.getChildAt(position).getLeft() + offset;
+ * <p>
+ * if (position > 0 || offset > 0) {
+ * newScrollX -= scrollOffset;
+ * }
+ * <p>
+ * if (newScrollX != lastScrollX) {
+ * lastScrollX = newScrollX;
+ * scrollTo(newScrollX, 0);
+ * }
+ * <p>
+ * }
+ * 总结
+ * <p>
+ * 从效果图的展示，到使用，再到原理分析，我相信小伙们已经对这个库有了大致的了解，有你需要的模式，直接拿去用就行，类库很小就一个类和一个attr文件，使用起来很简单的。
+ * 有能力有兴趣的可以多看看源码，自己可以根据自己的需求在完善下。第一次写开源的小项目，
+ * 虽然很简单，但是我也经过了很多的设计和调试才写出来的，其中可能好多的缺陷，希望大家多多指教，我会第一时间改掉的。以后我也会带给大家一些比较实用的、比较常用的的小Demo的。
+ * 希望大家能够多多支持我，去我的github上面多多star和fork，您的支持就是我最大的动力，谢谢大家。。。
  */

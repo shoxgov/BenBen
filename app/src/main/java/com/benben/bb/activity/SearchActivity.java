@@ -175,7 +175,11 @@ public class SearchActivity extends BaseActivity {
             String region = ri.getRegion();
             if (region.contains(".")) {
                 String[] regions = region.split("\\.");
-                baseViewHolder.setText(R.id.home_employ_addr, regions[0]+"."+regions[1]);
+                if (regions.length == 3) {
+                    baseViewHolder.setText(R.id.home_employ_addr, regions[1] + "." + regions[2]);
+                } else {
+                    baseViewHolder.setText(R.id.home_employ_addr, regions[0] + "." + regions[1]);
+                }
             } else {
                 baseViewHolder.setText(R.id.home_employ_addr, ri.getRegion());
             }
@@ -204,7 +208,7 @@ public class SearchActivity extends BaseActivity {
                     break;
             }
             String img = ri.getCompanyMien();
-            if (img.contains(",")) {
+            if (!TextUtils.isEmpty(img) && img.contains(",")) {
                 img = img.split(",")[0];
             }
             Glide.with(SearchActivity.this)

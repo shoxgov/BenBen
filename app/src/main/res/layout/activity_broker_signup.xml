@@ -9,6 +9,10 @@
     <com.benben.bb.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:rightBtnBackground="@mipmap/share_blackbg"
+        app:rightBtnText="邀请"
+        app:rightBtnTextcolor="@color/textblack"
+        app:showRightBtn="true"
         app:titleName="报名" />
 
     <View
@@ -27,25 +31,17 @@
         android:textSize="@dimen/font_normal"
         android:visibility="gone" />
 
-    <GridView
-        android:id="@+id/gridview"
+    <com.benben.bb.view.RecyclerViewSwipeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white"
-        android:horizontalSpacing="2dip"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="2"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        android:verticalSpacing="2dip" />
+        app:dividerColor="@color/mainbg"
+        app:dividerHeight="1dip" />
 
     <Button
         android:id="@+id/broker_signup_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
         android:background="@color/bluetheme"
         android:text="报名"
         android:textColor="@color/white"

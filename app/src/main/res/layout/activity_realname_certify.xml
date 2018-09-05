@@ -88,8 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="24"
                     android:background="@null"
-                    android:inputType="number"
-                    android:digits="@string/editInputtype"
+                    android:maxLength="18"
+                    android:text=""
+                    android:digits="1234567890xX"
                     android:hint="请输入身份证号"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/font_small" />

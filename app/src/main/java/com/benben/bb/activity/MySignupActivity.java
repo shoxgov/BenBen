@@ -1,5 +1,6 @@
 package com.benben.bb.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.bean.UserData;
+import com.benben.bb.dialog.FirstInMySignupDialog;
 import com.benben.bb.dialog.WarnDialog;
 import com.benben.bb.imp.DialogCallBack;
 import com.benben.bb.imp.TitleBarListener;
@@ -18,6 +20,7 @@ import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
 import com.benben.bb.okhttp3.response.SignupResponse;
 import com.benben.bb.utils.DateUtils;
+import com.benben.bb.utils.PreferenceUtil;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
@@ -81,6 +84,13 @@ public class MySignupActivity extends BaseActivity {
     }
 
     private void init() {
+        PreferenceUtil.init(this);
+        boolean isFirst = PreferenceUtil.getBoolean("IsFirstSignup", true);
+        if (isFirst) {
+            PreferenceUtil.commitBoolean("IsFirstSignup", false);
+            FirstInMySignupDialog dialog = new FirstInMySignupDialog(this);
+            dialog.show();
+        }
         requestSignup();
     }
 
@@ -141,13 +151,47 @@ public class MySignupActivity extends BaseActivity {
         public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
             final SignupResponse.SignupInfo si = (SignupResponse.SignupInfo) itemModel;
             baseViewHolder.setText(R.id.mysignup_positionname, si.getPositionName());
-            baseViewHolder.setText(R.id.mysignup_price, si.getSalary() + "元/小时");
-            baseViewHolder.setText(R.id.mysignup_welfare, si.getWelfare().replace(",", "|"));
-            baseViewHolder.setText(R.id.mysignup_addr, "工作地点：" + si.getRegion());
-            baseViewHolder.setText(R.id.mysignup_count, Html.fromHtml("报名：<font color=#FD7979>" + si.getEnrollNum() + "/" + si.getHiringCount() + "</font>(还剩<font color=#FD7979>" + DateUtils.dateDiffToday(si.getEndTime()) + "</font>天)"));
+            baseViewHolder.setText(R.id.mysignup_job_ltd, si.getCompanyName());
+            baseViewHolder.setText(R.id.mysignup_price, si.getFocusSalary());
+            String region = si.getRegion();
+            if (region.contains(".")) {
+                String[] regions = region.split("\\.");
+                if (regions.length == 3) {
+                    baseViewHolder.setText(R.id.mysignup_addr, regions[1] + "." + regions[2]);
+                } else {
+                    baseViewHolder.setText(R.id.mysignup_addr, regions[0] + "." + regions[1]);
+                }
+            } else {
+                baseViewHolder.setText(R.id.mysignup_addr, si.getRegion());
+            }
+            switch (si.getAdvSort()) {//advSort (1限时招聘2优质企业3犇犇推荐4可实习生5小时兼职)
+                case 1:
+                    baseViewHolder.setText(R.id.mysignup_job_tag, "限时招聘");
+                    baseViewHolder.setBackgroundColor(R.id.mysignup_job_tag, Color.parseColor("#fd7979"));
+                    break;
+                case 2:
+                    baseViewHolder.setText(R.id.mysignup_job_tag, "优质企业");
+                    baseViewHolder.setBackgroundColor(R.id.mysignup_job_tag, Color.parseColor("#94db46"));
+                    break;
+                case 3:
+                default:
+                    baseViewHolder.setText(R.id.mysignup_job_tag, "犇犇推荐");
+                    baseViewHolder.setBackgroundColor(R.id.mysignup_job_tag, R.color.bluetheme);
+                    break;
+                case 4:
+                    baseViewHolder.setText(R.id.mysignup_job_tag, "可实习生");
+                    baseViewHolder.setBackgroundColor(R.id.mysignup_job_tag, Color.parseColor("#ffa23c"));
+                    break;
+                case 5:
+                    baseViewHolder.setText(R.id.mysignup_job_tag, "小时兼职");
+                    baseViewHolder.setBackgroundColor(R.id.mysignup_job_tag, Color.parseColor("#50e3c2"));
+                    break;
+            }
             TextView submit = (TextView) baseViewHolder.getView(R.id.mysignup_submit);
             if (si.getEntryStatus() == 77) {
                 submit.setText("同意应聘该职位");
+                submit.setTextColor(getResources().getColor(R.color.white));
+                submit.setBackgroundResource(R.drawable.drawable_buttonbg);
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,7 +202,7 @@ public class MySignupActivity extends BaseActivity {
                             @Override
                             public void OkDown(Object obj) {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("positionUserId", si.getPositionUserId() + "");//职位ID
+                                params.put("positionUserId", si.getId() + "");//职位ID
                                 OkHttpUtils.getAsyn(NetWorkConfig.USER_AGREEN_SIGNUP_EVENT, params, BaseResponse.class, new HttpCallback() {
                                     @Override
                                     public void onSuccess(BaseResponse br) {
@@ -194,12 +238,28 @@ public class MySignupActivity extends BaseActivity {
                 switch (si.getEntryStatus()) {
                     case 91:
                         submit.setText("辞退");
+                        submit.setBackground(null);
+                        submit.setTextColor(getResources().getColor(R.color.gray_dark));
                         break;
                     case 99:
                         submit.setText("已入职");
+                        submit.setBackground(null);
+                        submit.setTextColor(getResources().getColor(R.color.gray_dark));
+                        break;
+                    case 88:
+                        submit.setText("等待系统审核");
+                        submit.setBackground(null);
+                        submit.setTextColor(Color.parseColor("#FFA23C"));
+                        break;
+                    case 89:
+                        submit.setText("等待企业审核");
+                        submit.setBackground(null);
+                        submit.setTextColor(getResources().getColor(R.color.gray_dark));
                         break;
                     default:
                         submit.setText("申核中");
+                        submit.setBackground(null);
+                        submit.setTextColor(getResources().getColor(R.color.gray_dark));
                         break;
                 }
                 submit.setOnClickListener(null);

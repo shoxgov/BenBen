@@ -17,6 +17,7 @@ import com.benben.bb.bean.AccountInfoData;
 import com.benben.bb.bean.UserData;
 import com.benben.bb.okhttp3.http.Https;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
+import com.benben.bb.okhttp3.response.BrokerEnrollSignupPositionResponse;
 import com.benben.bb.utils.LogUtil;
 import com.benben.bb.utils.PreferenceUtil;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
@@ -63,6 +64,10 @@ public class MyApplication extends Application {
     private static List<Activity> activityList = new ArrayList<>();
     public static int screenWidthPixels = 400;
     public static int screenHeightPixels = 800;
+    /**
+     * 传递列表参数
+     */
+    public static List<BrokerEnrollSignupPositionResponse.SignupPositionInfo> brokerBusinessStatisticsList;
     /**
      * 高德地图定位
      */

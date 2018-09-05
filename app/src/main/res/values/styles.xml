@@ -115,4 +115,10 @@
         <!-- 背景有灰度 -->
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <style name="myratingbar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/myratingbar</item>
+        <item name="android:minHeight">50.0px</item>
+        <item name="android:maxHeight">50.0px</item>
+    </style>
 </resources>

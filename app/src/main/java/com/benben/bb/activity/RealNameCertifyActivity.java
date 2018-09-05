@@ -91,7 +91,8 @@ public class RealNameCertifyActivity extends BaseActivity {
 
             }
         });
-        //0未认证1已通过2认证失败3认证中
+        //validateStatus  实名认证状态
+        //0未认证3认证中2认证失败1已通过
         switch (status) {
             case 3://认证中
             case 2://认证失败

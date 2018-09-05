@@ -61,15 +61,16 @@ public class CompanyRecruitDetailResponse extends BaseResponse {
         private String welfare;
         private String houseImg;
         private String endTime;
-        private String jobDemand;
         private String focusSalary;
         private String commisionDetails;
-        private String supplement;
         private String createDate;
         private String staffHouse;
-        private String staffCanteen;
         private String entryAge;
+        private String workTime;
         private String entrySex;
+        private String supplement;//薪资待遇;
+        private String staffCanteen;//食宿情况;
+        private String jobDemand;//职位说明;
 
         public int getId() {
             return id;
@@ -277,6 +278,14 @@ public class CompanyRecruitDetailResponse extends BaseResponse {
 
         public void setCommisionDetails(String commisionDetails) {
             this.commisionDetails = commisionDetails;
+        }
+
+        public String getWorkTime() {
+            return workTime;
+        }
+
+        public void setWorkTime(String workTime) {
+            this.workTime = workTime;
         }
     }
 }

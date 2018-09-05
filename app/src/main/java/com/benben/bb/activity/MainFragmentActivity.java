@@ -71,9 +71,9 @@ public class MainFragmentActivity extends BaseFragmentActivity {
         MyApplication.screenWidthPixels = dm.widthPixels;
         MyApplication.screenHeightPixels = dm.heightPixels;
 
-        MyApplication app = (MyApplication) getApplication();
-        app.initLocation();
-        app.startBD();
+//        MyApplication app = (MyApplication) getApplication();
+//        app.initLocation();
+//        app.startBD();
         judeFirst();
         mFragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
@@ -121,12 +121,12 @@ public class MainFragmentActivity extends BaseFragmentActivity {
 
     private void judeFirst() {
         PreferenceUtil.init(this);
-        boolean isFirst = PreferenceUtil.getBoolean("IsFirst", true);
+        boolean isFirst = PreferenceUtil.getBoolean("IsFirstMain", true);
         if (!isFirst) {
             return;
         }
-        if (UserData.getUserData().getValidateStatus() == 0) {//validateStatus 0未认证1已通过2认证失败3认证中
-            PreferenceUtil.commitBoolean("IsFirst", false);
+        if (UserData.getUserData().getValidateStatus() == 0) {//0未认证3认证中2认证失败1已通过
+            PreferenceUtil.commitBoolean("IsFirstMain", false);
             RealnameCertifyDialog realnameCertifyDialog = new RealnameCertifyDialog(this, "前去完成实名认证", new DialogCallBack() {
                 @Override
                 public void OkDown(Object obj) {

@@ -26,6 +26,7 @@ import java.util.List;
  "resourcesSum": 0,
  "benbenNum": "10033",
  "createDate": "2018-06-28 09:35:11.0"
+ "trueName":"沙漠之鹰","age":"0","nickName":"dfvbgyvg","sex":0,"education":"最高学历","fromId":null,"positionUserId":null,"resourcesSum":0,"benbenNum":"10033","createDate":"2018-06-28"}
  }
  ],
  "prePage": 0,
@@ -99,8 +100,11 @@ public class MyInviteResourceResponse extends BaseResponse {
    public class MyInviteResource{
        private int userId;
        private int resourcesSum;
+       private int age;
+       private int sex;
        private int benbenNum;
        private String userName;
+       private String education;
        private String trueName;
        private String avatar;
        private String createDate;
@@ -159,6 +163,30 @@ public class MyInviteResourceResponse extends BaseResponse {
 
        public void setCreateDate(String createDate) {
            this.createDate = createDate;
+       }
+
+       public int getAge() {
+           return age;
+       }
+
+       public void setAge(int age) {
+           this.age = age;
+       }
+
+       public int getSex() {
+           return sex;
+       }
+
+       public void setSex(int sex) {
+           this.sex = sex;
+       }
+
+       public String getEducation() {
+           return education;
+       }
+
+       public void setEducation(String education) {
+           this.education = education;
        }
    }
 }

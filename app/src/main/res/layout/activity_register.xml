@@ -15,7 +15,7 @@
         android:layout_width="@dimen/icon_certify_height"
         android:layout_height="@dimen/icon_certify_height"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/logo_bg"
         app:radius="15dip"
         app:type="round" />
 

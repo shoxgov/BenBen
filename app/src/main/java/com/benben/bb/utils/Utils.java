@@ -285,6 +285,26 @@ public class Utils {
     }
 
     /**
+     * 获得状态栏的高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getStatusHeight(Context context) {
+
+        int statusHeight = -1;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
+            statusHeight = context.getResources().getDimensionPixelSize(height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusHeight;
+    }
+
+    /**
      * 获取字符数量 汉字占2个，英文占一个
      *
      * @param text
@@ -342,10 +362,16 @@ public class Utils {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = false;
             options.inSampleSize = 1;   // width，hight设为原来的十分一
-            Bitmap logoBmp = Glide.with(context)
-                    .load(UserData.getUserData().getAvatar())
-                    .asBitmap().into(200, 200)
-                    .get();
+            Bitmap logoBmp;
+            try {
+                logoBmp = Glide.with(context)
+                        .load(UserData.getUserData().getAvatar())
+                        .asBitmap().into(200, 200)
+                        .get();
+            } catch (Exception e) {
+                e.printStackTrace();
+                logoBmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher, options);
+            }
             float scaleFactor = bitmap.getWidth() * 1.0f / 4 / 200;
             //
             Canvas canvas = new Canvas(bitmap);

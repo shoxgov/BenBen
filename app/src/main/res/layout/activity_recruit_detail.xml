@@ -85,31 +85,39 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/font_small" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dip"
-                android:background="@color/mainbg" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/recruit_detail_commission_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginTop="10dip"
-                android:text="就业顾问佣金"
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_normal" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/recruit_detail_position_commission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_marginTop="5dip"
-                android:text="0元/小时"
-                android:textColor="@color/textred"
-                android:textSize="@dimen/font_normal" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:background="@color/mainbg" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="10dip"
+                    android:text="就业顾问佣金"
+                    android:textColor="@color/textblack"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:id="@+id/recruit_detail_position_commission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="5dip"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="0元/小时"
+                    android:textColor="@color/textred"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -136,50 +144,6 @@
                 app:textSelectedColor="@color/bluetheme"
                 app:textSelectedSize="@dimen/font_normal" />
 
-            <!-- <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
-                 android:paddingBottom="10dip"
-                 android:paddingTop="10dip">
-
-                 <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:gravity="center"
-                     android:onClick="scrollTo2"
-                     android:text="薪资待遇"
-                     android:textSize="@dimen/font_normal" />
-
-                 <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:gravity="center"
-                     android:onClick="scrollTo3"
-                     android:text="食宿情况"
-                     android:textSize="@dimen/font_normal" />
-
-                 <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:gravity="center"
-                     android:onClick="scrollTo4"
-                     android:text="入职条件"
-                     android:textSize="@dimen/font_normal" />
-
-                 <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:gravity="center"
-                     android:onClick="scrollTo6"
-                     android:text="公司简介"
-                     android:textSize="@dimen/font_normal" />
-             </LinearLayout>-->
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
@@ -204,86 +168,20 @@
                 android:textSize="@dimen/font_large"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/recruit_detail_salary_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="基本薪资"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_position_salary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="15.0元/小时"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="工作时间"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_position_workday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="白天、夜班两班制"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="发薪日期"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_position_paytime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="每月20-25日发放"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
+                android:layout_margin="10dip"
+                android:background="@drawable/bg_white_radius_coner"
+                android:enabled="false"
+                android:gravity="left|top"
+                android:hint="薪资待遇"
+                android:minLines="2"
+                android:padding="5dip"
+                android:textColor="@drawable/textcolor_enable"
+                android:textColorHint="@color/gray_dark"
+                android:textSize="@dimen/font_small" />
 
             <View
                 android:layout_width="match_parent"
@@ -309,59 +207,20 @@
                 android:textSize="@dimen/font_large"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/recruit_detail_dining_edit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="员工食堂"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_dining"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="充卡就餐"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="员工宿舍"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_dormitory"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="免费住宿、水电免费"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="@drawable/bg_white_radius_coner"
+                android:enabled="false"
+                android:gravity="left|top"
+                android:hint="薪资待遇"
+                android:minLines="2"
+                android:padding="5dip"
+                android:textColor="@drawable/textcolor_enable"
+                android:textColorHint="@color/gray_dark"
+                android:textSize="@dimen/font_small" />
 
             <View
                 android:layout_width="match_parent"
@@ -387,137 +246,62 @@
                 android:textSize="@dimen/font_large"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="年龄"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_position_age"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="18-38岁"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="10dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="性别"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/recruit_detail_position_sex"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="不限"
-                    android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:text="面试要求"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/font_normal" />
-
             <EditText
-                android:id="@+id/recruit_detail_position_demand"
+                android:id="@+id/recruit_detail_demand_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dip"
-                android:background="@null"
+                android:background="@drawable/bg_white_radius_coner"
                 android:enabled="false"
-                android:lineSpacingMultiplier="1.2"
-                android:text=""
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_normal" />
+                android:gravity="left|top"
+                android:hint="薪资待遇"
+                android:minLines="2"
+                android:padding="5dip"
+                android:textColor="@drawable/textcolor_enable"
+                android:textColorHint="@color/gray_dark"
+                android:textSize="@dimen/font_small" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dip"
+                android:layout_height="10dip"
                 android:background="@color/mainbg" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/tv5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/recruit_detail_ltd_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dip"
-                android:layout_marginTop="10dip"
-                android:drawableLeft="@mipmap/detail_indicator_enterprise"
-                android:drawablePadding="5dip"
-                android:text="公司简介"
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_large"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/recruit_detail_ltd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:enabled="false"
-                android:lineSpacingMultiplier="1.2"
-                android:paddingBottom="5dip"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="5dip"
-                android:text=""
+                android:layout_marginRight="10dip"
+                android:layout_toLeftOf="@+id/recruit_detail_ltd_name_ref"
+                android:singleLine="true"
+                android:text="公司地址："
                 android:textColor="@color/textblack"
                 android:textSize="@dimen/font_normal" />
 
-            <TextView
-                android:id="@+id/recruit_detail_ltd_addr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:text="公司地址："
-                android:textColor="@color/textblack"
-                android:textSize="@dimen/font_small" />
-        </LinearLayout>
 
+            <ImageView
+                android:id="@+id/recruit_detail_ltd_name_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:src="@mipmap/right_arrow" />
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dip"
-            android:layout_marginTop="10dip"
+            android:layout_height="10dip"
             android:background="@color/mainbg" />
 
         <LinearLayout

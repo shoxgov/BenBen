@@ -9,7 +9,7 @@
     <com.benben.bb.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleName="我的就业顾问" />
+        app:titleName="助理顾问" />
 
     <LinearLayout
         android:id="@+id/broker_myteam_layout"

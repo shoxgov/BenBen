@@ -9,24 +9,25 @@
     <com.benben.bb.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightBtnText="明细"
         app:leftBtnBackground="@mipmap/whiteback"
+        app:rightBtnText="明细"
         app:showRightBtn="true"
-        app:titleBackground="@color/bluetheme" />
+        app:titleBackground="@color/bluetheme"
+        app:titleName="我的钱包"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bluetheme"
+        android:background="@mipmap/wallet_bg"
         android:orientation="vertical"
-        android:paddingBottom="10dip"
+        android:paddingBottom="40dip"
         android:paddingTop="10dip">
-
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="20dip"
             android:text="账户余额 （元）"
             android:textColor="@color/white"
             android:textSize="@dimen/font_normal" />
@@ -35,12 +36,87 @@
             android:id="@+id/mywallet_balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginTop="20dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="10dip"
             android:text="¥2333333.3"
             android:textColor="@color/white"
             android:textSize="40dip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥0.0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dip"
+                    android:text="昨日收益"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥0.0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dip"
+                    android:text="本月收益"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥0.0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dip"
+                    android:text="累计收益"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
@@ -58,7 +134,7 @@
         android:scrollbars="none" />
 
 
-    <Button
+   <!-- <Button
         android:id="@+id/mywallet_withdraw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,5 +144,5 @@
         android:layout_marginTop="15dip"
         android:background="@drawable/drawable_buttonbg"
         android:text="提现"
-        android:textColor="@color/white" />
+        android:textColor="@color/white" />-->
 </LinearLayout>

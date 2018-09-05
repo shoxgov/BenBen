@@ -204,7 +204,11 @@ public class EmployFragment extends BaseFragment {
             String region = ri.getRegion();
             if (region.contains(".")) {
                 String[] regions = region.split("\\.");
-                baseViewHolder.setText(R.id.employ_job_addr, regions[0]+"."+regions[1]);
+                if (regions.length == 3) {
+                    baseViewHolder.setText(R.id.employ_job_addr, regions[1] + "." + regions[2]);
+                } else {
+                    baseViewHolder.setText(R.id.employ_job_addr, regions[0] + "." + regions[1]);
+                }
             } else {
                 baseViewHolder.setText(R.id.employ_job_addr, ri.getRegion());
             }

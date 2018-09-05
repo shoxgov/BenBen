@@ -62,7 +62,9 @@ public class BandCardManagerActivity extends BaseActivity {
             addTv.setText("更换银行卡");
             usernameTv.setText(UserData.getUserData().getTrueName());
             try {
-                accountTv.setText(UserData.getUserData().getBindingPaytype() + "    (" + UserData.getUserData().getBindingPayAccount().replace(UserData.getUserData().getBindingPayAccount().substring(5, 9), "****") + ")");
+                int length = UserData.getUserData().getBindingPayAccount().length();
+                accountTv.setText(UserData.getUserData().getBindingPaytype() + "    (****" + UserData.getUserData().getBindingPayAccount().subSequence(length-4, length) + ")");
+//                accountTv.setText(UserData.getUserData().getBindingPaytype() + "    (" + UserData.getUserData().getBindingPayAccount().replace(UserData.getUserData().getBindingPayAccount().substring(5, 9), "****") + ")");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,7 +82,7 @@ public class BandCardManagerActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.bank_manager_status:
             case R.id.bank_manager_add:
-                //validateStatus  validateStatus 0未认证;1认证中;2认证失败;3已通过
+                //validateStatus  validateStatus 0未认证3认证中2认证失败1已通过
                 if (UserData.getUserData().getValidateStatus() == 1) {
                     Intent add = new Intent();
                     add.setClass(this, BankcardAddActivity.class);
@@ -100,6 +102,7 @@ public class BandCardManagerActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK) {
             init();
+            setResult(RESULT_OK);
         }
     }
 }

@@ -152,7 +152,7 @@ public class PersonEduActivity extends BaseActivity {
                     public void onSuccess(BaseResponse baseResponse) {
                         super.onSuccess(baseResponse);
                         if (baseResponse.getCode() == 1) {
-                            UserData.getUserData().setEducation(school);
+                            UserData.getUserData().setFinishSchool(school);
                             UserData.getUserData().setEducation(HIGH_ARRAYS[high]);
                             UserData.getUserData().setMajor(major);
                             UserData.getUserData().setStudyStatus(status);

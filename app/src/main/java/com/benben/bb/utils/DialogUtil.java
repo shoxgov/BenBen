@@ -16,6 +16,10 @@ public class DialogUtil {
     /**
      * @Description 显示加载状态框
      */
+    public static void showDialogLoading(Context context) {
+        showDialogLoading(context, "");
+    }
+
     public static void showDialogLoading(Context context, String message) {
         if (shapeLoadingDialog != null) {
             hideDialogLoading();

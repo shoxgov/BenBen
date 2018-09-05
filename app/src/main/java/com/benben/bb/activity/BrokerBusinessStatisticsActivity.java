@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.benben.bb.MyApplication;
 import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
@@ -136,16 +137,21 @@ public class BrokerBusinessStatisticsActivity extends BaseActivity {
 
         @Override
         public void convert(BaseViewHolder baseViewHolder, Object itemModel) {
-            final BrokerEnrollSignupPositionResponse.SignupPositionInfo spi = (BrokerEnrollSignupPositionResponse.SignupPositionInfo) itemModel;
+            final BrokerEnrollSignupPositionResponse.SignData spi = (BrokerEnrollSignupPositionResponse.SignData) itemModel;
             baseViewHolder.setText(R.id.broker_statistics_positionname, spi.getPositionName());
-            baseViewHolder.setText(R.id.broker_statistics_agreenum, "已输送：" + spi.getAgreeNum() + "人");
+            if (spi.getUserlist() == null || spi.getUserlist().isEmpty()) {
+                baseViewHolder.setText(R.id.broker_statistics_agreenum, "已输送：0 人");
+            } else {
+                baseViewHolder.setText(R.id.broker_statistics_agreenum, "已输送：" + spi.getUserlist().size() + "人");
+            }
             baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MyApplication.brokerBusinessStatisticsList = spi.getUserlist();
                     Intent detail = new Intent();
                     detail.setClass(BrokerBusinessStatisticsActivity.this, BrokerBusinessStatisticsDetailActivity.class);
                     detail.putExtra("positionId", spi.getPositionId());
-                    detail.putExtra("salary", spi.getSalary());
+                    detail.putExtra("focusSalary", spi.getFocusSalary());
                     detail.putExtra("commision", spi.getCommision());
                     detail.putExtra("positionName", spi.getPositionName());
                     startActivity(detail);

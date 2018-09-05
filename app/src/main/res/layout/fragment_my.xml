@@ -6,21 +6,33 @@
     android:background="@color/mainbg"
     android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@mipmap/fragment_my_topbg"
+        android:orientation="vertical">
 
-        <ImageView
+        <TextView
+            android:id="@+id/my_person_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitStart"
-            android:src="@mipmap/fragment_my_topbg" />
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="5dip"
+            android:gravity="right"
+            android:text="设置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/my_person_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/fragment_my_midbg">
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="30dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
 
             <com.benben.bb.view.RoundImageView
                 android:id="@+id/my_person_photo"
@@ -28,63 +40,208 @@
                 android:layout_height="@dimen/img_huge"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="5dip"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/logo_bg"
                 app:type="circle" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dip"
-                android:layout_toRightOf="@id/my_person_photo"
-                android:gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/my_person_truename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
                     android:singleLine="true"
-                    android:textColor="@color/textblack"
+                    android:text="张三"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/font_normal" />
 
                 <TextView
-                    android:id="@+id/my_person_id"
+                    android:id="@+id/my_person_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:text=""
+                    android:background="@drawable/boarder_btn_bg_semicircle"
+                    android:drawableLeft="@mipmap/my_vip"
+                    android:drawablePadding="5dip"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dip"
+                    android:paddingTop="5dip"
+                    android:text="企业人"
                     android:textColor="@color/textblack"
-                    android:textSize="@dimen/font_normal" />
-
-                <TextView
-                    android:id="@+id/my_person_signature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:text=""
-                    android:textColor="@color/gray_dark"
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
-    <ListView
-        android:id="@+id/my_setting_list"
+    <GridView
+        android:id="@+id/my_person_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
         android:layout_marginRight="15dip"
-        android:background="@color/white"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/line_color"
-        android:dividerHeight="1dip"
-        android:footerDividersEnabled="true"
+        android:layout_marginTop="-20dip"
+        android:background="@drawable/my_person_background"
+        android:gravity="center_vertical"
         android:listSelector="@android:color/transparent"
+        android:numColumns="4"
         android:overScrollMode="never"
         android:scrollbars="none" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/my_person_background"
+        android:orientation="vertical"
+        android:padding="10dip">
+
+        <TextView
+            android:id="@+id/my_privilege_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="尊贵特权"
+            android:textColor="@color/textblack"
+            android:textSize="@dimen/font_normal"
+            android:textStyle="bold" />
+
+        <GridView
+            android:id="@+id/my_privilege_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="3"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/my_privilege_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:text="暂无特权，完成任务升级特权"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_small"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_consultant_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/my_person_broker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:layout_weight="1"
+            android:background="@drawable/my_person_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dip">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/my_broker" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="就业顾问"
+                    android:textColor="@color/textred"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:text="人力资源管理"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_person_enterprise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="1"
+            android:background="@drawable/my_person_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dip">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/my_enterprise" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="企业用户"
+                    android:textColor="#6FB6FF"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:text="发布岗位直聘"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--    <ListView
+            android:id="@+id/my_setting_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:background="@color/white"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/line_color"
+            android:dividerHeight="1dip"
+            android:footerDividersEnabled="true"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />-->
 
 </LinearLayout>

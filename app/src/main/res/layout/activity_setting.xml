@@ -20,11 +20,13 @@
         android:orientation="vertical"
         android:paddingBottom="10dip">
 
-        <ImageView
+        <com.benben.bb.view.RoundImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:src="@mipmap/setting_bg" />
+            android:src="@mipmap/logo_bg"
+            app:radius="10dip"
+            app:type="round" />
 
         <TextView
             android:id="@+id/setting_version_code"

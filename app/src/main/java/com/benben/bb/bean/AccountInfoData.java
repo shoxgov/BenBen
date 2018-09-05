@@ -41,7 +41,7 @@ public class AccountInfoData implements Serializable {
     private int id;
     private int isAgent;
     private int isCompany;
-    private int validateStatus;//validateStatus 0未认证;1认证中;2认证失败;3已通过
+    private int validateStatus;//validateStatus 0未认证3认证中2认证失败1已通过
     private int walletStatus;
     private int sex;
     private float balance;

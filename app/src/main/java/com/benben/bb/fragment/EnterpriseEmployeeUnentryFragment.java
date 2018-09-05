@@ -1,5 +1,6 @@
 package com.benben.bb.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.benben.bb.NetWorkConfig;
 import com.benben.bb.R;
 import com.benben.bb.activity.EnterpriseAddRecruitActivity;
 import com.benben.bb.activity.EnterpriseEmployeeDetailActivity;
+import com.benben.bb.activity.UserInfoActivity;
 import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.base.BaseFragment;
 import com.benben.bb.bean.UserData;
@@ -144,6 +146,8 @@ public class EnterpriseEmployeeUnentryFragment extends BaseFragment {
                     .load(eei.getAvatar())
                     .error(R.mipmap.default_image)
                     .into((ImageView) baseViewHolder.getView(R.id.enterprise_employee_entry_photo));
+            baseViewHolder.setOnClickListener(R.id.enterprise_employee_entry_photo, new UserInfoListener(eei.getUserId()));
+            baseViewHolder.setOnClickListener(R.id.enterprise_employee_entry_name, new UserInfoListener(eei.getUserId()));
             baseViewHolder.setText(R.id.enterprise_employee_entry_name, eei.getTrueName());
             baseViewHolder.setText(R.id.enterprise_employee_entry_hint, eei.getUserName());
             baseViewHolder.setOnClickListener(R.id.employ_entry_btn1, new View.OnClickListener() {
@@ -152,7 +156,7 @@ public class EnterpriseEmployeeUnentryFragment extends BaseFragment {
                     WarnDialog warnDialog = new WarnDialog(getActivity(), "取消报名？", new DialogCallBack() {
                         @Override
                         public void OkDown(Object obj) {
-                            userStatusOp(eei.getPositionUserId(),eei.getUserId(), 2);
+                            userStatusOp(eei.getPositionUserId(), eei.getUserId(), 2);
                         }
 
 
@@ -170,9 +174,8 @@ public class EnterpriseEmployeeUnentryFragment extends BaseFragment {
                     WarnDialog warnDialog = new WarnDialog(getActivity(), "同意入职？", new DialogCallBack() {
                         @Override
                         public void OkDown(Object obj) {
-                            userStatusOp(eei.getPositionUserId(), eei.getUserId(),99);
+                            userStatusOp(eei.getPositionUserId(), eei.getUserId(), 99);
                         }
-
 
                         @Override
                         public void CancleDown() {
@@ -184,6 +187,22 @@ public class EnterpriseEmployeeUnentryFragment extends BaseFragment {
             });
         }
     };
+
+    class UserInfoListener implements View.OnClickListener {
+        private int userId;
+
+        public UserInfoListener(int userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent userInfo = new Intent();
+            userInfo.setClass(getActivity(), UserInfoActivity.class);
+            userInfo.putExtra("userId", userId + "");
+            startActivity(userInfo);
+        }
+    }
 
     private void userStatusOp(int id, int userId, int entryStatus) {
         Map<String, String> params = new HashMap<String, String>();

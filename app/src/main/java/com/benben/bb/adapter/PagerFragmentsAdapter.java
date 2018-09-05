@@ -17,6 +17,10 @@ public class PagerFragmentsAdapter extends FragmentStatePagerAdapter {
         this.fragments = fragments;
     }
 
+    public void setTitles(String[] titles) {
+        this.titles = titles;
+    }
+
     @Override
     public Fragment getItem(int position) {
         return fragments[position % fragments.length];
