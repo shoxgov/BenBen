@@ -131,7 +131,7 @@ public class EmployFragment extends BaseFragment {
     private void reset() {
         pageNo = 1;
         totalPage = -1;
-        recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+        recyclerSwipeLayout.clear();
     }
 
     private void requestEmployList(int sort) {

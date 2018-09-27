@@ -210,7 +210,7 @@ public class MySignupActivity extends BaseActivity {
                                         if (br.getCode() == 1) {
                                             pageNo = 1;
                                             totalPage = -1;
-                                            recyclerSwipeLayout.setNewData(new ArrayList<SignupResponse.SignupInfo>());
+                                            recyclerSwipeLayout.clear();
                                             requestSignup();
                                         } else {
                                             ToastUtil.showText(br.getMessage());

@@ -227,7 +227,7 @@ public class OkHttpUtils {
         if (!TextUtils.isEmpty(UserData.getUserData().getToken())) {
             params.put("token", UserData.getUserData().getToken());
         }
-        LogUtil.d("postAsyn url=" + url);
+        LogUtil.d("postAsyn url=" + url + ", params=" + params.values().toString());
         Request request = OkHttpRequest.builderRequest(HttpMethodType.POST, url, params, null);
         OkHttpRequest.doEnqueue(request, baseResponseClass, callback);
     }
@@ -274,7 +274,7 @@ public class OkHttpUtils {
         if (params == null) {
             params = new HashMap<>();
         }
-        LogUtil.d("postAsynFile url=" + url);
+        LogUtil.d("postAsynFile url=" + url + ", params=" + params.values().toString());
         if (!TextUtils.isEmpty(UserData.getUserData().getToken())) {
             params.put("token", UserData.getUserData().getToken());
         }
@@ -286,7 +286,7 @@ public class OkHttpUtils {
         if (params == null) {
             params = new HashMap<>();
         }
-        LogUtil.d("postAsynFiles url=" + url);
+        LogUtil.d("postAsynFiles url=" + url + ", params=" + params.values().toString());
         if (!TextUtils.isEmpty(UserData.getUserData().getToken())) {
             params.put("token", UserData.getUserData().getToken());
         }
@@ -298,7 +298,7 @@ public class OkHttpUtils {
         if (params == null) {
             params = new HashMap<>();
         }
-        LogUtil.d("postAsynFiles url=" + url);
+        LogUtil.d("postAsynFiles url=" + url + ", params=" + params.values().toString());
         if (!TextUtils.isEmpty(UserData.getUserData().getToken())) {
             params.put("token", UserData.getUserData().getToken());
         }

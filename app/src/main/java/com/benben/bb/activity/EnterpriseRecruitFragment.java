@@ -80,7 +80,7 @@ public class EnterpriseRecruitFragment extends BaseFragment {
     public void freshUp() {
         pageNo = 1;
         totalPage = -1;
-        recyclerSwipeLayout.setNewData(new ArrayList<CompanyRecruitResponse.RecruitInfo>());
+        recyclerSwipeLayout.clear();
         requestEnterpriseEmploy();
     }
 

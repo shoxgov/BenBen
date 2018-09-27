@@ -200,7 +200,7 @@ public class EnterpriseEmployeeEntryedFragment extends BaseFragment {
                 if (br.getCode() == 1) {
                     pageNo = 1;
                     totalPage = -1;
-                    recyclerSwipeLayout.setNewData(new ArrayList<CompanyEmployeeEntryResponse.EmployeeEntryInfo>());
+                    recyclerSwipeLayout.clear();
                     requestEmployPosition();
                 }
             }
@@ -226,7 +226,7 @@ public class EnterpriseEmployeeEntryedFragment extends BaseFragment {
                 if (br.getCode() == 1) {
                     pageNo = 1;
                     totalPage = -1;
-                    recyclerSwipeLayout.setNewData(new ArrayList<CompanyEmployeeEntryResponse.EmployeeEntryInfo>());
+                    recyclerSwipeLayout.clear();
                     requestEmployPosition();
                 }
             }

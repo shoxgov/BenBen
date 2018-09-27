@@ -6,6 +6,7 @@
     <com.benben.bb.view.RecyclerViewSwipeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/home_search_main_layout"
         app:dividerColor="@color/line_color"
         app:dividerHeight="1dip"
         app:itemlayout="@layout/list_home_hot_employ" />
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingBottom="5dip"
         android:paddingTop="5dip">
 
@@ -34,9 +36,9 @@
                 android:gravity="center"
                 android:hint="请输入职位名称进行搜索"
                 android:padding="5dip"
-                android:visibility="invisible"
                 android:textColorHint="#CCCCCC"
-                android:textSize="@dimen/font_normal" />
+                android:textSize="@dimen/font_normal"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 

@@ -165,7 +165,7 @@ public class MySalaryListActivity extends BaseActivity {
         if (requestCode == 12 && resultCode == RESULT_OK) {
             pageNo = 1;
             totalPage = -1;
-            recyclerSwipeLayout.setNewData(new ArrayList<MySalaryHistoryResponse.SalaryInfo>());
+            recyclerSwipeLayout.clear();
             requestHistory(oldDate);
         }
     }
@@ -187,7 +187,7 @@ public class MySalaryListActivity extends BaseActivity {
                     return;
                 }
                 salaryDate.setText(DATE_ARRAYS[position]);
-                recyclerSwipeLayout.setNewData(new ArrayList<MySalaryHistoryResponse.SalaryInfo>());
+                recyclerSwipeLayout.clear();
                 requestHistory(salaryDate.getText().toString());
             }
 

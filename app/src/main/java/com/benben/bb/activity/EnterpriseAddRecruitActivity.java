@@ -25,9 +25,9 @@ import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.CompanyInfoResponse;
 import com.benben.bb.okhttp3.response.CompanyRecruitDetailResponse;
 import com.benben.bb.okhttp3.response.CooperateEnterpriseResponse;
+import com.benben.bb.okhttp3.response.MyCompanyResponse;
 import com.benben.bb.utils.GlideImageLoader;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.utils.Utils;
@@ -195,18 +195,18 @@ public class EnterpriseAddRecruitActivity extends BaseActivity implements View.O
     };
 
     private void getCompanyInfo() {
-        OkHttpUtils.getAsyn(NetWorkConfig.GET_MY_COMPANY, CompanyInfoResponse.class, new HttpCallback() {
+        OkHttpUtils.getAsyn(NetWorkConfig.GET_MY_COMPANY, MyCompanyResponse.class, new HttpCallback() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 super.onSuccess(baseResponse);
-                CompanyInfoResponse cir = (CompanyInfoResponse) baseResponse;
+                MyCompanyResponse cir = (MyCompanyResponse) baseResponse;
                 if (cir.getCode() == 1) {
                     CooperateEnterpriseResponse.CooperateEnterprise ce = (new CooperateEnterpriseResponse()).new CooperateEnterprise();
-                    ce.setCompanyId(cir.getData().getCompanyInfo().getId());
-                    ce.setCompanyName(cir.getData().getCompanyInfo().getCompanyName());
-                    myCompanyId = cir.getData().getCompanyInfo().getId();
-                    myCompanyName = cir.getData().getCompanyInfo().getCompanyName();
-                    owerEnterpriseTv.setText(cir.getData().getCompanyInfo().getCompanyName());
+                    ce.setCompanyId(cir.getData().getId());
+                    ce.setCompanyName(cir.getData().getCompanyName());
+                    myCompanyId = cir.getData().getId();
+                    myCompanyName = cir.getData().getCompanyName();
+                    owerEnterpriseTv.setText(cir.getData().getCompanyName());
                     myEnterpriseList.add(ce);
                 }
                 requestCooperationEnterprise();

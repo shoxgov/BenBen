@@ -100,14 +100,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void init() {
-        mainDrawable = new GradientDrawable();
-        mainDrawable.setColor(Color.parseColor("#003b9cff"));
-        llMain.setBackground(mainDrawable);
+//        mainDrawable = new GradientDrawable();
+//        mainDrawable.setColor(Color.parseColor("#003b9cff"));
+//        llMain.setBackground(mainDrawable);
         childDrawable = new GradientDrawable();
         childDrawable.setColor(Color.parseColor("#00FFFFFF"));
 //        childDrawable.setStroke(Utils.dip2px(getActivity(), 1), Color.parseColor("#FFFFFF"));
         childDrawable.setCornerRadius(Utils.dip2px(getActivity(), 5));
-        llChild.setBackground(childDrawable);
+//        llChild.setBackground(childDrawable);
 
     }
 
@@ -135,7 +135,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         getActivity().registerReceiver(cityReceiver, mFilter);
         freshUI();
         initBanner();
-        recyclerSwipeLayout.addOnScrollListener(onScrollListener);
+//        recyclerSwipeLayout.addOnScrollListener(onScrollListener);
     }
 
     RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
@@ -358,7 +358,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     return;
                 }
                 if (pageNo < totalPage) {
-                    recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+                    recyclerSwipeLayout.clear();
                     pageNo++;
                     requestEmployList();
                 } else {

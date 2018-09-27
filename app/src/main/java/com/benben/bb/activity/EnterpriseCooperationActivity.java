@@ -16,8 +16,8 @@ import com.benben.bb.imp.TitleBarListener;
 import com.benben.bb.okhttp3.http.HttpCallback;
 import com.benben.bb.okhttp3.http.OkHttpUtils;
 import com.benben.bb.okhttp3.response.BaseResponse;
-import com.benben.bb.okhttp3.response.CompanyInfoResponse;
 import com.benben.bb.okhttp3.response.CooperateEnterpriseResponse;
+import com.benben.bb.okhttp3.response.MyCompanyResponse;
 import com.benben.bb.utils.ToastUtil;
 import com.benben.bb.view.RecyclerViewSwipeLayout;
 import com.benben.bb.view.SwitchButton;
@@ -25,7 +25,6 @@ import com.benben.bb.view.TitleBar;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -262,17 +261,17 @@ public class EnterpriseCooperationActivity extends BaseActivity {
     }
 
     private void getCompanyInfo() {
-        OkHttpUtils.getAsyn(NetWorkConfig.GET_MY_COMPANY, CompanyInfoResponse.class, new HttpCallback() {
+        OkHttpUtils.getAsyn(NetWorkConfig.GET_MY_COMPANY, MyCompanyResponse.class, new HttpCallback() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 super.onSuccess(baseResponse);
-                CompanyInfoResponse cir = (CompanyInfoResponse) baseResponse;
+                MyCompanyResponse cir = (MyCompanyResponse) baseResponse;
                 if (cir.getCode() == 1) {
                     try {
-                        companyId = cir.getData().getCompanyInfo().getCompanyId();
-                        companyRegion = cir.getData().getCompanyInfo().getCompanyRegion();
-                        enterpriseName.setText(cir.getData().getCompanyInfo().getCompanyName());
-                        if (cir.getData().getCompanyInfo().getAuditStatus() == 1) {
+                        companyId = cir.getData().getCompanyId();
+                        companyRegion = cir.getData().getCompanyRegion();
+                        enterpriseName.setText(cir.getData().getCompanyName());
+                        if (cir.getData().getAuditStatus() == 1) {
                             enterpriseTag.setVisibility(View.VISIBLE);
                         } else {
                             enterpriseTag.setVisibility(View.GONE);
@@ -315,7 +314,7 @@ public class EnterpriseCooperationActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11 && resultCode == RESULT_OK) {
-            recyclerSwipeLayout.setNewData(new ArrayList<CooperateEnterpriseResponse.CooperateEnterprise>());
+            recyclerSwipeLayout.clear();
             pageNo = 1;
             totalPage = -1;
             requestCooperationEnterprise();

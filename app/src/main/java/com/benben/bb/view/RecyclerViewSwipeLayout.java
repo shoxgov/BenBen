@@ -20,6 +20,7 @@ import com.benben.bb.adapter.CustomBaseQuickAdapter;
 import com.benben.bb.utils.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
@@ -265,6 +266,9 @@ public class RecyclerViewSwipeLayout<T> extends RelativeLayout {
     public void setNewData(List<T> data) {
         noDataView.setVisibility(View.GONE);
         adapter.setNewData(data);
+    }
+    public void clear() {
+        adapter.setNewData(new ArrayList<>());
     }
 
     public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {

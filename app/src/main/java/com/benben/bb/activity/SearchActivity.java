@@ -143,7 +143,7 @@ public class SearchActivity extends BaseActivity {
     private void reset() {
         pageNo = 1;
         totalPage = -1;
-        recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+        recyclerSwipeLayout.clear();
     }
 
     @Override
@@ -245,7 +245,7 @@ public class SearchActivity extends BaseActivity {
                 pageNo = 1;
                 pageSize = 10;
                 totalPage = -1;
-                recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+                recyclerSwipeLayout.clear();
                 requestSearchKey(temp, 0);
                 Utils.closeInputMethod(this);
                 break;

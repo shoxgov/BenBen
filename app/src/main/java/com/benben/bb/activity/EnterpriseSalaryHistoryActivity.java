@@ -172,7 +172,7 @@ public class EnterpriseSalaryHistoryActivity extends BaseActivity {
                     return;
                 }
                 salaryDate.setText(DATE_ARRAYS[position]);
-                recyclerSwipeLayout.setNewData(new ArrayList<EnterpriseSalaryHistoryResponse.SalaryInfo>());
+                recyclerSwipeLayout.clear();
                 requestHistory(salaryDate.getText().toString());
             }
 

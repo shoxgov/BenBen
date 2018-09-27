@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:showLeftBtn="true"
-        app:titleName="编辑企业信息" />
+        app:titleName="企业信息" />
 
     <View
         android:layout_width="match_parent"

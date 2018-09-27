@@ -182,7 +182,7 @@ public class BrokerMyteamActivity extends BaseActivity implements View.OnClickLi
                                     if (br.getCode() == 1) {
                                         pageNo = 1;
                                         totalPage = -1;
-                                        recyclerSwipeLayout.setNewData(new ArrayList<MyAgentsResponse.AgentInfo>());
+                                        recyclerSwipeLayout.clear();
                                         requestTeams();
                                     }
                                 }

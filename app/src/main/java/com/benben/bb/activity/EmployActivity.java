@@ -219,7 +219,7 @@ public class EmployActivity extends BaseActivity {
     private void reset() {
         pageNo = 1;
         totalPage = -1;
-        recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+        recyclerSwipeLayout.clear();
     }
 
     private void requestEmployList(int advSort, int sort) {
@@ -247,7 +247,7 @@ public class EmployActivity extends BaseActivity {
                         if (temp == null || temp.isEmpty()) {
                             if (totalPage == 0) {
                                 ToastUtil.showText("暂无数据");
-                                recyclerSwipeLayout.setNewData(new ArrayList<SearchResultResponse.RecruitInfo>());
+                                recyclerSwipeLayout.clear();
 //                                recyclerSwipeLayout.setEmpty();
                             }
                             return;
